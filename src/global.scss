@@ -177,6 +177,20 @@
   }
 }
 
+ion-content{
+  --ion-background-color: #fbfbfb !important;
+}
+
+ion-item{
+  --ion-background-color: #ffffff !important;
+}
+
+.swal2-container {
+
+  position: relative !important;
+  height: 100vh !important;
+}
+
 .header-md::after{
   background-image: none !important;
 }
@@ -191,6 +205,9 @@ button{
   margin-top: 3px;
 }
 
+.swipe-button-rounded{
+  background-color:#2dd36f !important;
+}
 .button-rounded{ 
   font-size: 16px;
   --border-radius: 50px;
@@ -364,7 +381,7 @@ producto-foto img{
   margin-bottom: 16px;
   -webkit-box-shadow: 0px 2px 5px -2px rgba(0,0,0,0.32);
   -moz-box-shadow: 0px 2px 5px -2px rgba(0,0,0,0.32);
-  box-shadow: 0px 2px 5px -2px rgba(0,0,0,0.32);
+  box-shadow: 0px 2px 3px -2px rgb(0 0 0 / 15%)
   
 } 
 
@@ -432,6 +449,7 @@ ion-avatar{
 }
 
 .encabezado-card-mesa{
+  font-size: 12px;
   background-color: #dd5e2b;
   color: white;
   padding: 5px;
@@ -439,6 +457,7 @@ ion-avatar{
 }
 
 .encabezado-card-general{
+  font-size: 12px;
   background-color: #2b9cdd;
   color: white;
   padding: 5px;
@@ -450,8 +469,16 @@ ion-avatar{
   text-align: right;
 }
 
-.contenido-card-pedido{
+.footer-card-mensajes{
+  font-size: 14px;
+  background-color: rgb(243, 243, 243);
+  color:#1e2023;
   padding: 5px;
+  border-radius: 5px 5px 0px 0px;
+  padding-left: 22px;
+}
+.contenido-card-pedido{
+  padding: 9px;
   font-size: 14px;
   color: #1a1a1a;
 }
@@ -529,32 +556,36 @@ ion-fab{
 }
 
 
-@keyframes FadeIn {
+@keyframes FadeOut {
   0% {
     opacity: 0;
+    margin-top: 20px;
   }
   100% {
     opacity: 1;
+    margin-top: 0px;
   }
 }
 
-.FadeIn {
-  animation-name: FadeIn;
+.FadeOut {
+  animation-name: FadeOut FadeIn;
   animation-duration: 1s;
 }
 
 @keyframes FadeOut {
   0% {
     opacity: 0;
+    margin-top: 20px;
   }
   100% {
     opacity: 1;
+    margin-top: 0px;
   }
 }
 
 .FadeOut {
   animation-name: FadeOut;
-  animation-duration: 1s;
+  animation-duration: 400ms;
 }
 
 .login-imagen-container{
@@ -577,6 +608,12 @@ ion-fab{
   background-color:#E91D62;
   height: 100vh;
 }
+
+.modal-wrapper{
+  border: 5px solid #E91D62 !important;
+  border-radius: 10px !important;
+}
+
 
 .modal-custom-wrapper .modal-wrapper{
   border: 5px solid #E91D62 !important;
@@ -652,4 +689,13 @@ ion-fab{
   max-width: 200px;
   text-align: center;
   margin: auto;
+}
+
+.pedido-item{
+  border: 1px solid #8080801f;
+  padding: 9px;
+  border-radius: 20px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 14px;
 }

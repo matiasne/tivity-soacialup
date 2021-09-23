@@ -6,20 +6,12 @@ import { Router } from '@angular/router';
 import { RolesService } from '../Services/roles.service';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../Services/loading.service';
-import { NotificacionesDesktopService } from '../Services/notificaciones-desktop.service';
-import { NotificacionesService } from '../Services/notificaciones.service';
-import { PresenceService } from '../Services/presence.service';
 import { UsuariosService } from '../Services/usuarios.service';
 import { ToastService } from '../Services/toast.service';
 import { FormComercioPage } from '../form-comercio/form-comercio.page';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { ImpresoraService } from '../Services/impresora.service';
-import { WoocommerceService } from '../Services/woocommerce/woocommerce.service';
-import { FotoService } from '../Services/fotos.service';
-import { Archivo } from '../models/foto';
-import { ImagesService } from '../Services/images.service';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
 import { EnumPlanes, User } from '../models/user';
+import { ImpresoraService } from '../Services/impresora/impresora.service';
 
 
 @Component({
@@ -54,16 +46,21 @@ export class HomePage implements OnInit {
     public AuthenticationService:AuthenticationService,
     public toastService:ToastService,
     private modalCtrl:ModalController,
-    private platform: Platform
+    private platform: Platform,
+    private impresoraService:ImpresoraService
   ) { 
-     
+    this.comercios = []; 
     this.user = new User()
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       console.log('Handler was called!');
-    });
+    }); 
 
-  }
+    
+
+  } 
+
+  
 
 
   ngOnInit() {
@@ -75,7 +72,7 @@ export class HomePage implements OnInit {
   //  this.user.asignarValores(this.authService.getActualUser());
 
     this.buscandoComercios = true;
-    this.comercios = [];
+    this.comercios = []; 
     console.log("!entrando a home"); 
     
     let roles:any = await this.rolesService.getAllRolesbyEmailGET(this.authService.getActualUser().email).toPromise();
@@ -84,9 +81,9 @@ export class HomePage implements OnInit {
         
         if(roles[i].comercioId){
           if(roles[i].estado != "pendiente" && roles[i].estado != "rechazada"){
-            let obs =this.comerciosService.get(roles[i].comercioId).subscribe(data=>{
+            /*let obs = this.comerciosService.get(roles[i].comercioId).subscribe(data=>{
               if(data){
-                this.buscandoComercios = false
+                
                 let comercio:any = data;
                 comercio.rol = roles[i];
                 console.log(comercio)
@@ -94,13 +91,21 @@ export class HomePage implements OnInit {
                 obs.unsubscribe()
               }
               
-            });            
+            });     */
+            let come = await this.comerciosService.get(roles[i].comercioId).toPromise()
+            if(come){
+              let comercio:any = come;
+                comercio.rol = roles[i];
+                console.log(comercio)
+                this.comercios.push(comercio)
+            }       
           }
         }
       }
       console.log(this.comercios) 
-    }
-  
+      this.buscandoComercios = false
+  }
+    
  
   async getAfipStatus(){
     console.log('Este es el estado del servidor:');
@@ -163,8 +168,9 @@ export class HomePage implements OnInit {
 
   seleccionar(comercio){
     this.user = this.authService.getActualUser();    
-    this.comerciosService.setSelectedCommerce(comercio.id);   
+    this.comerciosService.setSelectedCommerce(comercio);   
     this.authService.setRol(comercio.rol);
+    this.rolesService.setRol(comercio.rol)
     this.router.navigate(['dashboard-comercio',{id:comercio.id}]);
     this.usuariosService.setComecioSeleccionado(this.authService.getActualUserId(),comercio.id);
        

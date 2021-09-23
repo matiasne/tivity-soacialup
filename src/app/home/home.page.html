@@ -3,11 +3,12 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>    
-    <ion-title>Home</ion-title>    
+    <ion-title  size="small">Home</ion-title>    
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  
 
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -22,6 +23,7 @@
     <img src="../../assets/img/comercio.fw.png" alt="">
     <p>Aún no tienes comercios! Agregar uno nuevo</p>
   </div>
+  
   
 
   <ion-list lines="none">     
@@ -42,6 +44,8 @@
       </ion-row>
     </ion-grid>   
   </ion-list>
+ 
+
   <ion-fab *ngIf="!buscandoComercios"  vertical="bottom" horizontal="end" slot="fixed" (click)="nuevoComercio()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>

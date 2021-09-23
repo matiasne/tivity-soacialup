@@ -19,19 +19,28 @@ export class Comercio {
     public rolComandatarios = [];
     public rolCadetes = [];
     public rolEncargados = [];
-
     public plan = "FREE";
+
+    public countPedidoDia = 0;
+    public ultimoPedidoFecha:any;
+
+    public subdivisiones ={
+        nombre:"", //Ejemplo consultorios
+        items:[{
+            nombre:""
+        }]
+    }
     
     public config  = {
         productos:true,
         servicios:true,
         comandas: true,
         cocinas:true,
-        mesas:true,
+        reservas:true,
+        personal:true,
+        subdivisiones:true,
         clientes:true,
         woocommerce:true,
-        afip:true,
-        cobrarDirectamente: false,
         movimientosCajas:true,
         ctasCorrientes:true,
         stock:true,
@@ -42,7 +51,8 @@ export class Comercio {
         productosMaxLength:40,
         serviciosMaxLength:40,
         clientesMaxLength:100,
-        cajasMaxLength:2
+        cajasMaxLength:2,
+        memoriaDias:1
     }
 
     public colores = {
@@ -67,6 +77,24 @@ export class Comercio {
 
     public keywords = [];
 
+    public dataTicketAfip = {
+        tipoDoc:"",
+        nroDoc:"",
+        personaJuridica:"",
+        ptoVenta:"",  
+    }
+
+    public mercadoPago = {
+        publicKey:"",
+        nickname: "",
+        permalink:"",
+    }
+
+    public afip = {
+        token:"",
+        puntoVenta:""
+    }
+     
 	public constructor() {
        this.direccion = new Localizacion()
     }

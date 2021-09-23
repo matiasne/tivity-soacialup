@@ -40,9 +40,6 @@ export class ModalInputDireccionPage implements OnInit {
 
     this.comercio = new Comercio()
     this.comercio.asignarValores(this.comerciosService.getSelectedCommerceValue())
-
-    
-
     this.localizacion = new Localizacion()
   }
 
@@ -211,9 +208,9 @@ export class ModalInputDireccionPage implements OnInit {
         }
     }
 
-    setTimeout(function () {
+   /* setTimeout(function () {
       document.getElementById('pac-input').click();
-    }, 2500);
+    }, 2500);*/
  
       
   }
@@ -233,7 +230,7 @@ export class ModalInputDireccionPage implements OnInit {
     this.modalCtrl.dismiss(this.localizacion);
   }
 
-  cancelar(){
+  cerrar(){
     this.modalCtrl.dismiss()
   }
 

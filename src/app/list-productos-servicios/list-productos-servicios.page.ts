@@ -3,7 +3,6 @@ import { ModalController, LoadingController, AlertController, NavController, Pla
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../Services/productos.service';
 import { Subscription } from 'rxjs';
-import { ServiciosService } from '../Services/servicios.service';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
 import { CarritoService } from '../Services/global/carrito.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -23,11 +22,17 @@ import { ComandaPage } from '../impresiones/comanda/comanda.page';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { WordpressService } from '../Services/wordpress/wordpress.service';
-import { Producto } from '../models/producto';
+import { Item } from '../models/item';
 import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
 import { PedidoService } from '../Services/pedido.service';
-
+import { FormProductoPage } from '../form-producto/form-producto.page';
+import { DetailsCarritoPage } from '../details-carrito/details-carrito.page';
+import Fuse from 'fuse.js'
+import { ImpresoraService } from '../Services/impresora/impresora.service';
+import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
+import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
+import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
 
 @Component({
   selector: 'app-list-productos-servicios',
@@ -36,7 +41,6 @@ import { PedidoService } from '../Services/pedido.service';
 })
 export class ListProductosServiciosPage implements OnInit {
 
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   
   @ViewChild(IonSearchbar, { static: false }) ionSearchbar: IonSearchbar;
 
@@ -50,10 +54,8 @@ export class ListProductosServiciosPage implements OnInit {
 
   itemsAllProductos:any=[];
   itemsProductos:any = [];
-  itemsRenderProductos:any = [] 
+  //itemsRenderProductos:any = [] 
 
-  itemsPerPage = 30
-  itemsRenderizados = 0;
 
   public carrito:any
 
@@ -92,13 +94,19 @@ export class ListProductosServiciosPage implements OnInit {
   public showSearchBar = false;
 
   public pedidosSolicitadosLength = 0;
+
+  public impresoraStatus = false;
+
+  public flagCobrando = false;
+  
+  public devWidth = 0;
+
   constructor(
     public loadingController: LoadingController,
     private router: Router,
     private route: ActivatedRoute,
     public productosService:ProductosService,
     public variacionesStockService:VariacionesStocksService,
-    public serviciosService:ServiciosService,
     public modalCtrl: ModalController,
     public carritoService:CarritoService,
     private barcodeScanner: BarcodeScanner,
@@ -117,13 +125,21 @@ export class ListProductosServiciosPage implements OnInit {
     private wordpressService:WordpressService,
     private usuariosServices:UsuariosService,
     private notificacionesAppService:NotifificacionesAppService,
-    private pedidosService:PedidoService
+    private pedidosService:PedidoService,
+    private escanerCodigoBarraService:EscanerCodigoBarraService,
+    private impresoraService:ImpresoraService
     
   ) { 
     
+    this.devWidth = this.platform.width();
+    
+    this.escanerCodigoBarraService.observeEscanerUSB().subscribe(data=>{
+      this.buscarCodigo(data)
+    })
+
 
     console.log(this.ionSearchbar)
-    this.notificacionesAppService.getSinLeer(this.usuariosServices.usuarioLogueado).subscribe(snapshot =>{
+    this.notificacionesAppService.getSinLeer(this.authenticationService.getUser()).subscribe(snapshot =>{
       console.log(snapshot.length)
       this.countNotificaciones = snapshot.length;
     }) 
@@ -170,17 +186,18 @@ export class ListProductosServiciosPage implements OnInit {
 
     this.comerciosService.getSelectedCommerce().subscribe(data=>{
       this.comercio.asignarValores(data);
+      
     })
 
     this.cargaPorVoz.getPermission();
 
     this.carritoSubs = this.carritoService.getActualCarritoSubs().subscribe(data=>{
       this.carrito = data;
+      this.validarEnCarrito()
     });
 
-    this.pedidosService.listSolicitadosUltimosDosDias().subscribe((pedidos:any)=>{
-      this.pedidosSolicitadosLength = pedidos.length   
-      console.log(this.pedidosSolicitadosLength)
+    this.pedidosService.listSolicitados().subscribe((pedidos:any)=>{
+      this.pedidosSolicitadosLength =  pedidos.length
     })  
 
     /*Mantener toda la lógica en el ngOninit para que solo se subscriba una vez y
@@ -206,12 +223,12 @@ export class ListProductosServiciosPage implements OnInit {
   }
  
   ionViewDidEnter(){
-
+    //this.buscar(undefined);
     console.log("DidEnter")
     //this.marcarEnCarrito();
-    this.wordpressService.obtainToken()
-    console.log(this.carrito.productos)
-    this.validarEnCarrito()
+    
+    console.log(this.carrito.items)
+    
   }
 
   ionViewWillEnter(){
@@ -225,8 +242,7 @@ export class ListProductosServiciosPage implements OnInit {
   validarEnCarrito(){
     this.itemsProductos.forEach(element => {
       element.enCarrito = 0;
-      this.carrito.productos.forEach(prod => {        
-         
+      this.carrito.items.forEach(prod => {          
           if(prod.id == element.id){
             element.enCarrito += prod.cantidad;
           }
@@ -234,131 +250,40 @@ export class ListProductosServiciosPage implements OnInit {
     }) 
   }
 
-  verMas(){
+  mostrar(items){
+    console.log(items)
+    this.itemsProductos = items
+  }
 
-    console.log("!!!!! Lazy")
-    
-    if(this.itemsRenderizados < this.itemsPerPage){
-      console.log("No hay más!!!"+this.itemsRenderizados)
-      this.infiniteScroll.complete();
-      this.infiniteScroll.disabled = true;
-      return;
+  buscarCodigo(codigo){
+    console.log(codigo)
+    for(let i=0; i < this.itemsAllProductos.length ;i++){
+      if(this.itemsAllProductos[i].barcode === codigo){
+        this.itemsProductos.push(this.itemsAllProductos[i]);
+      }
     }
-
-    let start = this.itemsRenderizados;
-   
-    for(let i=start; i < start+this.itemsPerPage;i++){
-
-      if(this.itemsProductos[i] == undefined){
-        console.log("No hay más!!! fuera del array"+this.itemsRenderizados)
-        this.infiniteScroll.complete();
-        this.infiniteScroll.disabled = true;
-        return;
-      }
-      
-      if(this.itemsProductos[i].id){
-        this.itemsRenderProductos.push(this.itemsProductos[i])
-        this.itemsRenderizados +=1;
-        console.log("pushing to render") 
-      }
+    console.log(this.itemsProductos)
+    if(this.itemsProductos.length == 1){
+      this.agregarItem(this.itemsProductos[0])
+      this.toastServices.mensaje("Se seleccionó el producto: "+this.itemsProductos[0].nombre,"");
+    }
+    
      
-    }
-    this.infiniteScroll.complete();
-
 
   }
 
 
-  buscar(event){ 
 
-    this.itemsRenderProductos = []
-    this.itemsRenderizados = 0
-    this.infiniteScroll.disabled = false;
+  async editarProducto(item){
     
-    if(event)
-      this.palabraFiltro = event.target.value;     
-
-    if(this.palabraFiltro != ""){
-      var palabra = this.palabraFiltro.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-
-      var retorno = false;
-
-      this.itemsProductos = [];
-      
-      this.itemsAllProductos.forEach((item) => {      
-  
-        var encontrado = false;
-        if(item.nombre){
-          retorno =  (item.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
-          if(retorno)
-            encontrado = true;
-        }
-
-        if(item.descripcion){
-          retorno =  (item.descripcion.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
-          if(retorno)
-            encontrado = true;
-        }
-
-        if(item.barcode){
-          if(item.barcode.includes(palabra)){
-            encontrado = true;
-          }            
-        }       
-  
-        if(encontrado){
-          console.log("agregado a itemsProducto "+item.id)
-          this.itemsProductos.push(item);
-          if(this.itemsRenderProductos.length < this.itemsPerPage){
-            console.log("Renderizando"+item.id)
-            this.itemsRenderProductos.push(item)
-            this.itemsRenderizados += 1
-          }
-          return true;
-        }
-      });
-
-      if(this.buscandoBarCode){
-        this.buscandoBarCode = false;
-        if(this.itemsProductos.length == 1){
-          this.agregarProducto(this.itemsProductos[0])
-          this.toastServices.mensaje("Se seleccionó el producto: "+this.itemsProductos[0].nombre,"");
-        }
+    let modal = await this.modalCtrl.create({
+      component: FormProductoPage,
+      componentProps: {
+        item:item
       }
+    });  
+    return await modal.present();
 
-      
-      if(this.cargaPorVoz.reconociendoPorVoz){
-        this.cargaPorVoz.reconociendoPorVoz = false;
-        if(this.itemsProductos.length == 1){
-          this.agregarProducto(this.itemsProductos[0]);
-          this.toastServices.mensaje("Se seleccionó el producto: "+this.itemsProductos[0].nombre,"");
-        }
-      }           
-      
-    }
-    else{      
-      this.itemsProductos = this.itemsAllProductos;
-      for(let i=0; i < this.itemsPerPage;i++){
-      
-        if(this.itemsProductos[i]){
-          this.itemsRenderProductos.push(this.itemsProductos[i])
-          this.itemsRenderizados +=1;
-        }
-        else{
-          console.log("No hay más!!! fuera del array"+this.itemsRenderizados)
-          this.infiniteScroll.complete();
-          this.infiniteScroll.disabled = true;
-          return;
-        }
-      }
-    }    
-   
-    this.changeRef.detectChanges()    
-  }
-
-  editarProducto(item){
-    this.loadingService.presentLoading();
-    this.router.navigate(['form-producto',{id:item.id}]);
   }
 
   show(){
@@ -379,8 +304,7 @@ export class ListProductosServiciosPage implements OnInit {
           producto.producto = true;
           producto.enCarrito = 0;      
       }); 
-      this.buscar(undefined);   
-      
+      this.itemsProductos = this.itemsAllProductos     
     });  
   }
 
@@ -405,9 +329,7 @@ export class ListProductosServiciosPage implements OnInit {
         }
       ]
     });
-    await alert.present();   
-
-    
+    await alert.present();    
   }
 
   onDrag(event,producto){
@@ -430,7 +352,7 @@ export class ListProductosServiciosPage implements OnInit {
 
   agregarACarrito(producto){
     producto.precioTotal = producto.precio
-    this.carritoService.agregarProducto(producto);
+    this.carritoService.agregarItem(producto);
   }
 
 
@@ -439,7 +361,8 @@ export class ListProductosServiciosPage implements OnInit {
      
       this.dragAgregar = false
       producto.precioTotal = producto.precio
-      this.carritoService.agregarProducto(producto);
+      producto.cantidad = 1;
+      this.carritoService.agregarItem(producto);
       this.dragEvent.close().then(data=>{
            
           
@@ -448,35 +371,12 @@ export class ListProductosServiciosPage implements OnInit {
     
   }
 
-  reconocimientoPorVoz(){
-
-    if(!this.cargaPorVoz.reconociendoPorVoz){
-      this.cargaPorVoz.reconociendoPorVoz = true;
-      this.cargaPorVoz.startReconocimiento().subscribe(matches=>{        
-          let message = matches[0]; //Guarda la primera frase que ha interpretado en nuestra variable     
-          this.palabraFiltro = message;
-          this.buscar(undefined);        
-        },
-        (onerror) =>{
-            if(onerror == 0){
-              this.toastServices.mensaje("Reconocimiento por voz finalizado","");
-              this.palabraFiltro = "";
-               this.buscar(undefined);
-            } 
-        }) 
-    }else{
-      this.cargaPorVoz.reconociendoPorVoz = false;
-      this.cargaPorVoz.stopReconocimiento();
-    }
-  }
-
 
   lectorDeCodigo(){
+    this.showSearchBar = true;
     this.buscandoBarCode = true;
     this.barcodeScanner.scan().then(barcodeData => {      
-      //var codeBar:any =JSON.stringify(barcodeData);
-      this.palabraFiltro = barcodeData.text;
-      this.buscar(undefined)
+     this.buscarCodigo(barcodeData.text)
      }).catch(err => {
     
      });
@@ -486,7 +386,7 @@ export class ListProductosServiciosPage implements OnInit {
     this.router.navigate(['dashboard-productos']);
   }
 
-  async agregarProducto(producto:Producto){   
+  async agregarItem(item:Item){   
 
     
 
@@ -494,7 +394,7 @@ export class ListProductosServiciosPage implements OnInit {
       component: AddProductoVentaPage,     
       cssClass:'modal-custom-wrapper',
       componentProps:{
-        producto:producto
+        producto:item
       }
     });         
 
@@ -503,11 +403,10 @@ export class ListProductosServiciosPage implements OnInit {
     .then((retorno) => { 
 
       if(retorno.data){   
-        producto.enCarrito += retorno.data.cantidad;
-        delete retorno.data.keywords;
+        item.enCarrito += retorno.data.cantidad;
         //producto.cantidad = retorno.data.cantidad
         //producto.opcionesSeleccionadas = retorno.data.opcionesSeleccionadas
-        this.carritoService.agregarProducto(retorno.data);    
+        this.carritoService.agregarItem(retorno.data);    
         //this.marcarEnCarrito();         
       }else{
 
@@ -557,35 +456,64 @@ export class ListProductosServiciosPage implements OnInit {
 
   async siguiente(){
     
-    if(this.comercio.config.cobrarDirectamente)
-      this.cobrarDirectamente()
-    else
+ 
       this.verCarrito(); 
   }
 
   async verCarrito(){
-    console.log(this.route.snapshot.params.carritoIntended)
-    this.router.navigate(['details-carrito',{carritoIntended:this.route.snapshot.params.carritoIntended}])  
+   // this.router.navigate(['details-carrito',{carritoIntended:this.route.snapshot.params.carritoIntended}])  
+   this.flagCobrando = true; 
+   const modal = await this.modalController.create({
+     id:'details-carrito',
+      component: DetailsCarritoPage,
+      componentProps:{}      
+    });    
+
+    modal.onDidDismiss().then((retorno) => {
+    
+      if(this.route.snapshot.params.carritoIntended)
+        this.router.navigate([this.route.snapshot.params.carritoIntended]);
+      if(retorno.data == "vacio"){
+        this.itemsProductos.forEach(element => {
+          element.enCarrito = 0;
+        }) 
+      }
+    });
+
+    modal.onDidDismiss().then(data=>{
+      this.flagCobrando = false;
+    })
+    
+    return await modal.present();
+
+    
   }
-
+/*
   async cobrarDirectamente(){
-
+    this.flagCobrando = true;
     
     let pedido = new Pedido()  
-
-    pedido.asignarValores(this.carrito)
-
-    pedido.personalId = this.authenticationService.getUID();
-    pedido.personalEmail = this.authenticationService.getEmail();
-    pedido.personalNombre = this.authenticationService.getNombre();   
-
-    let editarPedido = new Pedido();
-    editarPedido.asignarValores(pedido);
+    pedido.setCreador(this.authenticationService.getUser())
+    pedido.asignarValores(this.carrito)    
+    pedido.direccion = JSON.parse(JSON.stringify(pedido.direccion));
+   
+    const modal = await this.modalController.create({
+      component: DetailsPedidoPage,
+      componentProps:{
+        pedido:pedido,
+      },
+      id:'detail-pedido'      
+    });
     
-    this.navParametrosService.param = editarPedido;
-    this.router.navigate(['details-pedido'])
+    modal.present().then(data=>{
+      
+    });    
 
-  }
+    modal.onDidDismiss().then(data=>{
+      this.flagCobrando = false;
+    })
+  //  })
+  }*/
 
   async imprimirComanda(pedido){
     const modal = await this.modalController.create({
@@ -638,17 +566,68 @@ export class ListProductosServiciosPage implements OnInit {
       return await modal.present();
     }
     else{
-      this.router.navigate(['form-producto']);
+     // this.router.navigate(['form-producto']);
+
+      let modal = await this.modalController.create({
+        component: FormProductoPage
+      });  
+      return await modal.present();
+
     }
     
   }
 
-  focusBuscar(){
-    this.showSearchBar = true;
-    setTimeout(() => {
-          // Set the focus to the input box of the ion-Searchbar component
-    this.ionSearchbar.setFocus();
-    },100);
+   
+
+  verImpresora(){
+    this.router.navigate(['form-impresora-config'])
+  }
+
+  getTotal(){
+    return this.pedidosService.getTotal(this.carrito)
+  }
+
+  continuar(){ 
+
+    if(this.carrito.items.length == 0){
+      this.toastServices.alert("Debes ingresar al menos un producto o servicio","");      
+      return;
+    }        
+    
+    this.crearPedido();       
+  } 
+
+  crearPedido(){
+    this.imprimir()   
+    this.carritoService.crearPedido()
+    this.modalController.dismiss("vacio")
+  }  
+
   
+  imprimir(){
+    this.impresoraService.impresionComanda(this.carrito);
+  }
+
+
+  async cobrar(){
+    this.carrito.comanda.numero = await this.comerciosService.obtenerActualizarNumeroPedido()
+    const modal = await this.modalController.create({
+      id:'form-cobrar',
+      component: FormCobrarPedidoPage,  
+      componentProps:{pedido:this.carrito,comercio:this.comercio},   
+      cssClass:'modal-custom-wrapper' 
+    });    
+
+    modal.onDidDismiss()
+    .then((retorno) => {
+      if(retorno.data == "cobrado"){
+       
+        this.modalController.dismiss(null,null,'details-carrito') 
+       
+        
+      }
+     
+    });
+    return await modal.present();
   }
 }

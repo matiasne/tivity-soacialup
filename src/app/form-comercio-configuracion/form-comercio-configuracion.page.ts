@@ -7,7 +7,8 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { FormComercioPage } from '../form-comercio/form-comercio.page';
 import { AlertController, ModalController } from '@ionic/angular';
 import { RolesService } from '../Services/roles.service';
-import { Rol } from '../models/rol';
+import { FormConfiguracionAfipPage } from '../form-configuracion-afip/form-configuracion-afip.page';
+import { FormConfigMercadopagoPage } from '../form-config-mercadopago/form-config-mercadopago.page';
 
 @Component({
   selector: 'app-form-comercio-configuracion',
@@ -31,7 +32,8 @@ export class FormComercioConfiguracionPage implements OnInit {
     private authService:AuthenticationService,
     private modalCtrl:ModalController,
     private alertController:AlertController,
-    private rolesService:RolesService
+    private rolesService:RolesService,
+    private modalController:ModalController
   ) { 
     this.comercio = new Comercio();
     this.comerciosService.getSelectedCommerce().subscribe(data=>{
@@ -44,13 +46,14 @@ export class FormComercioConfiguracionPage implements OnInit {
   } 
 
   ionViewDidEnter(){
-    let obs = this.authService.observeRol().subscribe(data=>{
+    this.authService.observeRol().subscribe(data=>{
       this.rolActual = data;
       console.log(this.rolActual)
       //Aca setea todos los shows
-      obs.unsubscribe();
+      
     })
   }
+
 
   async editarComercio(){
     // this.seleccionar(item);
@@ -109,8 +112,8 @@ export class FormComercioConfiguracionPage implements OnInit {
     this.router.navigate(['list-horarios']);
   }
 
-  openEditMesas(){
-    this.router.navigate(['list-mesas']);
+  openEditSubdivisiones(){
+    this.router.navigate(['form-subdivision']);
   }
 
   openEditCocinas(){
@@ -145,8 +148,9 @@ export class FormComercioConfiguracionPage implements OnInit {
     this.router.navigate(['list-beneficios']);
   }
 
-  openBeneficiosPuntaje(){
-    
+
+  importarCatalogo(){
+    this.router.navigate(['form-importar-catalogo-csv']);
   }
   
   update(){
@@ -155,7 +159,7 @@ export class FormComercioConfiguracionPage implements OnInit {
       this.comercio.config.beneficiosClientes = false;
       this.comercio.config.beneficiosPorPuntaje = false;
     }
-    this.comerciosService.update(this.comercio);
+    this.comerciosService.updateComercio(this.comercio);
   }
 
   
@@ -184,6 +188,28 @@ export class FormComercioConfiguracionPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async openEditAfip(){
+    const modal = await this.modalController.create({
+      component: FormConfiguracionAfipPage,
+    });
+    
+    modal.present().then(()=>{
+    
+
+    })
+  }
+
+  async openEditMercadoPAgo(){
+    const modal = await this.modalController.create({
+      component: FormConfigMercadopagoPage,
+    });
+    
+    modal.present().then(()=>{
+    
+
+    })
   }
 
   

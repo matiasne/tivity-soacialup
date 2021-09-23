@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenticationService } from './Services/authentication.service';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { ComerciosService } from './Services/comercios.service';
-import { NotificacionesDesktopService } from './Services/notificaciones-desktop.service';
 import { NotifificacionesAppService } from './Services/notifificaciones-app.service';
 import { Comercio } from './models/comercio';
 import { ToastService } from './Services/toast.service';
-import { MesasService } from './Services/mesas.service';
-import * as firebase from 'firebase';
 import { PresenceService } from './Services/presence.service';
 import { UsuariosService } from './Services/usuarios.service';
-import { Network } from '@ionic-native/network/ngx';
-import { PedidoService } from './Services/pedido.service';
-import { Printer } from '@ionic-native/printer/ngx';
-import { ImpresoraService } from './Services/impresora.service';
+import { ImpresoraService } from './Services/impresora/impresora.service';
 import { RolesService } from './Services/roles.service';
-import { Environment } from '@ionic-native/google-maps';
+import { BluetoothService } from './Services/bluetooth.service';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+import { SelectDivisionPage } from './select-division/select-division.page';
+import { NavegacionParametrosService } from './Services/global/navegacion-parametros.service';
+import { Division } from './models/subdivision';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +42,8 @@ export class AppComponent implements OnInit {
   public showServicios ="false";
   public showSubscripciones ="false";
   public showConfiguracion ="false";
+
+  private VERSION_MINIMA = 0;
 
   public appActions =[
     
@@ -111,7 +113,8 @@ export class AppComponent implements OnInit {
   public onlineOffline: boolean = navigator.onLine;
   public rolActual = ""; 
 
-  public connectionStatus = "offline"
+  public connectionStatus = "offline";
+
 
   constructor(
     private platform: Platform,
@@ -127,18 +130,28 @@ export class AppComponent implements OnInit {
     public presenceService:PresenceService,
     private usuariosService:UsuariosService,
     private usuarioService:UsuariosService,
+    private bluetoothService:BluetoothService,
+    private rolesService:RolesService,
     private impresoraService:ImpresoraService,
-    private rolesService:RolesService
+    private deeplinks: Deeplinks,
+    private alertController:AlertController,
+    private appVersion: AppVersion,
+    private openNativeSettings: OpenNativeSettings,
+    private modalCtrl: ModalController,
+    private navParametrosService:NavegacionParametrosService,
   ) {
-    this.comercioSeleccionado = new Comercio();   
+    this.comercioSeleccionado = new Comercio();
+    
+    console.log("LOGUEO DE APP")
+
     this.initializeApp();  
 
     this.authService.observeRol().subscribe(data=>{
       this.rolActual = data.rol;
       console.log(this.rolActual)
-      //Aca setea todos los shows
-
     })
+
+   
   }  
 
   initializeApp() {
@@ -146,15 +159,50 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(async () => {
 
       
-      console.log("NgOnInit")
 
-      this.statusBar.styleDefault();
+      if (this.platform.is('cordova')) {
+
+        
+
+        this.appVersion.getVersionNumber().then(res => {
+          let ionVersionNumber = res.split('.').join('');
+          if (Number(ionVersionNumber) <= this.VERSION_MINIMA){
+              this.forzarUpgrade()
+          }
+        }).catch(error => {
+          alert(error);
+        });
+
+         
+        this.deeplinks.route({
+          '/page': "page",
+          '':"pp"
+        }).subscribe(match => {
+          // match.$route - the route we matched, which is the matched entry from the arguments to route()
+          // match.$args - the args passed in the link
+          // match.$link - the full link data
+          console.log(match);
+        }, nomatch => {
+          // nomatch.$link - the full link data
+          console.log(nomatch);
+        });
+   
+
+        this.fcm.onNotification().subscribe(data => {      
+          if(data.wasTapped){
+            alert("wasTaped")
+          } else {
+            console.log(data);
+            this.toastService.mensajeVerde(data.title,data.body);
+          };
+        });
+  
+        this.bluetoothService.enable();
+
+      }
+     
       
-
-      setTimeout(() => {           
-        this.splashScreen.hide();
-      }, 1000);
-
+     
       /*this.notifiacionesDesktopService.requestPermission();
       this.notifiacionesDesktopService.init().then(data=>{
         console.log("OK")
@@ -162,21 +210,12 @@ export class AppComponent implements OnInit {
         console.log("ERROR"); 
       });*/
 
-      this.fcm.onNotification().subscribe(data => {      
-        if(data.wasTapped){
-          alert("wasTaped")
-        } else {
-          console.log(data);
-          this.toastService.mensajeVerde(data.title,data.body);
-        };
-      });
-
-      this.impresoraService.bluetoothEnable();  
+     
 
       this.authService.getActualUserIdObservable().subscribe(uid=>{       
 
         if(uid){   
-
+          
           this.platform.pause.subscribe(async () => {
             console.log("Salió del sistema"); 
           });
@@ -185,7 +224,7 @@ export class AppComponent implements OnInit {
             console.log("Salió del sistema");
           });
           
-          console.log("Logueado!"+uid)
+          
           this.router.navigate(['home']);     
 
           this.notificacionesAppService.getSinLeer(uid).subscribe(snapshot =>{
@@ -208,12 +247,18 @@ export class AppComponent implements OnInit {
             this.connectionStatus = data
           })
 
-          this.usuarioService.getUserData().subscribe(data=>{
+          this.usuarioService.obsUserData().subscribe(data=>{
             this.usuario = data
             console.log(this.usuario)
           })
         
           if (this.platform.is('cordova')) {
+
+            console.log("Logueado!"+uid)
+            this.splashScreen.hide();
+
+            this.impresoraService.conectarImpresoraBT()
+
             this.fcm.subscribeToTopic('gestion');
         
             this.fcm.getToken().then(token => {     
@@ -230,17 +275,17 @@ export class AppComponent implements OnInit {
           }          
         }  
         else{
+          this.splashScreen.hide();
           this.router.navigate(['login']);
         }    
       });      
 
-     /* let impresora = this.impresoraService.obtenerImpresora()
-      if(impresora.bluetooth){
-        this.impresoraService.conectarBluetoothEImpresora()
-      }*/       
-
+      
+      
     });
   }
+
+  
 
   ngOnInit() {
 
@@ -248,15 +293,19 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+
     this.comerciosService.getSelectedCommerce().subscribe(data=>{ 
       console.log(data)  
-      if(data)
+      if(data){
         this.comercioSeleccionado.asignarValores(data);
+      }
       else{
         this.comercioSeleccionado = new Comercio();
       } 
     });       
   }
+
+  
  
   verComercios(){
 
@@ -276,5 +325,44 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  
+  async forzarUpgrade(){
+    const alert = await this.alertController.create({
+    header: 'Es necesario que actualices a una versión más reciente',
+    message: '',
+    buttons: [
+        {
+        text: 'OK',
+        handler: () => {      
+            this.openNativeSettings.open("store");   
+            }
+        }
+    ]
+    });
+    await alert.present();   
+}
+
+tagListenerSuccess(tagEvent) {
+  console.log(tagEvent.type);
+  console.log("Ceci est un tag : " + tagEvent)  
+}
+
+  async selectDivision(){
+    
+    let modal = await this.modalCtrl.create({
+      component: SelectDivisionPage,
+    });  
+    modal.onDidDismiss()
+      .then((retorno) => {
+        if(retorno.data){
+          let division = new Division();
+          division.asignarValores(retorno.data)
+          this.navParametrosService.param = division;
+          this.router.navigate(['/details-division'])
+        }
+                
+    });
+    
+    return await modal.present()
+}
+
 }

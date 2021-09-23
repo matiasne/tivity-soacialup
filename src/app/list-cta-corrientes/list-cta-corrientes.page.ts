@@ -34,15 +34,15 @@ export class ListCtaCorrientesPage implements OnInit {
 
       this.buscando = false;
       cuentas.forEach((cta: any) => {           
-          var item:CtaCorriente = new CtaCorriente(this.authenticationService.getUID(), this.authenticationService.getNombre());
+          var item:CtaCorriente = new CtaCorriente();
           item.asignarValores(cta);       
           
           
           item.coTitularesId.forEach(async clienteId => {
             console.log(clienteId);
             if(clienteId)
-              await this.clientesServices.get(clienteId).subscribe(snap =>{
-                item.clientes.push(snap.payload.data());
+              await this.clientesServices.get(clienteId).subscribe(cliente =>{
+                item.clientes.push(cliente);
               })
           });
 

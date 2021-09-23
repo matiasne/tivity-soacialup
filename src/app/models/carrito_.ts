@@ -1,8 +1,6 @@
-import { Producto } from './producto';
-import { Servicio } from './servicio';
+import { Item } from './item';
 import { Pagare } from './pagare';
 import { Cliente } from './cliente';
-import { Comanda } from './comanda';
 import { MovimientoCtaCorriente } from './movimientoCtaCorriente';
 import { Mesa } from './mesa';
 import { Descuento } from './descuento';
@@ -18,8 +16,7 @@ export class Carrito{
 
     public descuentos:Descuento[] =[];
     public recargos:Recargo[]=[];
-    public productos:Producto[] = []; 
-    public servicios:Servicio[] = [];
+    public items:Item[] = []; 
 
 	constructor(
 		public vendedorId:"", 

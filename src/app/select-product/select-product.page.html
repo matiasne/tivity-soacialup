@@ -48,13 +48,12 @@
           <span *ngFor="let producto of itemsRenderProductos">           
 
            
-              <app-card-producto   
+              <app-card-item   
                 [item]="producto"
                 [multiplicador]="1" 
                 [showOpcionesSeleccionadas]="false"
-                [showEstadoComanda]="false"
                 (select)="seleccionarProducto(producto)"
-              ></app-card-producto>    
+              ></app-card-item>    
             
           </span>
 

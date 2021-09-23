@@ -3,10 +3,14 @@ import { Subscription } from 'rxjs';
 import { ComentariosService } from '../Services/comentarios.service';
 import { LoadingService } from '../Services/loading.service';
 import { PedidoService } from '../Services/pedido.service';
-import { EnumEstadoCocina } from 'src/app/models/pedido';
+import { EnumEstadoCocina } from 'src/app/models/item';
 import { CocinasService } from '../Services/cocinas.service';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Pedido } from '../models/pedido';
+import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
+import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
+import { DetailsComandaPage } from '../details-comanda/details-comanda.page';
 
 @Component({
   selector: 'app-list-comandas-v2',
@@ -38,6 +42,7 @@ export class ListComandasV2Page implements OnInit {
   public obsPedidos:any
 
   public fechaDesde = new Date();
+  public fechaHasta = new Date();
 
   public buscando = true;
 
@@ -49,9 +54,12 @@ export class ListComandasV2Page implements OnInit {
     private alertController:AlertController,
     private router:Router,  
     private platform:Platform,
+    private modalController:ModalController,
+    private navParametrosService:NavegacionParametrosService
   ) { 
     this.devWidth = this.platform.width();
-    this.fechaDesde.setDate(this.fechaDesde.getDate() - 1);
+    this.fechaDesde.setDate(this.fechaDesde.getDate() - 2);    
+    this.fechaHasta.setDate(this.fechaHasta.getDate() + 1); 
   }
 
   ngOnInit() {
@@ -73,7 +81,7 @@ export class ListComandasV2Page implements OnInit {
       this.obsPedidos.unsubscribe();
     } 
 
-    this.obsPedidos = this.pedidosService.listFechaDesde(this.fechaDesde,new Date()).subscribe((pedidos:any)=>{  
+    this.obsPedidos = this.pedidosService.listFecha(this.fechaDesde,this.fechaHasta).subscribe((pedidos:any)=>{  
       this.buscando = false;
       this.itemsPendientes = []; 
       this.itemsProceso = []; 
@@ -81,11 +89,12 @@ export class ListComandasV2Page implements OnInit {
       this.itemsRechazados = [];   
 
       this.loadingService.dismissLoading()               
-      this.pedidosAll = pedidos;  
-      console.log(this.pedidosAll)          
+      this.pedidosAll = pedidos;   
+      console.log(this.pedidosAll) 
       this.filtrar(); 
     });
   }
+
 
   async presentAlertCrearCocinas() {
     const alert = await this.alertController.create({
@@ -120,7 +129,6 @@ export class ListComandasV2Page implements OnInit {
   }
 
   segmentChanged(event){
-    console.log(event.target.value);
     this.seccionActiva = event.target.value;
   }
 
@@ -136,17 +144,20 @@ export class ListComandasV2Page implements OnInit {
     this.pedidosAll.forEach(item => { 
             
       var encontrado = false;      
-      this.cocinaFiltro.forEach(cocina =>{     
-        console.log(cocina) 
-        
-        item.productos.forEach(prod => {
-          console.log(prod.cocinaId) 
-          if(prod.cocinaId == cocina){
-            encontrado = true;  
-          } 
-        });        
-      })
-      console.log(encontrado)  
+      
+      if(this.cocinaFiltro.length > 0){
+        this.cocinaFiltro.forEach(cocina =>{             
+          item.items.forEach(prod => {
+            if(prod.cocinaId == cocina){
+              encontrado = true;  
+            } 
+          });        
+        })
+      }
+      else{
+        encontrado = true
+      }
+      
       
       if(encontrado){
        
@@ -162,8 +173,8 @@ export class ListComandasV2Page implements OnInit {
               encontrado = true;
           }
 
-          if(item.mesaNombre){
-            retorno =  (item.mesaNombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
+          if(item.divisionNombre){
+            retorno =  (item.divisionNombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
             if(retorno)
               encontrado = true;
           }   
@@ -178,36 +189,49 @@ export class ListComandasV2Page implements OnInit {
           encontrado = true;
         }   
       } 
-
-      console.log(encontrado)  
-
       if(encontrado){ 
-        console.log(item)  
-       // if(item.suspendido == 1){
-         // this.itemsRechazados.push(item);
-      //  } 
-        //else{
-          if(item.statusComanda == EnumEstadoCocina.rechazado){
-            this.itemsRechazados.push(item);
-          }
-          if(item.statusComanda == EnumEstadoCocina.solicitado){
-            this.itemsPendientes.push(item);
-          }
-          if(item.statusComanda == EnumEstadoCocina.tomado){
-            this.itemsProceso.push(item);
-          }
-          if(item.statusComanda == EnumEstadoCocina.completo){
-            this.itemsListas.push(item);
-          }
-      //  }    
-        console.log(this.itemsPendientes)     
-        return true; 
+        console.log(true)
+
+        if(item.comanda.estado == EnumEstadoCocina.rechazado){
+          this.itemsRechazados.push(item);
+        }
+        if(item.comanda.estado == EnumEstadoCocina.solicitado){
+          this.itemsPendientes.push(item);
+        }
+        if(item.comanda.estado == EnumEstadoCocina.tomado){
+          this.itemsProceso.push(item);
+        }
+        if(item.comanda.estado == EnumEstadoCocina.completo){
+          this.itemsListas.push(item);
+        }
       }
-    });    
+      return true; 
+    })  
   }
 
   nuevoPedido(){
-    this.router.navigate(['list-productos-servicios'])
+    this.router.navigate(['list-productos-servicios',{carritoIntended:'list-comandas-v2'}])
+  }
+
+  async abrir(item){
+    console.log(item)
+    let editarPedido = new Pedido();
+    editarPedido.asignarValores(item);
+    
+    this.navParametrosService.param = editarPedido;
+   // this.router.navigate(['details-pedido'])
+
+    const modal = await this.modalController.create({
+      component: DetailsComandaPage, 
+      id:'detail-comanda'      
+    });
+    modal.onDidDismiss()
+    .then((retorno) => {
+      this.refrescar()
+    })
+
+    
+    await modal.present();
   }
 
 }

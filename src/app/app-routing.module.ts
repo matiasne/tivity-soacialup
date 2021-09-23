@@ -4,8 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'folder/:id',
@@ -32,24 +31,12 @@ const routes: Routes = [
     loadChildren: () => import('./form-cliente/form-cliente.module').then( m => m.FormClientePageModule)
   },
   {
-    path: 'form-servicio',
-    loadChildren: () => import('./form-servicio/form-servicio.module').then( m => m.FormServicioPageModule)
-  },
-  {
     path: 'form-plan',
     loadChildren: () => import('./form-plan/form-plan.module').then( m => m.FormPlanPageModule)
   },
   {
     path: 'form-categoria',
     loadChildren: () => import('./form-categoria/form-categoria.module').then( m => m.FormCategoriaPageModule)
-  },
-  {
-    path: 'form-subscripcion',
-    loadChildren: () => import('./form-subscripcion/form-subscripcion.module').then( m => m.FormSubscripcionPageModule)
-  },
-  {
-    path: 'list-servicios',
-    loadChildren: () => import('./list-servicios/list-servicios.module').then( m => m.ListServiciosPageModule)
   },
   {
     path: 'list-clientes',
@@ -62,10 +49,6 @@ const routes: Routes = [
   {
     path: 'details-cliente',
     loadChildren: () => import('./details-cliente/details-cliente.module').then( m => m.DetailsClientePageModule)
-  },
-  {
-    path: 'details-servicio',
-    loadChildren: () => import('./details-servicio/details-servicio.module').then( m => m.DetailsServicioPageModule)
   },
   {
     path: 'details-subscripcion',
@@ -116,10 +99,6 @@ const routes: Routes = [
     loadChildren: () => import('./dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
   },
   {
-    path: 'dashboard-servicios',
-    loadChildren: () => import('./dashboard-servicios/dashboard-servicios.module').then( m => m.DashboardServiciosPageModule)
-  },
-  {
     path: 'form-producto',
     loadChildren: () => import('./form-producto/form-producto.module').then( m => m.FormProductoPageModule)
   },
@@ -134,10 +113,6 @@ const routes: Routes = [
   {
     path: 'add-producto-venta',
     loadChildren: () => import('./add-producto-venta/add-producto-venta.module').then( m => m.AddProductoVentaPageModule)
-  },
-  {
-    path: 'add-servicio-subscripcion',
-    loadChildren: () => import('./add-servicio-subscripcion/add-servicio-subscripcion.module').then( m => m.AddServicioSubscripcionPageModule)
   },
   {
     path: 'list-productos-servicios',
@@ -205,16 +180,8 @@ const routes: Routes = [
     loadChildren: () => import('./form-producto-grupo-opciones/form-producto-grupo-opciones.module').then( m => m.FormProductoGrupoOpcionesPageModule)
   },
   {
-    path: 'form-mesa',
-    loadChildren: () => import('./form-mesa/form-mesa.module').then( m => m.FormMesaPageModule)
-  },
-  {
     path: 'list-empleados',
     loadChildren: () => import('./list-empleados/list-empleados.module').then( m => m.ListEmpleadosPageModule)
-  },
-  {
-    path: 'list-mesas',
-    loadChildren: () => import('./list-mesas/list-mesas.module').then( m => m.ListMesasPageModule)
   },
   {
     path: 'form-comercio-configuracion',
@@ -265,10 +232,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-calendario/form-calendario.module').then( m => m.FormCalendarioPageModule)
   },
   {
-    path: 'list-calendarios',
-    loadChildren: () => import('./list-calendarios/list-calendarios.module').then( m => m.ListCalendariosPageModule)
-  },
-  {
     path: 'list-personal',
     loadChildren: () => import('./list-personal/list-personal.module').then( m => m.ListPersonalPageModule)
   },
@@ -295,14 +258,6 @@ const routes: Routes = [
   {
     path: 'list-pedidos',
     loadChildren: () => import('./list-pedidos/list-pedidos.module').then( m => m.ListPedidosPageModule)
-  },
-  {
-    path: 'select-mesa',
-    loadChildren: () => import('./select-mesa/select-mesa.module').then( m => m.SelectMesaPageModule)
-  },
-  {
-    path: 'details-mesa',
-    loadChildren: () => import('./details-mesa/details-mesa.module').then( m => m.DetailsMesaPageModule)
   },
   {
     path: 'form-cocina',
@@ -406,8 +361,129 @@ const routes: Routes = [
   {
     path: 'modal-input-direccion',
     loadChildren: () => import('./modal-input-direccion/modal-input-direccion.module').then( m => m.ModalInputDireccionPageModule)
-  }
- 
+  },
+  {
+    path: 'form-afip',
+    loadChildren: () => import('./form-afip/form-afip.module').then( m => m.FormAfipPageModule)
+  },
+  {
+    path: 'form-configuracion-afip',
+    loadChildren: () => import('./form-configuracion-afip/form-configuracion-afip.module').then( m => m.FormConfiguracionAfipPageModule)
+  },
+  {
+    path: 'form-cobrar-pedido',
+    loadChildren: () => import('./form-cobrar-pedido/form-cobrar-pedido.module').then( m => m.FormCobrarPedidoPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'form-devolver-pedido',
+    loadChildren: () => import('./form-devolver-pedido/form-devolver-pedido.module').then( m => m.FormDevolverPedidoPageModule)
+  },
+  {
+    path: 'form-user',
+    loadChildren: () => import('./form-user/form-user.module').then( m => m.FormUserPageModule)
+  },
+  {
+    path: 'list-select-bluetooth-device',
+    loadChildren: () => import('./list-select-bluetooth-device/list-select-bluetooth-device.module').then( m => m.ListSelectBluetoothDevicePageModule)
+  },
+  {
+    path: 'form-impresora',
+    loadChildren: () => import('./form-impresora/form-impresora.module').then( m => m.FormImpresoraPageModule)
+  },
+  {
+    path: 'dashboard-reservas',
+    loadChildren: () => import('./dashboard-reservas/dashboard-reservas.module').then( m => m.DashboardReservasPageModule)
+  },
+  {
+    path: 'list-reservas',
+    loadChildren: () => import('./list-reservas/list-reservas.module').then( m => m.ListReservasPageModule)
+  },
+  {
+    path: 'form-card-payment',
+    loadChildren: () => import('./form-card-payment/form-card-payment.module').then( m => m.FormCardPaymentPageModule)
+  },
+  {
+    path: 'form-config-mercadopago',
+    loadChildren: () => import('./form-config-mercadopago/form-config-mercadopago.module').then( m => m.FormConfigMercadopagoPageModule)
+  },
+  {
+    path: 'form-subscripcion',
+    loadChildren: () => import('./form-subscripcion/form-subscripcion.module').then( m => m.FormSubscripcionPageModule)
+  },
+  {
+    path: 'form-importar-catalogo-csv',
+    loadChildren: () => import('./form-importar-catalogo-csv/form-importar-catalogo-csv.module').then( m => m.FormImportarCatalogoCsvPageModule)
+  },
+  {
+    path: 'form-personal-permisos',
+    loadChildren: () => import('./form-personal-permisos/form-personal-permisos.module').then( m => m.FormPersonalPermisosPageModule)
+  },
+  {
+    path: 'select-personal',
+    loadChildren: () => import('./select-personal/select-personal.module').then( m => m.SelectPersonalPageModule)
+  },
+  {
+    path: 'form-card-token',
+    loadChildren: () => import('./form-card-token/form-card-token.module').then( m => m.FormCardTokenPageModule)
+  },
+  {
+    path: 'a-con-resp-inscripto',
+    loadChildren: () => import('./impresiones/facturas/a-con-resp-inscripto/a-con-resp-inscripto.module').then( m => m.AConRespInscriptoPageModule)
+  },
+  {
+    path: 'a-con-resp-no-inscripto',
+    loadChildren: () => import('./impresiones/facturas/a-con-resp-no-inscripto/a-con-resp-no-inscripto.module').then( m => m.AConRespNoInscriptoPageModule)
+  },
+  {
+    path: 'b-con-consumidor-final',
+    loadChildren: () => import('./impresiones/facturas/b-con-consumidor-final/b-con-consumidor-final.module').then( m => m.BConConsumidorFinalPageModule)
+  },
+  {
+    path: 'c-con-consumidor-final',
+    loadChildren: () => import('./impresiones/facturas/c-con-consumidor-final/c-con-consumidor-final.module').then( m => m.CConConsumidorFinalPageModule)
+  },
+  {
+    path: 'ticket-factura',
+    loadChildren: () => import('./impresiones/facturas/ticket-factura/ticket-factura.module').then( m => m.TicketFacturaPageModule)
+  },
+  {
+    path: 'form-estado-reserva',
+    loadChildren: () => import('./form-estado-reserva/form-estado-reserva.module').then( m => m.FormEstadoReservaPageModule)
+  },
+  {
+    path: 'list-estados-reserva',
+    loadChildren: () => import('./list-estados-reserva/list-estados-reserva.module').then( m => m.ListEstadosReservaPageModule)
+  },
+  {
+    path: 'list-reservas-calendario',
+    loadChildren: () => import('./list-reservas-calendario/list-reservas-calendario.module').then( m => m.ListReservasCalendarioPageModule)
+  },
+  {
+    path: 'form-subdivision',
+    loadChildren: () => import('./form-subdivision/form-subdivision.module').then( m => m.FormSubdivisionPageModule)
+  },
+  {
+    path: 'form-division',
+    loadChildren: () => import('./form-division/form-division.module').then( m => m.FormDivisionPageModule)
+  },
+  {
+    path: 'select-division',
+    loadChildren: () => import('./select-division/select-division.module').then( m => m.SelectDivisionPageModule)
+  },
+  {
+    path: 'details-division',
+    loadChildren: () => import('./details-division/details-division.module').then( m => m.DetailsDivisionPageModule)
+    
+  },
+  {
+    path: 'details-cliente',
+    loadChildren: () => import('./details-cliente/details-cliente.module').then( m => m.DetailsClientePageModule)
+    
+  },
 ];
 
 @NgModule({

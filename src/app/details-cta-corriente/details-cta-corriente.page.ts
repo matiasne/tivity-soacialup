@@ -9,6 +9,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingService } from '../Services/loading.service';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { MovimientosService } from '../Services/movimientos.service';
+import { UsuariosService } from '../Services/usuarios.service';
 
 @Component({
   selector: 'app-details-cta-corriente',
@@ -36,9 +37,11 @@ export class DetailsCtaCorrientePage implements OnInit {
     private authenticationSerivce:AuthenticationService,
     private alertController:AlertController,
     private loadingService:LoadingService,
-    private movimientosService:MovimientosService
+    private movimientosService:MovimientosService,
+    public usuariosService:UsuariosService
   ) { 
-    this.ctaCorriente = new CtaCorriente(this.authenticationSerivce.getUID(), this.authenticationSerivce.getNombre());
+    this.ctaCorriente = new CtaCorriente();
+    this.ctaCorriente.setCreador(this.authenticationSerivce.getUser())
     this.fechaDesde.setDate(this.fechaDesde.getDate() - 1);
   }
 
@@ -65,10 +68,8 @@ export class DetailsCtaCorrientePage implements OnInit {
 
       this.clientes=[];
       this.ctaCorriente.coTitularesId.forEach(titularId => {
-        this.clienteSubs = this.clientesServices.get(titularId).subscribe(snap =>{
-          let client:any = snap.payload.data();
-          client.id = snap.payload.id;
-          this.clientes.push(client);
+        this.clienteSubs = this.clientesServices.get(titularId).subscribe(data =>{
+          this.clientes.push(data);
         })
       });
     })
@@ -79,13 +80,11 @@ export class DetailsCtaCorrientePage implements OnInit {
 
   refrescar(){
     this.loadingService.presentLoading();
-    this.movSubs = this.movimientosService.getMovimientosCtaCorriente(this.route.snapshot.params.id).subscribe(snapshot=>{
+    this.movSubs = this.movimientosService.getMovimientosCtaCorriente(this.route.snapshot.params.id).subscribe(data=>{
                 
       this.loadingService.dismissLoading();
       this.items =[];
-      snapshot.forEach((snap: any) => {           
-        var item = snap.payload.doc.data();
-        item.id = snap.payload.doc.id;  
+      data.forEach((item: any) => {
         if(item.monto < 0)       
           item.extraccion = "true";
         else
@@ -96,7 +95,7 @@ export class DetailsCtaCorrientePage implements OnInit {
         this.items.push(item);
         
       });    
-        
+        console.log(this.items)
     }); 
   }
 

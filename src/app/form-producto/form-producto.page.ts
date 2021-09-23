@@ -2,14 +2,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
-import { ActionSheetController, ModalController, AlertController, NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, AlertController, NavController, NavParams } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { Camera} from '@ionic-native/camera/ngx';
 import { CategoriasService } from '../Services/categorias.service';
 import { ProductosService } from '../Services/productos.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Producto } from '../models/producto';
+import { Item } from '../models/item';
 import { FormCategoriaPage } from '../form-categoria/form-categoria.page';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ToastService } from '../Services/toast.service';
@@ -58,7 +58,7 @@ export class FormProductoPage implements OnInit {
   public updating:boolean = false;
   public titulo = "Nuevo Producto";
 
-  public producto:Producto; 
+  public item:Item; 
   public croppedImageIcono ="";
 
   public imagenesNuevas = []
@@ -67,19 +67,16 @@ export class FormProductoPage implements OnInit {
 
   public flagWoocommerce = false
   public woocommerceSyncData:WoocommerceSyncData
+
+  private paramId = "";
   
   constructor(
     private formBuilder: FormBuilder,
-    private imagePicker: ImagePicker,
-    private camera: Camera,
-    private crop: Crop,
     public actionSheetController: ActionSheetController,
-    private file: File,
     public modalController: ModalController,
     public productosService:ProductosService,
     public categoriaService:CategoriasService,
     private barcodeScanner: BarcodeScanner,
-    private route: ActivatedRoute,
     public alertController: AlertController,
     private navCtrl: NavController, 
     private router:Router,
@@ -92,23 +89,24 @@ export class FormProductoPage implements OnInit {
     public comercioService:ComerciosService,
     public imageService:ImagesService,
     private modalCtrl:ModalController,
-    private loadingService:LoadingService
+    private navParams:NavParams
   ) { 
 
     this.comercio = new Comercio()
     this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue())
-    this.producto = new Producto();
+    this.item = new Item();
     this.woocommerceSyncData = new WoocommerceSyncData()  
 
     this.datosForm = this.formBuilder.group({
+      tipo:['1',Validators.required],
       nombre: ['', Validators.required],
       barcode:[''],
       destacado:[false],
       precio: ['', Validators.required],
       promocion:[''],
-      unidad: ['unidades',Validators.required],
+      unidad: ['unidades'],
       valorPor:[1],
-      stock: [1, Validators.required],
+      stock: [1],
       descripcion:[''],
       cocinaId:[''],
       categorias:[''],
@@ -116,6 +114,14 @@ export class FormProductoPage implements OnInit {
       createdAt:[''],
       recibirPedidos:[true]
     });
+
+    this.item.asignarValores(this.navParams.get('item'))
+    this.datosForm.patchValue(this.item);
+        
+
+   
+  //  
+
   }
 
   get f() { return this.datosForm.controls; }
@@ -125,53 +131,36 @@ export class FormProductoPage implements OnInit {
 
   async ionViewDidEnter(){
 
-    this.loadingService.dismissLoading()
-
-    if(this.route.snapshot.params.id){
+    if(this.item.id != ""){
       this.updating = true; 
 
-      this.productosService.get(this.route.snapshot.params.id).subscribe(producto=>{        
-        this.titulo = "Editar Producto";
-        this.datosForm.patchValue(producto);
-        this.producto.asignarValores(producto)
+      this.gruposOpciones = []; 
+      this.item.gruposOpcionesId.forEach(id =>{
+        let sub = this.gruposOpcionesService.get(id).subscribe(data=>{
+          this.gruposOpciones.push(data);
+          sub.unsubscribe()
+        })
+      })      
 
-        this.gruposOpciones = []; 
-        this.producto.gruposOpcionesId.forEach(id =>{
-          let sub = this.gruposOpcionesService.get(id).subscribe(data=>{
-            this.gruposOpciones.push(data);
-            sub.unsubscribe()
-          })
-        })      
-        this.changeRef.detectChanges()        
-      })    
-      
-      this.productosService.getWoocommerceValue(this.route.snapshot.params.id).subscribe(data=>{
+     
+      this.productosService.getWoocommerceValue(this.item.id).subscribe(data=>{
         this.woocommerceSyncData.asignarValores(data);
         console.log(data)
       })
+
+      this.changeRef.detectChanges() 
     } 
     else{
-      this.producto.id = this.firestore.createId();
+      this.item.id = this.firestore.createId();
     }
 
-    let comercio_seleccionadoId = localStorage.getItem('comercio_seleccionadoId');
-    this.categoriaService.getAll().subscribe((snapshot) => {     
-      this.categorias = [];
-      snapshot.forEach((snap: any) => {         
-          var item = snap.payload.doc.data();
-          item.id = snap.payload.doc.id;              
-          this.categorias.push(item);   
-      }); 
+    this.categoriaService.list().subscribe(data => {     
+      this.categorias = data;
     })
 
     this.cocinasService.list().subscribe((data) => {     
       this.cocinas = data;
-    /*  if(this.cocinas.length == 0 && this.comercio.config.cocinas){
-        this.presentAlertCrearCocinas();
-      }*/
-    })
-
-   
+    })  
 
   }
 
@@ -188,7 +177,7 @@ export class FormProductoPage implements OnInit {
   }
 
   async agregarFoto(blob){
-    return this.fotosService.uploadImagen(this.producto.id,blob)
+    return this.fotosService.uploadImagen(this.item.id,blob)
   }
 
   async eliminarFoto(index){
@@ -207,7 +196,7 @@ export class FormProductoPage implements OnInit {
           handler: () => {           
            
            
-           this.producto.imagenes.splice(index,1)      
+           this.item.imagenes.splice(index,1)      
           }
         }
       ]
@@ -307,18 +296,18 @@ export class FormProductoPage implements OnInit {
     }  
 
 
-    this.producto.gruposOpcionesId =[]
+    this.item.gruposOpcionesId =[]
     this.gruposOpciones.forEach(grupo =>{
-      this.producto.gruposOpcionesId.push(grupo.id);
+      this.item.gruposOpcionesId.push(grupo.id);
     })
 
-    this.producto.asignarValores(this.datosForm.value);
+    this.item.asignarValores(this.datosForm.value);
 
     var palabras = [this.datosForm.controls.nombre.value,this.datosForm.controls.descripcion.value];
 
-    if(this.producto.categorias){
-      if(this.producto.categorias.length > 0){
-        this.producto.categorias.forEach(element => {
+    if(this.item.categorias){
+      if(this.item.categorias.length > 0){
+        this.item.categorias.forEach(element => {
           palabras.push(element)
         });
       }
@@ -329,31 +318,30 @@ export class FormProductoPage implements OnInit {
       let blob = this.imageService.getBlob(this.imagenesNuevas[i].url)
       let file = await this.agregarFoto(blob)
       let json = JSON.parse(JSON.stringify(file))
-      this.producto.imagenes.push(json)     
+      this.item.imagenes.push(json)     
     }
 
-    if(this.comercio.config.woocommerce){
-      
+    if(this.comercio.config.woocommerce){      
       console.log(this.woocommerceSyncData)
       this.woocommerceSyncData.changeDate = new Date()
       let wSyncData = JSON.parse(JSON.stringify(this.woocommerceSyncData));
-      this.productosService.updateWoocommerceValues(this.producto.id,wSyncData);
+      this.productosService.updateWoocommerceValues(this.item.id,wSyncData);
     }
 
    
     if(this.updating){
-      this.productosService.update(this.producto).then((data:any)=>{
+      this.productosService.update(this.item).then((data:any)=>{
         
       })
      
     } 
     else{
-      this.productosService.set(this.producto.id,this.producto).then((data:any)=>{
+      this.productosService.set(this.item.id,this.item).then((data:any)=>{
       })
       
     }    
-
-    this.navCtrl.back();
+    this.modalCtrl.dismiss()
+    //this.navCtrl.back();
 
   }
 
@@ -373,7 +361,7 @@ export class FormProductoPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: FormStockPage,
       componentProps:{
-        producto:this.producto
+        item:this.item
       }
     });  
 
@@ -395,9 +383,8 @@ export class FormProductoPage implements OnInit {
 
 
  
-  cancelar(){
-   
-    this.navCtrl.back();
+  cerrar(){
+   this.modalCtrl.dismiss()
   }
 
   elimiar(){
@@ -417,9 +404,10 @@ export class FormProductoPage implements OnInit {
         }, {
           text: 'Eliminar',
           handler: () => {
-            this.productosService.delete(this.route.snapshot.params.id);
-            this.productosService.deleteWoocommerceValues(this.route.snapshot.params.id)
-            this.navCtrl.back();
+            this.productosService.delete(this.paramId);
+            this.productosService.deleteWoocommerceValues(this.paramId)
+            //this.navCtrl.back();
+            this.modalCtrl.dismiss();
           }
         }
       ]

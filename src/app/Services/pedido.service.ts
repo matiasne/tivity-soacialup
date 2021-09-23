@@ -18,6 +18,7 @@ export class PedidoService extends BaseService{
   public actualPedidoSubject = new BehaviorSubject<Pedido>(this.pedidoActual);
 
   public pedidoCalificando:Pedido = new Pedido();
+  public memoriaDias = 0;
 
   constructor(
     protected afs: AngularFirestore,
@@ -26,7 +27,7 @@ export class PedidoService extends BaseService{
       super(afs); 
       this.comerciosService.getSelectedCommerce().subscribe(data=>{
         if(data){
-          
+          this.memoriaDias = data.config.memoriaDias
           this.setPath('comercios/'+data.id+'/pedidos')   
          }        
       })
@@ -49,40 +50,81 @@ export class PedidoService extends BaseService{
         );          
   }     
 
+  listPedidos(){
+
+    let fechaDiasMemoria = new Date();
+    console.log(this.memoriaDias)
+    fechaDiasMemoria.setDate(fechaDiasMemoria.getDate() - Number(this.memoriaDias));
+
+    return this.afs.collection(this.path, ref => ref.where('createdAt', '>=', fechaDiasMemoria).orderBy('createdAt',"desc")).snapshotChanges()
+    .pipe(
+        map(changes => {
+            return changes.map(a => {   
+                const data:any = a.payload.doc.data();
+                data.id = a.payload.doc.id;
+                data.fromCache = a.payload.doc.metadata.fromCache;                     
+
+            /*    if(this.memoriaDias > 0){
+                //================= borra lo anterior a la fecha configurada de almacenamiento
+                  var batch = this.afs.firestore.batch();
+
+                  let fechaDiasMemoria = new Date();
+                  fechaDiasMemoria.setDate(fechaDiasMemoria.getDate() - Number(this.memoriaDias));
+
+                  let borrar = false;
+                  if(data.createdAt.toDate().getTime() < fechaDiasMemoria.getTime()){
+                    borrar = true
+                    var pedidoRef:any = this.getRef(data.id)
+                    batch.delete(pedidoRef)
+                    console.log("borrando pedido id: "+data.id)
+                  }
+
+                  if(borrar){
+                    batch.commit()
+                  }
+                }*/
+
+                return data;
+            });
+        })
+    );     
+  }
 
 
-  listFechaDesde(fechaFrom,fechaTo){
+
+  listFecha(fechaFrom,fechaTo){
+ 
     
-    console.log(fechaFrom); 
+  fechaTo.setDate(fechaTo.getDate() + 1);
 
-    console.log(fechaTo); 
-
-    return this.afs.collection(this.path, ref => ref.where('createdAt', '>=', fechaFrom).where('createdAt', '<=', fechaTo).orderBy('createdAt',"desc").limit(50)).snapshotChanges()
+    return this.afs.collection(this.path, ref => ref.where('createdAt', '>=', fechaFrom).orderBy('createdAt',"desc").limit(50)).snapshotChanges()
         .pipe(
             map(changes => {
+              console.log("listFechaDEsdeHasta")
                 return changes.map(a => {   
                     const data:any = a.payload.doc.data();
                     data.id = a.payload.doc.id;
-                    data.fromCache = a.payload.doc.metadata.fromCache;  
+                    data.fromCache = a.payload.doc.metadata.fromCache;                     
+
+                    
+                    
+
                     return data;
                 });
             })
         );     
   }
 
-  public listSolicitadosUltimosDosDias(){
 
-    let fechaHasta = new Date();
-    let fechaDesde = new Date()
-    fechaDesde.setDate(fechaDesde.getDate() - 2);
-    let date = new Date(fechaDesde) 
+  public listSolicitados(){
 
-    return this.afs.collection(this.path, ref => ref.where('createdAt', '>=', date).where('createdAt', '<=', fechaHasta).orderBy('createdAt',"desc").limit(50)).snapshotChanges()
+    return this.afs.collection(this.path).snapshotChanges()
         .pipe(
             map(changes => {
-                return changes.map((a:any) => {   
-                  if(a.statusCobro == 1){
-                    const data:any = a.payload.doc.data();
+                return changes.filter((a:any) => {                 
+                  
+                  const data:any = a.payload.doc.data();
+                  if(data.statusCobro == 1){
                     data.id = a.payload.doc.id;
                     data.fromCache = a.payload.doc.metadata.fromCache;  
                     return data;
@@ -97,7 +139,7 @@ export class PedidoService extends BaseService{
    
     let total = 0;
 
-    pedido.productos.forEach(prod =>{
+    pedido.items.forEach(prod =>{
       total += prod.precioTotal
     })    
 
@@ -140,6 +182,19 @@ export class PedidoService extends BaseService{
 
     total = total+totalMonto;
     return total;
+  }
+
+  async incrementarNumeroMensajes(id){
+
+    var docRef =  this.afs.firestore.collection(this.path).doc(id);
+    let doc = await  this.afs.firestore.runTransaction(t => t.get(docRef)); 
+    if (!doc.exists) {throw ("doc not found");}
+    
+    var countMensajes = doc.data().countMensajes + 1;
+    await doc.ref.update({ countMensajes: countMensajes });
+
+    return countMensajes;
+
   }
   
 

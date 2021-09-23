@@ -39,9 +39,6 @@ export class ComerciosService extends BaseService {
     return this.commerceSubject.value.id
   }
 
-  
-
-
   getByNombre(nombre){
     return this.afs.collection(this.path, ref =>  ref.where('nombre','==',nombre)).valueChanges();    
   }
@@ -51,21 +48,16 @@ export class ComerciosService extends BaseService {
     return this.afs.collection(this.path).doc(id).ref;
   }
 
+  updateComercio(data){
+    this.update(data)
+    this.commerceSubject.next(data)
+  }
 
 
-  public setSelectedCommerce(comercioId){    
-    localStorage.setItem('comercio_seleccionadoId',comercioId);
-    if(comercioId){        
-        this.get(comercioId).subscribe(data =>{     
-          this.commerceSubject.next(data);
-          this.comercio.asignarValores(data);
-        });
-    }
-    else{
-      this.commerceSubject.next(undefined);    
-    }
 
-    
+  public setSelectedCommerce(comercio){    
+    localStorage.setItem('comercio_seleccionadoId',comercio.id);
+    this.commerceSubject.next(comercio);    
   }
 
   public search(by,palabra,ultimo){      
@@ -88,8 +80,8 @@ export class ComerciosService extends BaseService {
   }  
 
   
-  getWoocommerceValue(id){
-    this.woocommerceSyncPath = this.path+'/'+id+'/woocommerceSincData'
+  getWoocommerceValue(){
+    this.woocommerceSyncPath = this.path+'/'+this.commerceSubject.value.id+'/woocommerceSincData'
     return this.afs.collection(this.woocommerceSyncPath).doc("1").get()
     .pipe(
         map(doc => {
@@ -104,17 +96,48 @@ export class ComerciosService extends BaseService {
     ); 
   }
 
-  updateWoocommerceValues(id,values){
-    this.woocommerceSyncPath = this.path+'/'+id+'/woocommerceSincData'
+  updateWoocommerceValues(values){
+    this.woocommerceSyncPath = this.path+'/'+this.commerceSubject.value.id+'/woocommerceSincData'
     return this.afs.collection(this.woocommerceSyncPath).doc("1").set(values)
   }
 
   
-  deleteWoocommerceValues(id){
-    this.woocommerceSyncPath = this.path+'/'+id+'/woocommerceSincData'
+  deleteWoocommerceValues(){
+    this.woocommerceSyncPath = this.path+'/'+this.commerceSubject.value.id+'/woocommerceSincData'
     this.afs.collection(this.woocommerceSyncPath).doc("1").delete().then(data=>{
       console.log("Actualizados los valores de woocommerce")
     })
+  }
+
+  async obtenerActualizarNumeroPedido(){
+/*
+    var docRef =  this.afs.firestore.collection("comercios").doc(this.commerceSubject.value.id);
+
+    let doc = await  this.afs.firestore.runTransaction(t => t.get(docRef));
+ 
+    if (!doc.exists) {throw ("doc not found");}
+
+    let fechaUltimo = new Date()
+    if(doc.data().ultimoPedidoFecha)
+      fechaUltimo = doc.data().ultimoPedidoFecha.toDate();    
+
+    
+    var countPedidoDia = Number(doc.data().countPedidoDia) + 1;
+
+    let fecha = new Date();
+    console.log(fecha.getDate()+" "+fechaUltimo.getDate())
+    if(fecha.getDate() > fechaUltimo.getDate()){
+      countPedidoDia = 0;
+    }
+
+    console.log(countPedidoDia)
+
+    await doc.ref.update({ countPedidoDia: countPedidoDia, ultimoPedidoFecha:fecha });
+
+    return countPedidoDia;*/
+
+    return 0;
+
   }
 
 }

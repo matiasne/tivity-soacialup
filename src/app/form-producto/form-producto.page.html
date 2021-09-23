@@ -1,16 +1,25 @@
 <ion-header>
   <ion-toolbar> 
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{titulo}} <p class="header-subtitulo">{{producto.nombre}}</p></ion-title>    
+    <ion-button fill="clear" (click)="cerrar()" color="primary" slot="end">
+      <ion-icon  name="close-outline"></ion-icon>
+    </ion-button>   
+    <ion-title  size="small">{{titulo}} <p class="header-subtitulo">{{item.nombre}}</p></ion-title>    
   </ion-toolbar>
 </ion-header>
 
-<ion-content  class="ion-padding">
-
-  
+<ion-content  class="ion-padding">  
   <form [formGroup]="datosForm">
+    <div class="form-card">
+      <ion-item>
+        <ion-label color="primary" position="floating">Tipo</ion-label>
+        <ion-select formControlName="tipo">
+          <ion-select-option [value]="1" selected>Producto</ion-select-option>
+          <ion-select-option [value]="2">Servicio</ion-select-option>
+        </ion-select>
+      </ion-item> 
+    </div>
+    
+
     <div class="form-card">        
       <ion-item [class.invalid]="submitted && !datosForm.controls.nombre.valid">
         <ion-label position="floating">Nombre *</ion-label>
@@ -32,7 +41,7 @@
     </div>
 
     <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide *ngFor="let imagen of producto.imagenes;let i=index" (click)="verImagen(i,imagen)">
+      <ion-slide *ngFor="let imagen of item.imagenes;let i=index" (click)="verImagen(i,imagen)">
         <ion-card>
           <img src="{{imagen.url}}"/>
           <!--ion-card-content>
@@ -64,20 +73,18 @@
           
   
     <div class="form-card" *ngIf="comercio.config.stock">
-      <p>Stock actual: {{producto.stock}}</p>
+      <p>Stock actual: {{item.stock}}</p>
       <ion-button size="large" color="light"  expand="block" (click)="agregarStock()">Agregar Stock</ion-button>
     </div>  
     
     
     
-    <div class="form-card">
-      
-      
+    <div class="form-card">     
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item [class.invalid]="submitted && !datosForm.controls.precio.valid">
-              <ion-label color="primary" position="floating">Precio *</ion-label>
+              <ion-label color="primary" position="floating">Precio (Iva incluido) *</ion-label>
               <ion-input name="precio" type="number" formControlName="precio" required></ion-input>              
             </ion-item>
             <div *ngIf="submitted && f.precio.errors" class="invalid-feedback">
@@ -225,6 +232,6 @@
   <ion-toolbar> 
     <ion-button class="button-rounded" slot="end" color="success" (click)="guardar()">Guardar</ion-button>
     
-    <ion-button class="button-rounded" slot="start"  color="light" (click)="cancelar()">Cancelar</ion-button>
+    <ion-button class="button-rounded" slot="start"  color="light" (click)="cerrar()">Cancelar</ion-button>
   </ion-toolbar>
 </ion-footer>

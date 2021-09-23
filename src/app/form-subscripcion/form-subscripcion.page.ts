@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { ListClientesPage } from '../list-clientes/list-clientes.page';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ListServiciosPage } from '../list-servicios/list-servicios.page';
-import { SubscripcionesService } from '../Services/subscripciones.service';
-import { AuthenticationService } from '../Services/authentication.service';
-import { AddServicioSubscripcionPage } from '../add-servicio-subscripcion/add-servicio-subscripcion.page';
-import { ToastService } from '../Services/toast.service';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { ChatPage } from '../chat/chat.page';
+import { FormClientePage } from '../form-cliente/form-cliente.page';
+import { Comercio } from '../models/comercio';
+import { Descuento } from '../models/descuento';
+import { ItemPedido } from '../models/itemPedido';
+import { Recargo } from '../models/recargo';
+import { Rol } from '../models/rol';
 import { Subscripcion } from '../models/subscripcion';
-import { ClientesService } from '../Services/clientes.service';
-import { PlanesService } from '../Services/planes.service';
-import { Servicio } from '../models/servicio';
-import { ServiciosService } from '../Services/servicios.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
-
+import { SelectPersonalPage } from '../select-personal/select-personal.page';
+import { SelectProductPage } from '../select-product/select-product.page';
+import { AuthenticationService } from '../Services/authentication.service';
+import { ComerciosService } from '../Services/comercios.service';
+import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
+import { ReservasService } from '../Services/reservas.service';
+import { SubscripcionesService } from '../Services/subscripciones.service';
 
 @Component({
   selector: 'app-form-subscripcion',
@@ -23,176 +24,222 @@ import { SelectClientePage } from '../select-cliente/select-cliente.page';
 })
 export class FormSubscripcionPage implements OnInit {
 
-  public datosForm: FormGroup;
-  
-  public cliente;
-  public servicio;
-  public planes;
-
-  submitted = false;
-  subs:any;
-  titulo ="Nueva Subscripción";
-  updating =false;
+  public subscripcion:Subscripcion;
+  public comercio:Comercio;
+  public personal:Rol;
 
   constructor(
-    private formBuilder: FormBuilder,
-    public modalController: ModalController,
-    public router:Router,
-    public subscripcionService:SubscripcionesService,
-    private clientesService:ClientesService,
-    private servicioService:ServiciosService,
     public authService:AuthenticationService,
-    private toastServices:ToastService,
-    private route: ActivatedRoute,
-  ) { 
-
-    this.datosForm = this.formBuilder.group({
-      plan: ['', Validators.required],
-      pagoAdelantado :['', Validators.required],
-      descipcion :[''],
-      clienteRef:['', Validators.required],
-      servicioRef:['', Validators.required],
-      vendedorRef:['',Validators.required],
-      vendedor_nombre:[''],
-      createdAt:[''],
-      fechaInicio:['']
-    });
-
-   
-
-    if(this.route.snapshot.params.id){
-      
-      this.updating = true;
-      this.titulo = "Editar Subscripción";
-      this.subs = this.subscripcionService.get(this.route.snapshot.params.id).subscribe(data=>{
-        this.datosForm.patchValue(data.payload.data())
-        
-       
-      });
-    }
-    else{
-      
-    }
-
-  }
+    public modalController:ModalController,
+    private navParamService:NavegacionParametrosService,
+    private alertController:AlertController,
+    private navParams:NavParams,
+    private subscripcionesService:SubscripcionesService,
+    private comercioService:ComerciosService
+  ) {
+    this.comercio = new Comercio()
+    this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue());
+    this.subscripcion = new Subscripcion()
+   }
 
   ngOnInit() {
 
+    if(this.navParamService.param instanceof Subscripcion){   //si es un solo pedido 
+      console.log("!!!!")
+      this.subscripcion.asignarValores(this.navParamService.param);
+    }  
+    
+    
+    console.log(this.subscripcion)
+
   }
+
+  
+  async agregarItem(){
+
+    const modal = await this.modalController.create({
+      component: SelectProductPage,     
+      cssClass:'modal-custom-wrapper' 
+    });
+    modal.onDidDismiss()
+    .then((retorno) => {
+      if(retorno.data){
+
+        if(retorno.data instanceof  ItemPedido){
+          const p = JSON.parse(JSON.stringify(retorno.data));
+          this.subscripcion.items.push(p); 
+        }
+
+        if(retorno.data instanceof  Descuento){
+          const p = JSON.parse(JSON.stringify(retorno.data));
+          this.subscripcion.descuentos.push(p); 
+        }
+
+        if(retorno.data instanceof  Recargo){
+          const p = JSON.parse(JSON.stringify(retorno.data));
+          this.subscripcion.recargos.push(p); 
+        }
+
+      }
+         
+    });
+    return await modal.present(); 
+
+  }
+
+  
+  eliminarDescuento(i){
+    this.subscripcion.descuentos.splice(i,1);
+  }
+
+  eliminarRecargo(i){
+    this.subscripcion.recargos.splice(i,1);
+  }
+
+  eliminarCliente(){
+    this.subscripcion.clienteId ="";
+    this.subscripcion.clienteEmail ="";
+    this.subscripcion.clienteNombre ="";
+  }
+
+  async eliminarItem(p,i){
+
+    const alert = await this.alertController.create({
+      header: 'Está seguro que desea eliminar el producto'+p.nombre+'?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Eliminar',
+          handler: () => {           
+            this.subscripcion.items.splice(i,1);
+          }
+        }
+      ]
+    });
+    await alert.present();
+
+    
+  }
+
 
   async seleccionarCliente(){
     const modal = await this.modalController.create({
-      component: SelectClientePage      
+      component: SelectClientePage,
+      cssClass:'modal-custom-wrapper'      
     });
-    modal.onDidDismiss()
-    .then((retorno) => {
-      if(retorno.data)
-        this.cliente = retorno.data.item        
-    });
-    return await modal.present();
-  }
-
-  async seleccionarServicio(){
-    const modal = await this.modalController.create({
-      component: ListServiciosPage      
-    });
-    modal.onDidDismiss()
-    .then((retorno) => {
-      if(retorno.data){
-        console.log(retorno.data);
-        if(retorno.data){
-          this.agregarServicio(retorno.data.item);        
-        }        
-      }    
-    });
-    return await modal.present();
-  }
-
-  async agregarServicio(servicio){
     
-    const modal = await this.modalController.create({
-      component: AddServicioSubscripcionPage,
-      componentProps: { servicio: servicio }
-    });
+    modal.present().then(()=>{
+    
+
+    })
+
     modal.onDidDismiss()
     .then((retorno) => {
       if(retorno.data){
-        this.servicio = retorno.data.item;        
+        if(retorno.data == "nuevo"){
+          this.abrirNuevoCliente();
+        }
+        if(retorno.data != "nuevo"){
+          let cliente = retorno.data.item;
+          this.subscripcion.clienteEmail = cliente.email
+          this.subscripcion.clienteId = cliente.id;
+          this.subscripcion.clienteNombre = cliente.nombre
+        }   
       }
+           
     });
     return await modal.present();
+  }
+
+  async abrirNuevoCliente(){
+    const modal = await this.modalController.create({
+      component: FormClientePage,     
+      cssClass:'modal-custom-wrapper' 
+    });    
+    modal.present().then(()=>{
     
 
+    })
+
+    modal.onDidDismiss()
+    .then((retorno) => {
+      if(retorno.data){       
+        let cliente = retorno.data.item;
+        this.subscripcion.clienteEmail = cliente.email
+        this.subscripcion.clienteId = cliente.id;
+        this.subscripcion.clienteNombre = cliente.nombre
+      }           
+    });
+    return await modal.present();
   }
 
-
-  eliminarCliente(){
-    this.cliente = "";
+  async seleccionarPersonal(){
+    const modal = await this.modalController.create({
+      component: SelectPersonalPage,
+      cssClass:'modal-custom-wrapper'      
+    });    
+    modal.onDidDismiss()
+    .then((retorno) => {
+      if(retorno.data){
+        let cliente = retorno.data.item;
+        this.subscripcion.personalEmail = cliente.userEmail
+        this.subscripcion.personalId = cliente.id;        
+      }           
+    });
+    return await modal.present();
   }
 
-  eliminarServicio(){
-    this.servicio = "";
+  eliminarPersonal(){
+    this.personal = new Rol();
+    this.subscripcion.personalId = "";
+    this.subscripcion.personalNombre ="";
+    this.subscripcion.personalEmail ="";
+  }
+  
+  async chat(){
+    const modal = await this.modalController.create({
+      component: ChatPage,     
+      cssClass:'modal-custom-wrapper',
+      componentProps:{
+        id:this.subscripcion.id,
+        objeto:"reservas"
+      }      
+    });
+    return await modal.present(); 
   }
 
-  get f() { return this.datosForm.controls; }
+  async eliminar(){
+    const alert = await this.alertController.create({
+      header: 'Está seguro que desea eliminar la subscripción?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Eliminar',
+          handler: () => {           
+            this.subscripcionesService.delete(this.subscripcion.id).then(data=>{
+              this.modalController.dismiss()
+            })
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   guardar(){
+    this.modalController.dismiss(this.subscripcion)
+  }
 
-    this.submitted = true;
-
-    var vendedorId = this.authService.getUID();
-    console.log(vendedorId)
-    this.datosForm.patchValue({
-      vendedorRef: this.authService.getRef(vendedorId)
-    });
-
-    this.datosForm.patchValue({
-      servicioRef: this.servicioService.getRef(this.servicio.id)
-    });
-
-    this.datosForm.patchValue({
-      clienteRef: this.clientesService.getRef(this.cliente.id)
-    });
-
-    this.datosForm.patchValue({
-      planRef: this.clientesService.getRef(this.servicio.plan.id)
-    });
-
-    this.datosForm.patchValue({
-      pagoAdelantado: this.servicio.pagoAdelantado
-    });
-
-    this.datosForm.patchValue({
-      descipcion_venta: this.servicio.descripcion_venta
-    });
-
-    this.datosForm.patchValue({
-      fechaInicio: this.servicio.fechaInicio
-    });
-
-   
-
-   
-
-    var vendedor_nombre = this.authService.getNombre();
-    console.log(vendedorId)
-    this.datosForm.patchValue({
-      vendedor_nombre: vendedor_nombre
-    });
-
-
-    console.log(this.datosForm.value);
-
-    if (this.datosForm.invalid) {
-      this.toastServices.alert('Por favor completar todos los campos marcados con * antes de continuar',"");
-      return;
-    } 
-
-    this.subscripcionService.add(this.datosForm.value).then(data=>{
-      console.log(data);
-    });
-
-    
+  cerrar(){
+    this.modalController.dismiss();
   }
 
 }

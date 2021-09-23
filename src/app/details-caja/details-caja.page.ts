@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComerciosService } from '../Services/comercios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CajasService } from '../Services/cajas.service';
 import { VentasService } from '../Services/ventas.service';
 import { LoadingService } from '../Services/loading.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Caja } from '../models/caja';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import { MovimientosService } from '../Services/movimientos.service';
 import { Comercio } from '../models/comercio';
+import { PedidoService } from '../Services/pedido.service';
+import { Pedido } from '../models/pedido';
+import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
+import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-details-caja',
@@ -46,27 +51,26 @@ export class DetailsCajaPage implements OnInit {
     public alertController:AlertController,
     private movimientosService:MovimientosService,
     private route:ActivatedRoute,
-    private comercioService:ComerciosService
+    private comercioService:ComerciosService,
+    private pedidosService:PedidoService,
+    public navParametrosService:NavegacionParametrosService,
+    private modalController:ModalController,
+    public changeRef:ChangeDetectorRef,
   ) { 
     this.comercio = new Comercio()
-    this.caja = new Caja();
+    this.caja = new Caja()
     this.caja.id = this.route.snapshot.params.id;
     this.fechaDesde.setDate(this.fechaDesde.getDate() - 1);
 
     this.comercio = this.comercioService.getSelectedCommerceValue()
-    if(this.comercio.config.movimientosCajas){
-      this.movimientosService.setearPath(this.caja.id)
-      this.movimientosService.getMovimientosCaja(this.caja.id,this.fechaDesde).subscribe(snapshot =>{
-      
-        this.items = [];
-        snapshot.forEach((snap: any) => {  
-          var mov = snap.payload.doc.data();
-          mov.id = snap.payload.doc.id;            
-          this.items.push(mov);  
-        });    
-        console.log(this.items)     
-      }); 
-    }
+    
+    this.movimientosService.setearPath(this.caja.id)
+    this.movimientosService.getMovimientosCaja(this.caja.id,this.fechaDesde).subscribe(data =>{
+    
+      this.items = data;
+      console.log(this.items)     
+    }); 
+    
 
   }
 
@@ -81,16 +85,17 @@ export class DetailsCajaPage implements OnInit {
 
   refrescar(){
     
-    
+    this.cajasService.get(this.caja.id).subscribe(data=>{
+      this.caja.asignarValores(data);
+      console.log(data)
+      console.log("Cambiando valores de caja!")
+      this.changeRef.detectChanges()   
+    })
     
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter(){    
     
-    this.cajasService.get(this.caja.id).subscribe(data=>{
-      this.caja.asignarValores(data);
-      console.log("Cambiando valores de caja!")
-    })
     this.refrescar();        
           
   }
@@ -150,12 +155,38 @@ export class DetailsCajaPage implements OnInit {
 
             
             this.movimientosService.eliminarMovimientoCaja(this.caja,item);
-           
+            this.refrescar();
           }
         }
       ]
     });
     await alert.present();    
+  }
+
+  seleccionar(item){
+    if(item.pedidoId){
+      let obs = this.pedidosService.get(item.pedidoId).subscribe(async data=>{
+
+        let editarPedido = new Pedido();
+        editarPedido.asignarValores(data);
+        
+
+        const modal = await this.modalController.create({
+          component: DetailsPedidoPage,
+          componentProps:{
+            pedido:editarPedido
+          },
+          id:'detail-pedido'      
+        });
+        modal.onDidDismiss()
+        .then((retorno) => {
+          this.refrescar()
+        })
+
+        
+        await modal.present();  
+      })
+    }
   }
 
 

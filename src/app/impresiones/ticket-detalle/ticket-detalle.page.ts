@@ -32,8 +32,9 @@ export class TicketDetallePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pedido = new Pedido()
    this.comercio = this.comercioService.getSelectedCommerceValue()
-   this.pedido = this.navParams.get('pedido');
+   this.pedido.asignarValores(this.navParams.get('pedido'))
   }
 
   ionViewDidEnter(){
@@ -79,12 +80,12 @@ export class TicketDetallePage implements OnInit {
     let largoDeLinea = 38
     let text = this.comercio.nombre+"\n"
     text += "Gracias por tu visita!\n"
-    if(this.pedido.mesaId){        
+    if(this.pedido.divisionNombre){        
       text += "\n"
-      text += "Mesa: "+ this.pedido.mesaNombre; //text to print        
+      text += "Mesa: "+ this.pedido.divisionNombre; //text to print        
     }
 
-    this.pedido.productos.forEach(producto => {       
+    this.pedido.items.forEach(producto => {       
       if(producto.suspendido == 0){
         let cantidad = producto.cantidad+"x";
         let nombre = producto.nombre;

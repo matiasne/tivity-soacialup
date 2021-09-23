@@ -1,27 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Comercio } from 'src/app/models/comercio';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
 import { ComerciosService } from 'src/app/Services/comercios.service';
 import { PedidoService } from 'src/app/Services/pedido.service';
-import { EnumEstadoCocina } from 'src/app/models/pedido';
+import { EnumEstadoCocina } from 'src/app/models/item';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormComentarioPage } from 'src/app/form-comentario/form-comentario.page';
 import { ComentariosService } from 'src/app/Services/comentarios.service';
-import { Producto } from 'src/app/models/producto';
 
 @Component({
   selector: 'app-card-comanda-v2',
   templateUrl: './card-comanda-v2.component.html',
   styleUrls: ['./card-comanda-v2.component.scss'],
 })
-export class CardComandaV2Component implements OnInit {
+export class CardComandaV2Component implements OnInit, OnDestroy {
 
   @Input() public pedido:any;
+  @Input() public cocinasFiltro:any;
   @Input() showAvatar = true;
+
+  @Output() ver = new EventEmitter<any>();
+
   public comercio:Comercio; 
   public pEstado = EnumEstadoCocina;
   public cEstado = EnumEstadoCobro;
-  
+
+  public submit = false;
+
+  public vencimiento:any 
+  public minutosRestantes = 0;
+  public interval:any
+  public restantesPorcentaje = 100;
+
   constructor(
     private comercioService:ComerciosService,
     private pedidosService:PedidoService,
@@ -30,17 +40,71 @@ export class CardComandaV2Component implements OnInit {
     private alertController:AlertController
   ) { 
     this.comercio = new Comercio();
-    this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue());
+    this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue());   
+    this.submit = false;
+    
+    
+   
+  }
 
+  open(){
+    this.ver.emit();
+  }
+
+  setVencimiento(){ 
+    if (this.pedido.fechaTomado){
+      this.vencimiento = this.pedido.fechaTomado.toDate()
+      if(this.pedido.comanda){
+        if(this.pedido.comanda.demora > 0){
+          this.vencimiento.setMinutes(this.pedido.fechaTomado.toDate().getMinutes() + this.pedido.comanda.demora);
+  
+          let fechaHoy = new Date()
+          this.minutosRestantes = Math.round((this.vencimiento.getTime() - fechaHoy.getTime()) / (1000 * 60))
+  
+          if(this.minutosRestantes < 0){
+            this.minutosRestantes = 0;
+          }
+          
+          this.restantesPorcentaje = (this.minutosRestantes/this.pedido.comanda.demora)*100        
+          console.log(this.minutosRestantes+" %"+this.restantesPorcentaje)
+          if(this.minutosRestantes > 0){
+            this.interval = setInterval(()=>{
+              
+                
+                let fechaHoy = new Date()
+                this.minutosRestantes = Math.round((this.vencimiento.getTime() - fechaHoy.getTime()) / (1000 * 60))
+                
+                
+                
+  
+                this.restantesPorcentaje = (this.minutosRestantes/this.pedido.comanda.demora)*100
+  
+                console.log(this.minutosRestantes+" %"+this.restantesPorcentaje)
+              
+            },60000)
+          }
+        }
+      }
+    }
+    
+    
+    
+  }
+
+  ngOnDestroy(){
+    console.log("destroy comanda")
+    clearInterval(this.interval);
   }
 
   ngOnInit() {
-    console.log(this.pedido)
-
-    this.pedido.productos.sort(function(a, b) {
+    
+    if(this.pedido.comanda)
+      this.minutosRestantes = this.pedido.comanda.demora
+    this.pedido.items.sort(function(a, b) {
       return Number(a.cocinaId) - Number(b.cocinaId);
     });
-
+    this.submit = false;
+    this.setVencimiento()
   }
 
   async rechazar(){
@@ -55,42 +119,22 @@ export class CardComandaV2Component implements OnInit {
       });
       modal.onDidDismiss()
       .then((retorno) => {
-        if(retorno.data)
-         
-            this.pedido.statusComanda = EnumEstadoCocina.rechazado;
-            console.log(this.pedido.statusComanda)
-            this.pedidosService.update(this.pedido).then(data=>{
-              console.log("El pedido ha sido rechazado");
-            })
+        if(retorno.data)        
+
+            this.setearProductosDeCocina(EnumEstadoCocina.rechazado)
                   
       }); 
       return await modal.present();   
   } 
 
   tomar(){
-    this.pedido.statusComanda = EnumEstadoCocina.tomado;
-    console.log(this.pedido.statusComanda)
-    this.pedidosService.update(this.pedido).then(data=>{
-      console.log("El pedido ha sido rechazado");
-    })
+    
+    this.setearProductosDeCocina(EnumEstadoCocina.tomado)
+    this.open()
   }
 
-  productoListo(producto){
-    producto.estadoComanda = "Listo";
-    let todosListos = true;
-    this.pedido.productos.forEach(element => {
-      if(element.estadoComanda != "Listo"){
-        todosListos = false;
-      }
-    });  
-
-    if(todosListos){
-      this.pedido.statusComanda = EnumEstadoCocina.completo;      
-    }
-    
-    this.pedidosService.update(this.pedido).then(data=>{
-      console.log("El pedido esta listo");
-    })
+  listo(){
+    this.setearProductosDeCocina(EnumEstadoCocina.completo)
   }
 
  
@@ -106,11 +150,9 @@ export class CardComandaV2Component implements OnInit {
           }
         }, {
           text: 'Si',
-          handler: () => {           
-            this.pedido.statusComanda = EnumEstadoCocina.solicitado;
-            this.pedidosService.update(this.pedido).then(data=>{
-              console.log("El pedido ha sido suspendido");
-            })              
+          handler: () => { 
+                    
+            this.setearProductosDeCocina(EnumEstadoCocina.solicitado)            
           }
         }
       ]
@@ -131,13 +173,7 @@ export class CardComandaV2Component implements OnInit {
         }, {
           text: 'Si',
           handler: () => {           
-            this.pedido.statusComanda = EnumEstadoCocina.tomado;
-            this.pedido.productos.forEach(element => {
-              element.estadoComanda = "Pendiente"
-            });
-            this.pedidosService.update(this.pedido).then(data=>{
-              console.log("El pedido ha sido rechazado");
-            })              
+            this.setearProductosDeCocina(EnumEstadoCocina.tomado)          
           }
         }
       ]
@@ -146,9 +182,14 @@ export class CardComandaV2Component implements OnInit {
   }
 
   finalizar(){
-    this.pedido.statusComanda = EnumEstadoCocina.finalizado;
+    this.setearProductosDeCocina(EnumEstadoCocina.finalizado)
+  }
+
+  setearProductosDeCocina(estado){
+    this.submit = true;  
+    this.pedido.comanda.estado = estado;
     this.pedidosService.update(this.pedido).then(data=>{
-      console.log("El pedido ha finalizado");
+      console.log("Pedido Actualizado");
     }) 
   }
 

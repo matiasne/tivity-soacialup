@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from '../authentication.service';
-import { Producto } from 'src/app/models/producto';
+import { Item } from 'src/app/models/item';
 import { Descuento, EnumTipoDescuento } from 'src/app/models/descuento';
 import { EnumTipoRecargo, Recargo } from 'src/app/models/recargo';
 import { PedidoService } from '../pedido.service';
 import { Pedido } from 'src/app/models/pedido';
-import { Mesa } from 'src/app/models/mesa';
 import { Cliente } from 'src/app/models/cliente';
 import { ModalNotificacionService } from '../modal-notificacion.service';
 import { ComentariosService } from '../comentarios.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Comentario } from 'src/app/models/comentario';
-import { ImpresoraService } from '../impresora.service';
+import { ImpresoraService } from '../impresora/impresora.service';
+import { ComerciosService } from '../comercios.service';
+import { ItemPedido } from 'src/app/models/itemPedido';
+import { Division, Subdivision } from 'src/app/models/subdivision';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +22,7 @@ import { ImpresoraService } from '../impresora.service';
 export class CarritoService {
 
   public carrito:Pedido;
-
-  public comentario = "";
-  
+  public comentario = "";  
   public actualCarritoSubject = new BehaviorSubject<any>("");
 
   constructor(
@@ -31,25 +31,27 @@ export class CarritoService {
     private modalNotificacion:ModalNotificacionService,
     private comentariosService:ComentariosService,
     private firestore: AngularFirestore,
-    private impresoraService:ImpresoraService,
+    private comerciosService:ComerciosService,
   ) { 
     this.carrito = new Pedido();
     this.actualCarritoSubject.next(this.carrito);
   }
 
-  public getActualCarritoSubs(){
+  public getActualCarritoSubs(){ 
     return this.actualCarritoSubject.asObservable();
   }
 
-  public agregarProducto(producto:Producto){         
-    producto.enCarrito += producto.cantidad;
-    const p = JSON.parse(JSON.stringify(producto));
+  public agregarItem(item:Item){
+    let itemCarrito = new ItemPedido()
+    itemCarrito.asignarValores(item)         
+    item.enCarrito += itemCarrito.cantidad;
+    const p = JSON.parse(JSON.stringify(item));
 
     p.gruposOpciones =[];
-    this.carrito.productos.push(p);
+    this.carrito.items.push(p);
     this.carrito.on = true;    
 
-    this.modalNotificacion.success("Agregado",producto.cantidad+' '+producto.unidad+' de '+producto.nombre)
+    //this.modalNotificacion.success("Agregado",itemCarrito.cantidad+' '+itemCarrito.unidad+' de '+itemCarrito.nombre)
     this.actualCarritoSubject.next(this.carrito);    
   }
 
@@ -84,8 +86,8 @@ export class CarritoService {
   }
 
   public eliminarProducto(index){
-    this.carrito.productos.splice(index,1);
-    if(this.carrito.productos.length > 0 || this.carrito.servicios.length > 0)
+    this.carrito.items.splice(index,1);
+    if(this.carrito.items.length > 0)
       this.carrito.on = true;    
     else{
       this.carrito.on = false;
@@ -95,19 +97,19 @@ export class CarritoService {
 
 
   setearCliente(cliente:Cliente){
-    this.carrito.cliente = cliente;
     this.carrito.clienteId = cliente.id
     this.carrito.clienteNombre = cliente.nombre
     this.carrito.clienteEmail = cliente.email
+    this.carrito.clienteDocTipo = cliente.documentoTipo
+    this.carrito.clienteDoc = cliente.documento
+    this.carrito.clientePersonaJuridica = cliente.personaJuridica
 
-    console.log(this.carrito.cliente)
     this.carrito.on = true;    
     this.actualCarritoSubject.next(this.carrito); 
   }
 
-  setearMesa(mesa:Mesa){
-    this.carrito.mesaId = mesa.id;
-    this.carrito.mesaNombre = mesa.nombre
+  setearDivision(division:Division){
+    this.carrito.divisionNombre = division.nombre
     this.actualCarritoSubject.next(this.carrito);
   }
 
@@ -119,6 +121,7 @@ export class CarritoService {
 
   vaciar(){ 
       this.carrito = new Pedido()
+      this.carrito.setCreador(this.authenticationService.getUser())
       this.carrito.on = false;    
       this.actualCarritoSubject.next(this.carrito);       
   }
@@ -127,19 +130,23 @@ export class CarritoService {
     return this.pedidosService.getTotal(this.carrito)
   }
 
-  crearPedido(){
-    this.carrito.id = this.firestore.createId();
-    this.carrito.personalId = this.authenticationService.getUID();
-    this.carrito.personalEmail = this.authenticationService.getEmail();
-    this.carrito.personalNombre = this.authenticationService.getNombre();
+  async crearPedido(){
+
+    let c:any = new Pedido()  //NO borrar!!! importante para cuando está en modo offline!!!
+    c.setCreador(this.authenticationService.getUser())
+    Object.assign(c, this.carrito);
+    this.vaciar(); 
+
+    this.modalNotificacion.success("Cargado","El pedido ha sido cargado a la lista.")
+    c.id = this.firestore.createId();
+    c.comanda.numero = await this.comerciosService.obtenerActualizarNumeroPedido()
+    c.total = this.getTotal()
+
+    c.primerMensaje = this.comentario
     
-    
-    this.impresoraService.impresionComanda(this.carrito)
-    
-    
-    
+
     if(this.comentario != ""){ 
-      this.comentariosService.setearPath("pedidos",this.carrito.id);      
+      this.comentariosService.setearPath("pedidos",c.id);      
       let comentario = new Comentario();
       comentario.text =this.comentario;
       comentario.senderId=this.authenticationService.getUID();
@@ -147,18 +154,22 @@ export class CarritoService {
       this.comentariosService.add(comentario).then(data=>{
         console.log("comentario agregado")
       })
-    }  
+      this.comentario = "";
+    }   
 
-    let c:any = new Pedido()  //NO borrar!!! importante para cuando está en modo offline!!!
-    Object.assign(c, this.carrito);
-    this.vaciar();  
+     
 
     c.direccion = JSON.parse(JSON.stringify(c.direccion));
     
+    console.log(c)
 
-    this.pedidosService.add(c).then((data:any)=>{       
-      console.log("!!!!!!"+data.fromCache)      
+    this.pedidosService.set(c.id,c).then((data:any)=>{       
+      console.log("!!!!!!"+data.fromCache)   
     });  
-    this.modalNotificacion.success("Cargado","El pedido ha sido cargado a la lista.")
+    
+  }
+
+  obtenerNumeroPedido(){
+    
   }
 }

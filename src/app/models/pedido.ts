@@ -1,21 +1,10 @@
-import { Producto } from './producto';
-import { Comercio } from './comercio';
-import { Servicio } from './servicio';
-import { MovimientoCtaCorriente } from './movimientoCtaCorriente';
-import { Pagare } from './pagare';
+
 import { Descuento } from './descuento';
 import { Recargo } from './recargo';
 import { Localizacion } from './localizacion';
-
-
-export enum EnumEstadoCocina {
-    rechazado = 1, 
-    solicitado = 2, 
-    tomado = 3,  
-    completo = 4,
-    finalizado = 5, 
-    suspendido = 6
-}
+import { ItemPedido } from './itemPedido';
+import { User } from './user';
+import { Cliente } from './cliente';
 
 export enum EnumEstadoCobro {
     pendiente = 1, 
@@ -28,49 +17,113 @@ export class Pedido{
 
     public id="";
 
-    public statusComanda = EnumEstadoCocina.solicitado;
     public statusCobro = EnumEstadoCobro.pendiente;    
+
+    public comanda ={ 
+        estado:2,
+        demora:0,
+        numero:0,
+    }
+
+    public creadorId = "";
+    public creadorEmail="";
+    public creadorNombre="";
+
 
     public personalId = "";
     public personalEmail="";
     public personalNombre="";
 
-    public cliente:any
     public clienteId="";
 	public clienteEmail="";
 	public clienteNombre="";
-    
-    public mesaId = "";
-    public mesaNombre = "";
+    public clienteDocTipo="";
+    public clienteDoc="";
+    public clientePersonaJuridica ="";
+    public clienteDireccion="";
+    public divisionNombre = "";
   
-    public on=false;
+    public on = false;
  
     public descuentos:Descuento[] =[];
     public recargos:Recargo[]=[];
-    public productos:Producto[] = [];
-    public servicios:Servicio[] = [];
+    public items:ItemPedido[] = [];
 	 
     public cantidadComentarios = 0;
-    
-
     public createdAt:any
 
     public countListos = 0
 
-    public metodoPago = "";
+    public metodoPago = [];
+    public metodoDevolucion = []
     public reembolso ="";
     public cajaUtilizada ="";
 
+    public montoPagoEfectivo =  0;
+    public montoPagoDebito = 0;
+    public montoPagoCredito = 0;
+    public montoPagoCtaCorriente = 0;
+    public montoPagoMercadoPago = 0;
+
     public direccion:Localizacion;
-    public total = 0
+    public total = 0;
+    public entregaEfectivo=0;
+    
+
+    public primerMensaje ="";
+    public countMensajes = 0;
+
+    public fechaTomado:any;
+
+    public afipFactura = {
+        emisor:{
+            razonSocial:"",
+            tipoDoc:"",
+            nroDoc:"",
+            personaJuridica:"",
+            ptoVenta:"",
+            fechaInicioActividades:"",
+            ingresosBrutos:"",
+        },       
+            receptor:{
+            nombre:"",
+            tipoDoc:"",
+            numDuc:"",
+            direccion:"",
+            personaJuridica:""
+        },       
+        ptoVenta:"",
+        CbteLetra:"",
+        CbteTipo:"",
+        CAE:"",
+        CAEFchVto:"",
+        voucherNumber:"",      
+        ingresosBrutos:"",  
+        fechaEmision:""      
+    }
     
 	constructor(){
         this.direccion = new Localizacion();
+    }
 
+    public setCreador(usuario:User){
+        this.creadorId = usuario.uid;
+        this.creadorEmail = usuario.email;
+        this.creadorNombre = usuario.displayName;
     }
 
     public asignarValores(init?: Partial<Pedido>) {
         Object.assign(this, init);
+    }
+
+    public asignarCliente(cliente:Cliente) {
+        this.clienteEmail = cliente.email
+        this.clienteId = cliente.id;
+        this.clienteNombre = cliente.nombre
+        this.clienteDocTipo = cliente.documentoTipo
+        this.clienteDoc = cliente.documento
+        this.clientePersonaJuridica = cliente.personaJuridica
+        this.clienteDireccion = JSON.parse(JSON.stringify(cliente.direccion))
     }
 
     

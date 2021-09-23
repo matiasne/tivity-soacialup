@@ -1,36 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <div class="container-producto">       
-      <app-card-producto
-      [item]="producto"
-      [multiplicador]="producto.cantidad"
-      ></app-card-producto>        
-    </div>  
+  <ion-toolbar>    
+    <ion-button fill="clear" (click)="cerrar()" color="primary" slot="end">
+      <ion-icon  name="close-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content  class="ion-padding">     
-
-  <ion-item class="form-card item-producto-cantidad" lines="none">
+  <div class="container-producto">       
+    <app-card-item-pedido
+    [item]="itemPedido"
+    [multiplicador]="itemPedido.cantidad"
+    ></app-card-item-pedido>        
+  </div>  
+  <ion-item class="item-producto-cantidad" lines="none">
     <ion-button class="button-block" slot="start" (click)="restarCantidad()"><ion-icon name="remove"></ion-icon></ion-button>
     <b>
-      <span *ngIf="producto.valorPor && (producto.valorPor * producto.cantidad)==1 && producto.unidad == 'unidades'">
-        {{producto.valorPor * producto.cantidad}} unidad 
+      <span *ngIf="itemPedido.valorPor && (itemPedido.valorPor * itemPedido.cantidad)==1 && itemPedido.unidad == 'unidades'">
+        {{itemPedido.valorPor * itemPedido.cantidad}} unidad 
       </span>
 
-      <span *ngIf="producto.valorPor && (producto.valorPor * producto.cantidad)==1 && producto.unidad != 'unidades'">
-        {{producto.valorPor * producto.cantidad}}  {{producto.unidad}}
+      <span *ngIf="itemPedido.valorPor && (itemPedido.valorPor * itemPedido.cantidad)==1 && itemPedido.unidad != 'unidades'">
+        {{itemPedido.valorPor * itemPedido.cantidad}}  {{itemPedido.unidad}}
       </span>
 
-      <span *ngIf="producto.valorPor && (producto.valorPor * producto.cantidad)!=1">
-        <span *ngIf="producto.valorPor">
-          {{producto.valorPor * producto.cantidad}}
+      <span *ngIf="itemPedido.valorPor && (itemPedido.valorPor * itemPedido.cantidad)!=1">
+        <span *ngIf="itemPedido.valorPor">
+          {{itemPedido.valorPor * itemPedido.cantidad}}
         </span>
-        <span *ngIf="producto.unidad">
-          {{producto.unidad}}
+        <span *ngIf="itemPedido.unidad">
+          {{itemPedido.unidad}}
         </span> 
       </span>  
     </b> 
@@ -85,23 +84,13 @@
       <h4>Descripcion adicional</h4>
     </ion-text> 
     
-    <ion-textarea [(ngModel)]="producto.descripcion_venta"></ion-textarea>
+    <ion-textarea [(ngModel)]="itemPedido.descripcion_venta"></ion-textarea>
  
   </div>  
-
-  
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-
-    <ion-fab-button (click)="editarProducto()">
-      <ion-icon name="create"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
 </ion-content>
 <ion-footer class="ion-no-border ion-padding">
   <ion-toolbar>  
     <ion-button class="button-rounded" slot="end" (click)="agregar()">Agregar</ion-button>  
-    <ion-button class="button-rounded" slot="start"  color="light" (click)="cancelar()">Cancelar</ion-button>
   </ion-toolbar>
 </ion-footer> 

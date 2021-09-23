@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { Impresora } from '../models/impresora';
-import { AuthenticationService } from '../Services/authentication.service';
-import { CocinasService } from '../Services/cocinas.service';
-import { ImpresoraService } from '../Services/impresora.service';
+import { ModalController, NavController } from '@ionic/angular';
+import { FormImpresoraPage } from '../form-impresora/form-impresora.page';
+import { ListSelectBluetoothDevicePage } from '../list-select-bluetooth-device/list-select-bluetooth-device.page';
+import { BluettothDevice } from '../models/bluetooth-device';
+import { BluettothImpresora } from '../models/bluetooth-impresora';
+import { Comercio } from '../models/comercio';
+import { ComerciosService } from '../Services/comercios.service';
+import { ImpresoraService } from '../Services/impresora/impresora.service';
 
 @Component({
   selector: 'app-form-impresora-config',
@@ -12,49 +15,93 @@ import { ImpresoraService } from '../Services/impresora.service';
 })
 export class FormImpresoraConfigPage implements OnInit {
 
+  public impresora:BluettothImpresora
+  public impresoraUSB:any
+  public impresionBandeja = false; 
   public cocinas = [];
-  public impresora:Impresora
-  public conexionActual = false;
 
   constructor(
-    private cocinasService:CocinasService,
+    private modalCtrl:ModalController,
     private impresoraService:ImpresoraService,
-    private authService:AuthenticationService,
-    private navCtrl:NavController
+    private comercioService:ComerciosService
   ) { 
-    this.impresora = new Impresora()
-    this.impresoraService.obsEstadoImpresora().subscribe(data=>{
-      this.conexionActual = data.conectada;
-    })        
-  }
-
-  ngOnInit() {
-    this.cocinasService.list().subscribe((data) => {     
-      this.cocinas = data; 
-      this.impresora = this.impresoraService.obtenerImpresora();
-      console.log(this.impresora)
-    })
-  }
-
-  guardar(){
-
-    if(this.impresora.escposBluetooth && this.impresora.mac == ""){
-      alert("Ingrese un valor de MAC ADDRESS");
-      return;
-    }
-
-    this.impresoraService.guardarImpresora(this.impresora);
+    this.impresora = new BluettothImpresora()   
+    this.impresora = this.impresoraService.getImpresoraBT()
+    this.impresionBandeja = this.impresoraService.getImpresoraBandeja()
+    console.log(this.impresora)
     
   }
 
+  ngOnInit() {
+    
+  }
 
-  atras(){
-    this.navCtrl.back()
+  async seleccionar(printer){
+    const modal = await this.modalCtrl.create({
+      component: FormImpresoraPage,
+      componentProps:{dispositivo:printer}
+    });
+    modal.onDidDismiss()
+    .then((retorno) => {
+      if(retorno.data){
+        this.impresora.asignarValores(retorno.data)
+        this.impresoraService.guardarImpresoraBT(retorno.data);
+      }
+               
+    });
+    return await modal.present();
+  }
+
+  async agregarImpresora(){
+    const modal = await this.modalCtrl.create({
+      component: ListSelectBluetoothDevicePage,
+      id:'list-impresoras'
+    });
+    modal.onDidDismiss()
+    .then(async (retorno) => {
+      if(retorno.data){   
+        
+          const modal = await this.modalCtrl.create({
+            component: FormImpresoraPage,
+            componentProps:{dispositivo:retorno.data}
+          });
+          modal.onDidDismiss()
+          .then((retorno) => {
+            this.impresora.asignarValores(retorno.data)
+            this.impresoraService.guardarImpresoraBT(retorno.data);
+          });
+          return await modal.present();             
+        }             
+    });
+    return await modal.present();
+  }
+
+  async agregarImpresoraUSB(){
+    await this.impresoraService.seleccionarDispositivoUSB()
+    this.impresoraUSB = this.impresoraService.dispositivoUSBConectado;
+  }
+
+  eliminarImpresoraUSB(){
+    this.impresoraService.desvincularUSB();
+    this.impresoraUSB =undefined;
   }
 
 
-  probar(){
-    this.impresoraService.impresionPrueba(this.authService.getEmail());
+
+
+  
+  conectar(){
+    this.impresoraService.impresionPrueba("usuario prueba")
   }
+
+  updateBandeja(){    
+    this.impresoraService.setImpresoraBandeja(this.impresionBandeja)
+  }
+
+  eliminar(){
+    this.impresora = new BluettothImpresora()   
+    this.impresoraService.eliminarImpresoraBT()
+  }
+
 
 }

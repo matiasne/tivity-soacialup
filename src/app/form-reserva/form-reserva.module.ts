@@ -7,10 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { FormReservaPageRoutingModule } from './form-reserva-routing.module';
 
 import { FormReservaPage } from './form-reserva.page';
+import { ComponentsModule } from '../Components/components.module';
+import { DirectivesModule } from '../Directives/directives.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
+    DirectivesModule,
     FormsModule,
     IonicModule,
     FormReservaPageRoutingModule

@@ -10,7 +10,7 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 })
 export class BaseService {
     
-    private collection: AngularFirestoreCollection;
+    public collection: AngularFirestoreCollection;
 
     private orderBy = {
         campo:"",
@@ -114,9 +114,7 @@ export class BaseService {
 
         let time = new Date();
         const promise = new Promise((resolve, reject) => {
-            this.collection.add({...item, createdAt: time}).then((ref:any) => {
-                
-               
+            this.collection.add({...item, createdAt: time}).then((ref:any) => {           
                 
                 const newItem = {
                     id: ref.id,
@@ -150,7 +148,26 @@ export class BaseService {
             });
         });
         return promise;
-    } 
+    }
+    
+    setMerge(id,item) {  
+        //    delete item.id;  
+            console.log('[BaseService] adding item'+this.path+'/'+id);
+            console.log(item);
+    
+            let time = new Date();
+            const promise = new Promise((resolve, reject) => {
+                this.collection.doc(id).set({...item, updatedAt: time},{merge:true}).then(ref => {
+                    const newItem = {
+                        id: item.id,
+                        /* workaround until spread works with generic types */
+                        ...(item as any)
+                    };
+                    resolve(newItem);
+                }); 
+            });
+            return promise;
+        }
     
     
     
@@ -173,8 +190,9 @@ export class BaseService {
     }
 
     public updateValues(id,data){
+        let time = new Date();
         const promise = new Promise((resolve, reject) => {
-            return this.collection.doc(id).update(data).then((resp) => {
+            return this.collection.doc(id).update({...data, updatedAt:time}).then((resp) => {
                 resolve({
                     ...(resp as any)
                 });
