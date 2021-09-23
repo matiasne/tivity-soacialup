@@ -1,0 +1,10 @@
+{
+  "name": "tivity",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "b39b909d"
+}
+
