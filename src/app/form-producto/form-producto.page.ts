@@ -295,19 +295,24 @@ export class FormProductoPage implements OnInit {
       return; 
     }  
 
+    console.log(this.item)
 
-    this.item.gruposOpcionesId =[]
+    let itemGuardar = new Item();
+    itemGuardar.asignarValores(this.item);
+    itemGuardar.asignarValores(this.datosForm.value);
+
+    itemGuardar.gruposOpcionesId =[]
     this.gruposOpciones.forEach(grupo =>{
-      this.item.gruposOpcionesId.push(grupo.id);
+      itemGuardar.gruposOpcionesId.push(grupo.id);
     })
 
-    this.item.asignarValores(this.datosForm.value);
+    
 
     var palabras = [this.datosForm.controls.nombre.value,this.datosForm.controls.descripcion.value];
 
-    if(this.item.categorias){
-      if(this.item.categorias.length > 0){
-        this.item.categorias.forEach(element => {
+    if(itemGuardar.categorias){
+      if(itemGuardar.categorias.length > 0){
+        itemGuardar.categorias.forEach(element => {
           palabras.push(element)
         });
       }
@@ -318,25 +323,25 @@ export class FormProductoPage implements OnInit {
       let blob = this.imageService.getBlob(this.imagenesNuevas[i].url)
       let file = await this.agregarFoto(blob)
       let json = JSON.parse(JSON.stringify(file))
-      this.item.imagenes.push(json)     
+      itemGuardar.imagenes.push(json)     
     }
 
     if(this.comercio.config.woocommerce){      
       console.log(this.woocommerceSyncData)
       this.woocommerceSyncData.changeDate = new Date()
       let wSyncData = JSON.parse(JSON.stringify(this.woocommerceSyncData));
-      this.productosService.updateWoocommerceValues(this.item.id,wSyncData);
+      this.productosService.updateWoocommerceValues(itemGuardar.id,wSyncData);
     }
 
    
     if(this.updating){
-      this.productosService.update(this.item).then((data:any)=>{
+      this.productosService.update(itemGuardar).then((data:any)=>{
         
       })
      
     } 
     else{
-      this.productosService.set(this.item.id,this.item).then((data:any)=>{
+      this.productosService.set(itemGuardar.id,itemGuardar).then((data:any)=>{
       })
       
     }    

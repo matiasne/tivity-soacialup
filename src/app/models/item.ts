@@ -36,7 +36,7 @@ export class Item {
     public promocion=0;
   //  public precioTotal = 0;
     public destacado = false;
-    public unidad="";
+    public unidad="unidades";
     public valorPor = 0;
     public stock = 0;
     public descripcion="";

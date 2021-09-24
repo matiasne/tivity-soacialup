@@ -38,7 +38,7 @@ export class Comercio {
         cocinas:true,
         reservas:true,
         personal:true,
-        subdivisiones:true,
+        subdivisiones:false,
         clientes:true,
         woocommerce:true,
         movimientosCajas:true,
