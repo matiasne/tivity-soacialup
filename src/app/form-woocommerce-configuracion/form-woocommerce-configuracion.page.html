@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding ion-text-center">
 
   <!--div class="form-card" *ngIf="!wordpressToken">   
     
@@ -47,6 +47,8 @@
     </ion-item>
 
     <ion-button class="button-rounded" color="primary" (click)="test()">Probar Conexión</ion-button>
+
+    <ion-button *ngIf="isOk" class="button-rounded" color="success" (click)="sincronizar()">Sincronizar</ion-button>
    
     <!--ion-grid>
       <ion-row>

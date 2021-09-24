@@ -73,7 +73,7 @@
                 </div>
       
                 <ion-virtual-scroll [items]="itemsProductos">
-                <ion-col size="12" size-xs="12" size-sm="6" size-md="4" size-lg="3" *virtualItem="let producto">           
+                <ion-col size="12" size-xs="12" size-sm="6" size-md="6" size-lg="6" *virtualItem="let producto">           
       
                   <ion-item-sliding  [ngClass]="{'en-carrito': producto.enCarrito}" (ionDrag)="onDrag($event,producto)"> 
                     <app-card-item 

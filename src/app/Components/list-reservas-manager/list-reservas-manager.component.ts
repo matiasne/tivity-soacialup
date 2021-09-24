@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { CalendarModal, CalendarModalOptions } from 'ion2-calendar';
 import { Comercio } from 'src/app/models/comercio';
 import { ComerciosService } from 'src/app/Services/comercios.service';
+import { ToastService } from 'src/app/Services/toast.service';
 import { FormReservaPage } from '../../form-reserva/form-reserva.page';
 import { Reserva } from '../../models/reserva';
 import { Subscripcion } from '../../models/subscripcion';
@@ -79,6 +80,7 @@ export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
     private navParametrosService:NavegacionParametrosService,
     private router:Router,
     private comercioService:ComerciosService,
+    private toastService:ToastService
   ) { }  
 
   ngAfterViewInit() {
@@ -122,14 +124,23 @@ export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
   
   handleDateClick(arg) {
     console.log(arg)
-    
+  
     if(arg.view.type == 'dayGridMonth'){
+      console.log(arg.date.getTime())
+      console.log((new Date()).getTime())
+      
       this.calendarApi.changeView('timeGridDay');
       this.calendarApi.gotoDate(arg.date)
     }
     
-    if(arg.view.type == 'timeGridDay')
-      this.nuevaReserva(arg.date)  
+    if(arg.view.type == 'timeGridDay'){
+      if(arg.date.getTime() < (new Date()).getTime()){
+        this.toastService.alert("Solo se permite reservas a fechas futuras","")
+        return 
+      }
+      this.nuevaReserva(arg.date) 
+    }
+       
   }
 
 

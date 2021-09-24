@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Comercio } from 'src/app/models/comercio';
 import { Item } from 'src/app/models/item';
 import { WCProduct } from 'src/app/models/woocommerce/product';
 import { WoocommerceSyncData } from 'src/app/models/woocommerceSyncData';
@@ -37,7 +38,8 @@ export class WoocommerceService {
     private fotosService:FotoService,
     private categoriasService:CategoriasService
   ) {    
-    
+    this.comercio = new Comercio()
+    this.comercio.asignarValores(this.comerciosService.getSelectedCommerceValue())
   }
 
   setPart(part:string){
@@ -66,7 +68,7 @@ export class WoocommerceService {
      };     
      
      let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-     console.log(woocommerce)
+     
     this.apiUrl = woocommerce.url+this.woocommercePart+"system_status?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
     return this.http.get(this.apiUrl,options); 
   }
@@ -85,14 +87,14 @@ export class WoocommerceService {
      };     
      console.log("test")
     let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-    console.log(woocommerce)
+    
     this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
     return this.http.get(this.apiUrl,options).toPromise(); 
   }
 
   async getOne(id){
     let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-    console.log(woocommerce)
+    
     this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"/"+id+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
 
     let httpHeaders = new HttpHeaders({
@@ -105,12 +107,12 @@ export class WoocommerceService {
     let options = {
       headers: httpHeaders
     };  
-    return this.http.get(this.apiUrl,options).toPromise(); 
+    return await this.http.get(this.apiUrl,options).toPromise(); 
   }
 
   async postOne(data){    
     let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-    console.log(woocommerce)
+    
     this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
 
     let httpHeaders = new HttpHeaders({
@@ -124,12 +126,12 @@ export class WoocommerceService {
       headers: httpHeaders
     };     
 
-    return this.http.post(this.apiUrl,data,options); 
+    return await this.http.post(this.apiUrl,data,options).toPromise(); 
   }
 
   async updateOne(id, data){
     let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-    console.log(woocommerce)
+    
     this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"/"+id+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
 
     let httpHeaders = new HttpHeaders({
@@ -142,7 +144,7 @@ export class WoocommerceService {
      let options = {
        headers: httpHeaders
      };     
-    return this.http.put(this.apiUrl,data,options); 
+    return await this.http.put(this.apiUrl,data,options).toPromise(); 
   }
 
   async deleteOne(id){
@@ -159,10 +161,10 @@ export class WoocommerceService {
      };     
 
      let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-     console.log(woocommerce)
+     
     this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"/"+id+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
 
-    return this.http.delete(this.apiUrl,options); 
+    return await this.http.delete(this.apiUrl,options).toPromise(); 
   }
 
   async updateStock(item:Item){
@@ -172,7 +174,7 @@ export class WoocommerceService {
         stock: item.stock
       }  
       let woocommerce:any =  await this.comerciosService.getWoocommerceValue().toPromise()
-      console.log(woocommerce)
+      
       this.apiUrl = woocommerce.url+this.woocommercePart+this.tipoItem+"/"+item.id+"?consumer_key="+woocommerce.consumerKey+"&consumer_secret="+woocommerce.consumerSecret
 
       let httpHeaders = new HttpHeaders({
@@ -187,8 +189,6 @@ export class WoocommerceService {
   }
 
   convertWCtoFirebase(productoWC){
-
-
     let prod = new Item()
     prod.nombre = productoWC.name
     prod.precio = productoWC.regular_price
@@ -196,17 +196,23 @@ export class WoocommerceService {
     prod.promocion = productoWC.price
     prod.barcode = productoWC.sku
 
-    prod.updatedAt = new Date()
+    prod.updatedAt = new Date(productoWC.date_modified)
     
+    prod.woocommerce ={
+      id:productoWC.id,
+      lastUpdate:new Date(),
+      sincronizado:true
+    } 
+
     if(productoWC.manage_stock)
       prod.stock = productoWC.stock_quantity   
     
+    //Tarea pendiente guardar la imagen en firestorage  
+
     return prod;
   }
 
-  async convertFirebasetoWC(item:Item){
-
-   
+  async convertFirebasetoWC(item:Item){  
 
     let wcProducto = new WCProduct();   
     wcProducto.name = item.nombre;
@@ -214,7 +220,7 @@ export class WoocommerceService {
     wcProducto.description = item.descripcion;
     wcProducto.price = item.promocion.toString();
     wcProducto.sku = item.barcode;   
-    
+
     if(this.comercio.config.stock)
       wcProducto.manage_stock = true;
     else
@@ -235,9 +241,7 @@ export class WoocommerceService {
       }
       else{
           console.log("Categoria no sincronizada con woocommerce!!!");
-      }
-      
-        
+      }        
     }
 
     for(const img of item.imagenes){
@@ -249,29 +253,19 @@ export class WoocommerceService {
 
 
   
-  async crearProductoInWC(p:Item){  
-   
+  async crearProductoInWC(p:Item){   
     
       let producto = new Item()
       producto.asignarValores(p) //esto para que cargue las variables a los productos viejos aunque sea vacias
       console.log("creando en wc el producto id:"+producto.id)
       let wcProducto = await this.convertFirebasetoWC(producto);   
       
-      wcProducto["meta_data"] = [{
-
-      }]
-      
-
-      console.log("creando")
-      this.incrementarEnvio();
-
-      
+       
 
       try{
         const data = JSON.parse(JSON.stringify(wcProducto));
         let resp:any = await this.postOne(data)
-        this.incrementarRespuesta();
-
+        console.log(resp)
         p.woocommerce ={
           id:resp.id,
           lastUpdate:new Date(),
@@ -289,30 +283,26 @@ export class WoocommerceService {
 
   async actualizarProductoInWC(producto:Item){
     //busco el producto por id de woocommerce elimino todas las imágenes del mismo, elimino el producto. cargo el producto de nuevo
-    
-      this.incrementarEnvio();
-      
-     
       console.log("actualizando id:"+producto.woocommerce.id)
 
       try{
         await this.getOne(producto.woocommerce.id)
         let wcProducto = await this.convertFirebasetoWC(producto);
-        wcProducto.id = producto.woocommerce.id
-      
+        wcProducto.id = producto.woocommerce.id     
         
         try{
           await this.updateOne(wcProducto.id,wcProducto)
-          console.log("Porducto actualizado en woocommerce");
+          console.log("Producto actualizado en woocommerce");
           producto.woocommerce.lastUpdate = new Date();
 
+          this.productosServices.update(producto).then(data=>{
+            console.log("LastUpdate de Woocommerce guardado")
+          })
 
         }
         catch(err){
-          console.log(err)
-         
-        }
-      
+          console.log(err)         
+        }      
       }
       catch(err){
         console.log(err)
@@ -365,9 +355,7 @@ export class WoocommerceService {
     
               try{
                 console.log(prod.nombre)
-                let productos = await this.getOne(p.woocommerce.id)
-
-                
+                let productos = await this.getOne(p.woocommerce.id)               
 
                 prod.updatedAt = prod.updatedAt.toDate().setSeconds(prod.updatedAt.toDate().getSeconds());
                 p.woocommerce.lastUpdate = p.woocommerce.lastUpdate.toDate().setSeconds(p.woocommerce.lastUpdate.toDate().getSeconds() + 100);
@@ -416,17 +404,62 @@ export class WoocommerceService {
 
 
 
-  private incrementarEnvio(){
+  private incrementarEnvio(total){
     this.psend++;
-    let progreso = this.psend/this.total
+    let progreso = this.psend/total
     this.progresoSend.next(progreso);
   }
 
-  private incrementarRespuesta(){   
+  private incrementarRecivido(total){   
     this.preceived++;
-    let progreso = this.preceived/this.total
-    console.log(this.total+" "+this.preceived+" "+progreso+" "+this.progresoReceived.value)
+    let progreso = this.preceived/total
     this.progresoReceived.next(progreso);
+  }
+
+  public async merge(){
+    
+      let obs = this.productosServices.list().subscribe(async productos => {
+        obs.unsubscribe()
+        try{
+          let productosWooCommerce:any = await this.getAll()
+      
+          console.log(productos)
+          console.log(productosWooCommerce)
+          for(let i = 0; i < productos.length;i++){
+            let prod = new Item()
+            prod.asignarValores(productos[i])
+            if(productos[i].woocommerce.id == ""){ // no existe en woocommerce        
+              await this.crearProductoInWC(prod);      
+            }   
+            else{
+              await this.actualizarProductoInWC(prod);
+            }  
+            this.incrementarEnvio(productos.length);     
+          }
+      
+          for(let j = 0; j < productosWooCommerce.length;j++){
+            let productoFirebase = this.convertWCtoFirebase(productosWooCommerce[j])
+            if(productos.some(obj => obj.id === productoFirebase.id)){
+              console.log("Ya existe")
+            }
+            else{
+              this.productosServices.add(productoFirebase).then(data=>{
+                console.log("Producto Agregado")
+              })
+            }
+            this.incrementarRecivido(productosWooCommerce.length)
+      
+          } 
+        }catch(err){
+                    console.log(err)
+    
+        }
+
+      })
+
+      
+    
+
   }
 
 

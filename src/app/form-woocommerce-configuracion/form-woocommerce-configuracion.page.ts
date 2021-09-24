@@ -98,27 +98,6 @@ export class FormWoocommerceConfiguracionPage implements OnInit {
 
   async conectar(){
 
-  /*  try{
-      await this.wordpressService.login(this.woocommerceConnection.user,this.woocommerceConnection.password,this.woocommerceConnection.url)
-    }
-    catch(err){
-      console.log(err)
-      
-
-      if(err.status == 0){
-        this.toastService.alert("Error","No se puede conectar con la URL") 
-        
-      }
-      else{
-        this.toastService.alert("Error",err.error.message)
-      }
-
-      this.isOk = false;
-      this.comerciosService.updateWoocommerceValues(this.comercio.id,this.woocommerceConnection).then(data=>{
-        console.log("Update")
-      })
-     
-    }*/
     this.prueba = false;
     
     this.loadingService.presentLoadingText("Probando conexión...")
@@ -159,21 +138,21 @@ export class FormWoocommerceConfiguracionPage implements OnInit {
   }
  
 
- /* async sincronizar(){
+  async sincronizar(){
     this.actualizar = false;
     this.progresoReceived = 0;
     this.progresoSend = 0; 
     
-    await this.webhooksService.pause()
-    await this.webhooksService.sincronizar()
+  //  await this.webhooksService.pause()
+  //  await this.webhooksService.sincronizar()
 
-    let resp = await this.WCCategoriesService.syncFirebaseToWC()   
+  //  let resp = await this.WCCategoriesService.syncFirebaseToWC()   
    // console.log(resp)
-    resp = await this.woocommerceService.syncFirebaseToWC()  
+    await this.woocommerceService.merge()  
   //  console.log(resp)
-    await this.webhooksService.enable()
+  //  await this.webhooksService.enable()
     
-  }*/
+  }
 
 
   downloadData(){
