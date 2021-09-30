@@ -9,7 +9,7 @@ import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja
 import { EnumEstadoCobro } from '../models/pedido';
 import { Item } from '../models/item';
 import { WCOrder } from '../models/woocommerce/order';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { CajasService } from '../Services/cajas.service';
 import { ComerciosService } from '../Services/comercios.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';

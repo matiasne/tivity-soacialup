@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 import { Permisos, Rol } from '../models/rol';

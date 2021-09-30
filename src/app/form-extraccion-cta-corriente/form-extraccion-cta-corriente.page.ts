@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from '../models/cliente';
 import { ModalController, NavController } from '@ionic/angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { Subscription } from 'rxjs';
 import { CarritoService } from '../Services/global/carrito.service';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -14,6 +13,7 @@ import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja
 import { MovimientosService } from '../Services/movimientos.service';
 import { ToastService } from '../Services/toast.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
+import { Cliente } from '../Modules/clientes/cliente';
 
 @Component({
   selector: 'app-form-extraccion-cta-corriente',

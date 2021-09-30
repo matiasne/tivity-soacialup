@@ -6,7 +6,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormInvitacionPage } from '../form-invitacion/form-invitacion.page';
 import { User } from 'firebase';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 
 @Component({
   selector: 'app-list-empleados',

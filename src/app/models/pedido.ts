@@ -4,7 +4,7 @@ import { Recargo } from './recargo';
 import { Localizacion } from './localizacion';
 import { ItemPedido } from './itemPedido';
 import { User } from './user';
-import { Cliente } from './cliente';
+import { Cliente } from '../Modules/clientes/cliente';
 
 export enum EnumEstadoCobro {
     pendiente = 1, 

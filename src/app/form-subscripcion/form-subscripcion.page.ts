@@ -11,7 +11,7 @@ import { Subscripcion } from '../models/subscripcion';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
 import { SelectPersonalPage } from '../select-personal/select-personal.page';
 import { SelectProductPage } from '../select-product/select-product.page';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { ComerciosService } from '../Services/comercios.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { ReservasService } from '../Services/reservas.service';

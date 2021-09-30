@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { ComerciosService } from '../Services/comercios.service';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { Rol } from '../models/rol';
 import { RolesService } from '../Services/roles.service';
 import { AngularFirestore } from 'angularfire2/firestore';

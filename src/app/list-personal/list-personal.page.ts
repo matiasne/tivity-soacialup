@@ -6,7 +6,7 @@ import { AlertController, ModalController, NavController } from '@ionic/angular'
 import { Router } from '@angular/router';
 import { FormInvitacionPage } from '../form-invitacion/form-invitacion.page';
 import { User } from 'firebase';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { LoadingService } from '../Services/loading.service';
 import { FormPersonalPermisosPage } from '../form-personal-permisos/form-personal-permisos.page';
 

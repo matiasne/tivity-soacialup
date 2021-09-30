@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Comentario } from '../models/comentario';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { ComentariosService } from '../Services/comentarios.service';
 import { UsuariosService } from '../Services/usuarios.service';
 

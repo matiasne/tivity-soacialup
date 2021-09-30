@@ -9,7 +9,7 @@ import { LoadingService } from '../Services/loading.service';
 import * as firebase from 'firebase/app';
 import * as geofirex from 'geofirex';
 import { ToastService } from '../Services/toast.service';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { RolesService } from '../Services/roles.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { FotoService } from '../Services/fotos.service';

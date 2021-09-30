@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { FormProductoPage } from '../form-producto/form-producto.page';
+import { ProductosService } from '../Services/productos.service';
 
 @Component({
   selector: 'app-dashboard-productos',
@@ -13,7 +14,7 @@ export class DashboardProductosPage implements OnInit {
   constructor(
     public router:Router,
     public modalController: ModalController,
-    private navCtrl: NavController,
+    private productosServices: ProductosService,
   ) { }
 
   ngOnInit() {
@@ -30,6 +31,14 @@ export class DashboardProductosPage implements OnInit {
     let modal = await this.modalController.create({
       component: FormProductoPage
     });  
+
+    modal.onDidDismiss().then(response =>{
+      if(response.data){
+        this.productosServices.add(response.data).then(reps =>{
+          console.log("ok")
+        })
+      }
+    })
     return await modal.present();
   }
 }

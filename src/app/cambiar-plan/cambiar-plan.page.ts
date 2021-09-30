@@ -3,7 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { FormCardTokenPage } from '../form-card-token/form-card-token.page';
 import { ComerciosService } from '../Services/comercios.service';
 import { LoadingService } from '../Services/loading.service';
-import { MercadopagoService } from '../Services/mercadopago.service';
+import { MercadopagoService } from '../Modules/mercadopago/mercadopago.service';
 
 @Component({
   selector: 'app-cambiar-plan',

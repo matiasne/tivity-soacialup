@@ -4,15 +4,13 @@ import { NavController, ModalController, AlertController } from '@ionic/angular'
 import { Subscription } from 'rxjs';
 import { ComerciosService } from '../../Services/comercios.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingService } from '../../Services/loading.service';
 import { ToastService } from '../../Services/toast.service';
 import { SelectClientePage } from '../../select-cliente/select-cliente.page';
 import { FormClientePage } from '../../form-cliente/form-cliente.page';
 import { Mesa } from '../../models/mesa';
-import { Cliente } from '../../models/cliente';
 import { Comercio } from '../../models/comercio';
 import { Pedido } from '../../models/pedido';
-import { AuthenticationService } from '../../Services/authentication.service';
+import { AuthenticationService } from '../../Modules/authentication/authentication.service';
 import { EnumTipoDescuento } from '../../models/descuento';
 import { ModalNotificacionService } from '../../Services/modal-notificacion.service';
 import { ModalInputDireccionPage } from '../../modal-input-direccion/modal-input-direccion.page';
@@ -21,6 +19,7 @@ import { ImpresoraService } from '../../Services/impresora/impresora.service';
 import { SelectDivisionPage } from '../../select-division/select-division.page';
 import { Division, Subdivision } from '../../models/subdivision';
 import { FormCobrarPedidoPage } from '../../form-cobrar-pedido/form-cobrar-pedido.page';
+import { Cliente } from 'src/app/Modules/clientes/cliente';
 
 
 @Component({
@@ -44,7 +43,6 @@ export class CarritoComponent implements OnInit {
     private navCtrl: NavController,
     public modalController: ModalController,
     public comerciosService:ComerciosService,
-    private loadingService:LoadingService,
     private toastServices:ToastService,
     private impresoraService:ImpresoraService,
     
@@ -57,7 +55,6 @@ export class CarritoComponent implements OnInit {
     this.comercio = new Comercio();
     this.carrito = new Pedido(); 
 
-    this.loadingService.presentLoading()
 
     this.comerciosService.getSelectedCommerce().subscribe(data=>{
       this.comercio.asignarValores(data)
@@ -71,7 +68,6 @@ export class CarritoComponent implements OnInit {
     this.subsCarrio = this.carritoService.getActualCarritoSubs().subscribe(data=>{
       this.carrito = data;  
       
-      this.loadingService.dismissLoading()
     })    
   }  
 
@@ -151,7 +147,6 @@ export class CarritoComponent implements OnInit {
   
 
   async seleccionarCliente(){
-    this.loadingService.presentLoading();
     const modal = await this.modalController.create({
       component: SelectClientePage,
       cssClass:'modal-custom-wrapper',      
@@ -170,7 +165,7 @@ export class CarritoComponent implements OnInit {
         }
         if(retorno.data != "nuevo"){
           this.toastServices.mensaje("Cliente Agregado!","");
-          this.carritoService.setearCliente(retorno.data.item);
+          this.carritoService.setearCliente(retorno.data);
         }   
       }
            
@@ -189,7 +184,7 @@ export class CarritoComponent implements OnInit {
     modal.onDidDismiss()
     .then((retorno) => {
       if(retorno.data){    
-        this.carritoService.setearCliente(retorno.data.item);
+        this.carritoService.setearCliente(retorno.data);
       }           
     });
     return await modal.present();
@@ -226,8 +221,7 @@ export class CarritoComponent implements OnInit {
           text: 'Si',
           handler: () => {           
             this.carritoService.vaciar()   
-            this.modalNotificacion.trash("Vaciado","El carrito ahora se encuentra completamente vacío.")
-            this.atras()          
+            this.modalNotificacion.trash("Vaciado","El carrito ahora se encuentra completamente vacío.")      
           }
         }
       ]

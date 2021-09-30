@@ -13,8 +13,7 @@ declare var MercadoPago: any
   styleUrls: ['./form-card-token.page.scss'],
 })
 export class FormCardTokenPage implements OnInit {
-
-  
+ 
 
   public cardLogo = ""
 
@@ -67,126 +66,11 @@ export class FormCardTokenPage implements OnInit {
 
   ionViewDidEnter(){
     
-    this.amount = this.navParams.get('amount').toString()
-    
-    this.cardForm = this.mp.cardForm({
-      amount: this.amount,
-      autoMount: true,
-      processingMode: 'aggregator',
-      form: {
-          id: 'form-checkout',
-          cardholderName: {
-              id: 'form-checkout__cardholderName',
-              placeholder: 'Cardholder name',
-          },
-          cardholderEmail: {
-              id: 'form-checkout__cardholderEmail',
-              placeholder: 'Email',
-          },
-          cardNumber: {
-              id: 'form-checkout__cardNumber',
-              placeholder: 'Card number',
-          },
-           cardExpirationMonth: {
-              id: 'form-checkout__cardExpirationMonth',
-              placeholder: 'MM'
-          },
-          cardExpirationYear: {
-              id: 'form-checkout__cardExpirationYear',
-              placeholder: 'YYYY'
-          },
-          securityCode: {
-              id: 'form-checkout__securityCode',
-              placeholder: 'CVV',
-          },
-          installments: {
-              id: 'form-checkout__installments',
-              placeholder: 'Total installments'
-          },
-          identificationType: {
-              id: 'form-checkout__identificationType',
-              placeholder: 'Document type'
-          },
-          identificationNumber: {
-              id: 'form-checkout__identificationNumber',
-              placeholder: 'Document number'
-          },
-          issuer: {
-              id: 'form-checkout__issuer',
-              placeholder: 'Issuer'
-          }
-      },
-      callbacks: {
-         onFormMounted: error => {
-             if (error) return console.warn('Form Mounted handling error: ', error)
-             console.log('Form mounted')
-         },
-         onFormUnmounted: error => {
-             if (error) return console.warn('Form Unmounted handling error: ', error)
-             console.log('Form unmounted')
-         },
-         onIdentificationTypesReceived: (error, identificationTypes) => {
-             if (error) return console.warn('identificationTypes handling error: ', error)
-             console.log('Identification types available: ', identificationTypes)
-         },
-         onPaymentMethodsReceived: (error, paymentMethods) => {
-             if (error) return console.warn('paymentMethods handling error: ', error)
-             console.log('Payment Methods available: ', paymentMethods)
-         },
-         onIssuersReceived: (error, issuers) => {
-             if (error) return console.warn('issuers handling error: ', error)
-             console.log('Issuers available: ', issuers)
-             this.cardLogo = issuers[0].thumbnail
-         },
-         onInstallmentsReceived: (error, installments) => {
-             if (error) return console.warn('installments handling error: ', error)
-             console.log('Installments available: ', installments)
-         },
-         onCardTokenReceived: (error, data) => {
-           if (error) return this.ErrorResponseHandler(error)
-            console.log('Token available: ', data.token)
-            
-            if(this.amount == "0")
-              this.modalCtrl.dismiss(data,'','modal-mp')
-         },
-         onSubmit: (event) => { //PAra pagar con cuotas
-             event.preventDefault();
-             const cardData = this.cardForm.getCardFormData();
-             console.log(cardData)
-
-             const ret={ 
-              issuer:cardData.issuerId,
-              installments: cardData.installments,
-              transactionAmount: cardData.amount,
-              paymentMethodId:cardData.paymentMethodId,
-              token:cardData.token,
-              email:cardData.cardholderEmail,
-              identificationType:cardData.identificationType,
-              identificationNumber:cardData.identificationNumber
-            }
-            
-            console.log(ret)
-            
-            if(this.amount != "0")
-              this.modalCtrl.dismiss(ret,'','modal-mp')
-         },
-         onFetching:(resource) => {
-             console.log('Fetching resource: ', resource)
-
-             // Animate progress bar
-             const progressBar = document.querySelector('.progress-bar')
-             progressBar.removeAttribute('value')
-
-             return () => {
-                 progressBar.setAttribute('value', '0')
-             }
-         },
-     }
-  })
+   
   }
 
   async ngOnInit() {
-    this.amount = this.navParams.get('amount')
+    
     
     
     
@@ -197,42 +81,7 @@ export class FormCardTokenPage implements OnInit {
   }
 
   
-  async cobrar () {
-    this.cardForm.submit()
-   }
   
-
-async cargar () {
- this.cardForm.createCardToken()
-}
-
-cerrar(){
-  this.modalCtrl.dismiss()
-}
-
-ErrorResponseHandler = (response) => {
-  console.log(response)
-  this.loadingService.dismissLoading()
-  
-    if(response[0].code === "205"){
-      alert("Ingresa un número de tarjeta")
-    }
-    if(response[0].code === "E301"){
-      alert("Numero de tarjeta inválido")
-    }
-    if(response[0].code === "E302"){
-      alert("Código de seguridad inválido")        
-    }
-    if(response[0].code === "221"){
-      alert("Ingresa nombre de propietario de la tarjeta")
-      
-    }
-    return;
-  
-
-  
- 
-}
 
 
 }

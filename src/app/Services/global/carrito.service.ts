@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../../Modules/authentication/authentication.service';
 import { Item } from 'src/app/models/item';
 import { Descuento, EnumTipoDescuento } from 'src/app/models/descuento';
 import { EnumTipoRecargo, Recargo } from 'src/app/models/recargo';
 import { PedidoService } from '../pedido.service';
 import { Pedido } from 'src/app/models/pedido';
-import { Cliente } from 'src/app/models/cliente';
 import { ModalNotificacionService } from '../modal-notificacion.service';
 import { ComentariosService } from '../comentarios.service';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -15,6 +14,7 @@ import { ImpresoraService } from '../impresora/impresora.service';
 import { ComerciosService } from '../comercios.service';
 import { ItemPedido } from 'src/app/models/itemPedido';
 import { Division, Subdivision } from 'src/app/models/subdivision';
+import { Cliente } from 'src/app/Modules/clientes/cliente';
 
 @Injectable({
   providedIn: 'root'

@@ -32,7 +32,7 @@ import { ItemPedido } from '../models/itemPedido';
 import { UsuariosService } from '../Services/usuarios.service';
 import { SelectDivisionPage } from '../select-division/select-division.page';
 import { Division } from '../models/subdivision';
-import { Cliente } from '../models/cliente';
+import { Cliente } from '../Modules/clientes/cliente';
 
 @Component({
   selector: 'app-details-pedido',
@@ -190,7 +190,7 @@ export class DetailsPedidoPage implements OnInit {
           this.abrirNuevoCliente();
         }
         if(retorno.data != "nuevo"){
-          let cliente = retorno.data.item;
+          let cliente = retorno.data;
           this.pedido.asignarCliente(cliente)
           this.actualizarPedido()
         }   

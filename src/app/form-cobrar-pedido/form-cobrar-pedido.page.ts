@@ -11,9 +11,8 @@ import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { EnumEstadoCobro, Pedido } from '../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { AfipServiceService } from '../Services/afip/afip-service.service';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { CajasService } from '../Services/cajas.service';
-import { ClientesService } from '../Services/clientes.service';
 import { ComerciosService } from '../Services/comercios.service';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { CarritoService } from '../Services/global/carrito.service';
@@ -24,8 +23,7 @@ import { MovimientosService } from '../Services/movimientos.service';
 import { PedidoService } from '../Services/pedido.service';
 import { ProductosService } from '../Services/productos.service';
 import { ToastService } from '../Services/toast.service';
-import { FormCardPaymentPage } from '../form-card-payment/form-card-payment.page';
-import { MercadopagoService } from '../Services/mercadopago.service';
+import { MercadopagoService } from '../Modules/mercadopago/mercadopago.service';
 import { FormCardTokenPage } from '../form-card-token/form-card-token.page';
 
 @Component({
@@ -70,8 +68,6 @@ export class FormCobrarPedidoPage implements OnInit {
     private toastServices:ToastService,
     private router:Router,
     private modalController:ModalController,
-    private authenticationService:AuthenticationService,
-    private firestore: AngularFirestore,
     private movimientosService:MovimientosService,
     private pedidosService:PedidoService,
     private productosService:ProductosService,

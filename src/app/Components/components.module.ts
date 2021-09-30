@@ -17,7 +17,6 @@ import { CardItemComponent } from './card-item/card-item.component';
 import { CardItemPedidoComponent } from './card-item-pedido/card-item-pedido.component';
 import { SearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
 import { CardReservaComponent } from './card-reserva/card-reserva.component';
-import { ListPedidosManagerComponent } from './list-pedidos-manager/list-pedidos-manager.component';
 import { DirectivesModule } from '../Directives/directives.module';
 import { ListReservasManagerComponent } from './list-reservas-manager/list-reservas-manager.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -42,7 +41,6 @@ imports: [
     CardUsuarioComponent,
     CardItemComponent,
     CardItemPedidoComponent,
-    ListPedidosManagerComponent,
     ListReservasManagerComponent,
     CardSubscriptionComponent,
     CardPedidoComponent,
@@ -61,7 +59,6 @@ imports: [
     CardUsuarioComponent,
     CardItemComponent,
     CardItemPedidoComponent,
-    ListPedidosManagerComponent,
     ListReservasManagerComponent,
     CardSubscriptionComponent,
     CardPedidoComponent,

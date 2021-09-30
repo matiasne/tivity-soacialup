@@ -9,54 +9,10 @@
 
 
 <ion-content style="margin-top: 50px;" class="ion-padding">  
-  <ion-searchbar animated #search
-    placeholder="Buscar nombre"
-    animated="true"
-    showCancelButton="never" 
-    color="light" 
-    autocomplete="on"
-    enterkeyhint="send"
-    inputmode="text"
-    type="text"
-    debounce="300"
-    value="{{palabraFiltro}}"
-    (ionChange)="onChange($event)">
-  </ion-searchbar>
 
-  <ion-list lines="none">   
-    
-    <ion-item-sliding *ngFor="let item of clientes" class="item-card" >    
-
-      <ion-item (click)="seleccionar(item)" >
-        <div slot="start">
-          <img src="{{item.foto}}" *ngIf="item.foto">
-          <ion-icon name="person-outline" *ngIf="!item.foto"></ion-icon>
-        </div>      
-        <ion-label text-wrap>
-          <h2><b>{{item.nombre}}</b> </h2>   
-          <p>{{item.email}}</p>        
-          <p>{{item.documentoTipo}}: {{item.documento}}</p> 
-          <p *ngIf="item.personaJuridica == 1">Responsable Inscripto</p>
-          <p *ngIf="item.personaJuridica == 2">Monotributista</p>
-          <p *ngIf="item.personaJuridica == 3">Iva Exento</p>
-        </ion-label>  
-      </ion-item> 
-      
-        <ion-item-options side="end">
-          <ion-item-option (click)="editar(item)"><ion-icon name="create" ></ion-icon> Editar</ion-item-option>
-        </ion-item-options>
-  
-      </ion-item-sliding>
-
- 
-  </ion-list>
-
-  <span *ngIf="clientes.length == 0">
-    
-      No exite ningún cliente con ese Nombre o Email.
-      <ion-button color="primary" (click)="nuevo()">Crear Uno Nuevo!</ion-button>
- 
-  </span>
+  <app-list-cliente
+    (seleccionado)="select($event)"
+  ></app-list-cliente>
 
   <!-- fab placed to the bottom end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="nuevo()">
@@ -65,11 +21,5 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="verMas()">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Cargando más trabajos...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  
+ 
 </ion-content>

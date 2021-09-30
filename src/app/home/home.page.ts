@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComerciosService } from '../Services/comercios.service';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { ModalController, AlertController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { RolesService } from '../Services/roles.service';

@@ -10,7 +10,7 @@ import { Caja } from '../models/caja';
 import { CtaCorriente } from '../models/ctacorriente';
 import { BaseService } from './base.service';
 import { ComerciosService } from './comercios.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

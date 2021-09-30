@@ -172,6 +172,11 @@ export class BaseService {
     
     
     update(data) {
+
+        // console.log(data);      
+        //   this.woocommerceService.setPart("products")
+        //   this.woocommerceService.actualizarProductoInWC(this.item)
+
   
         console.log(`[BaseService] updating item ${data.id}`);
         console.log(data);

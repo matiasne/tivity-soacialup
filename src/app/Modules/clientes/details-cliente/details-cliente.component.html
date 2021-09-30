@@ -1,0 +1,97 @@
+
+
+  <ion-item (click)="enviarMail()" class="item-card">
+    <div slot="start">      
+      <ion-icon name="mail-outline"></ion-icon>
+    </div>      
+    <ion-label>
+      <h2><b>{{cliente.email}}</b></h2>        
+    </ion-label>  
+  </ion-item>
+
+  <ion-item (click)="llamar()" class="item-card">
+    <div slot="start">      
+      <ion-icon name="call-outline"></ion-icon>
+    </div>      
+    <ion-label>
+      <h2><b>{{cliente.telefono}}</b></h2>        
+    </ion-label>  
+  </ion-item>
+
+  <ion-item class="item-card" *ngIf="cliente.direccion.state">
+    <div slot="start">      
+      <ion-icon name="location-outline"></ion-icon>
+    </div>      
+    <ion-label>
+      <h2><b>{{cliente.direccion.street_name}} {{cliente.direccion.street_number}},{{cliente.direccion.locality}},{{cliente.direccion.state}}</b></h2>
+      <span *ngIf="cliente.direccion.piso"> Piso: {{cliente.direccion.piso}}</span>
+        <span *ngIf="cliente.direccion.puerta"> Puerta: {{cliente.direccion.puerta}}</span>
+        {{cliente.direccion.distanciaDelComercio}} Km.        
+    </ion-label>    
+  </ion-item>
+  
+  
+
+  <ion-item class="item-card"> 
+    <div slot="start">      
+      <ion-icon name="create-outline"></ion-icon>
+    </div>       
+    <ion-label> 
+      <h2><b>{{cliente.descripcion}}</b></h2>        
+    </ion-label>       
+  </ion-item>  
+
+  <h5>Cuentas Corrientes:</h5>
+  <ion-button *ngIf="ctasCorrientes.length == 0" class="button-rounded" color="primary" (click)="crearCuentaCorriente()">Crear Cuenta Corriente</ion-button>
+
+  
+  <div *ngIf="ctasCorrientes.length != 0">
+    <ion-list lines="none">
+      <ion-item-sliding  class="item-card" *ngFor="let item of ctasCorrientes">
+        <ion-item (click)="seleccionarCuentaCorriente(item)">           
+          <ion-label>
+            <p>  
+              {{item.nombre}}
+            </p> 
+            <p>
+              <b>{{item.montoTotal | currency}}</b> 
+            </p>        
+          </ion-label>         
+        </ion-item> 
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editarCtaCorriente(item)"><ion-icon name="trash" ></ion-icon> Editar</ion-item-option>
+      </ion-item-options>
+
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+<!--div *ngIf="seccionActiva == 'beneficios'">
+  <ion-button  class="button-rounded" color="primary" (click)="agregarBeneficio()">Agregar Beneficio</ion-button>
+  <ion-item-sliding *ngFor="let beneficio of beneficios" class="item-card">
+    <ion-item>  
+      <div slot="start">
+        <ion-icon name="file-tray-full-outline"></ion-icon>
+      </div>      
+      <ion-label>
+        <b>{{beneficio.descripcion}}</b>        
+      </ion-label> 
+    </ion-item>  
+    <ion-item-options side="end">
+      <ion-item-option (click)="cancelarBeneficio(beneficio)"><ion-icon name="trash" ></ion-icon>Eliminar</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</div>
+
+<div *ngIf="seccionActiva == 'seguimiento'">
+
+  <ion-item  class="item-card">
+    <ion-label position="floating">Estado</ion-label>
+    <ion-select [(ngModel)]="cliente.estado" (ionChange)="cambioEstado()">
+      <ion-select-option *ngFor="let estado of estadosClientes" [value]="estado.id">{{estado.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button slot="end" (click)="openAddEstado()">Agregar Nuevo Estado</ion-button>
+  
+
+</div-->

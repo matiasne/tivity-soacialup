@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AlertController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -17,10 +17,8 @@ export class LoginPage implements OnInit {
   @ViewChild('passwordEyeConfirmation') passwordEyeConfirm;
 
   passwordTypeInput1  =  'password';
-  passwordTypeInput2  =  'password';
   // Variable para cambiar dinamicamente el tipo de Input que por defecto sera 'password'
   iconpassword1  =  'eye-off';
-  iconpassword2  =  'eye-off';
 
   public devWidth
 
