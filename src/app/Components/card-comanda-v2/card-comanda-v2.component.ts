@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Comercio } from 'src/app/models/comercio';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
 import { ComerciosService } from 'src/app/Services/comercios.service';
-import { PedidoService } from 'src/app/Services/pedido.service';
+import { PedidoService } from 'src/app/Modules/pedidos/pedido.service';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormComentarioPage } from 'src/app/form-comentario/form-comentario.page';

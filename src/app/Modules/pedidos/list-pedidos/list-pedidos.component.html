@@ -26,14 +26,6 @@
     </ion-item>
   </ion-col>    
   <ion-col size="6">
-    <!--ion-item>  
-      <ion-label position="floating">Desde</ion-label>
-      <ion-select interface="popover" multiple=false (ionChange)="onChangeAtras($event)">
-        <ion-select-option  [value]="1" selected>Ayer</ion-select-option>
-        <ion-select-option  [value]="2">2 días atras</ion-select-option>
-        <ion-select-option  [value]="7">Una semana atrás</ion-select-option>
-      </ion-select>       
-    </ion-item-->
     <ion-button fill="clear" color="primary" (click)="abrirSelectorFechas()"><ion-icon name="calendar-outline"></ion-icon></ion-button>  
   </ion-col>
   
@@ -60,8 +52,7 @@
         <ion-item-option  (click)="reanudar(pedido)"><ion-icon name="trash" ></ion-icon>Reanudar</ion-item-option>
       </ion-item-options> 
     </ion-item-sliding>  
-  </span>   
-  
+  </span>     
 </ion-list>
 
 <ion-list lines="none">        

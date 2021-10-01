@@ -3,7 +3,7 @@ import { Comercio } from 'src/app/models/comercio';
 import { EnumTipoDescuento } from 'src/app/models/descuento';
 import { Pedido } from 'src/app/models/pedido';
 import { EnumTipoRecargo } from 'src/app/models/recargo';
-import { PedidoService } from '../pedido.service';
+import { PedidoService } from '../../Modules/pedidos/pedido.service';
 import { commands } from './printer-commands';
 import EscPosEncoder from 'esc-pos-encoder-ionic';
 import { ComerciosService } from '../comercios.service';

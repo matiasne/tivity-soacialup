@@ -6,7 +6,7 @@ import { EnumTipoDescuento } from 'src/app/models/descuento';
 import { Pedido } from 'src/app/models/pedido';
 import { EnumTipoRecargo } from 'src/app/models/recargo';
 import { ComerciosService } from 'src/app/Services/comercios.service';
-import { PedidoService } from 'src/app/Services/pedido.service';
+import { PedidoService } from 'src/app/Modules/pedidos/pedido.service';
 
 @Component({
   selector: 'app-ticket-detalle',

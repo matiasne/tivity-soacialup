@@ -10,12 +10,14 @@ import { DetailsPedidoPage } from './details-pedido.page';
 import { ComponentsModule } from '../Components/components.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { DirectivesModule } from '../Directives/directives.module';
+import { PedidosModule } from '../Modules/pedidos/pedidos.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
     DirectivesModule,
+    PedidosModule,
     NgxQRCodeModule,
     FormsModule,
     IonicModule,

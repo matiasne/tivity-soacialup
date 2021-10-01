@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../../Modules/authentication/authentic
 import { ComentariosService } from '../../../Services/comentarios.service';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
 import { LoadingService } from '../../../Services/loading.service';
-import { PedidoService } from '../../../Services/pedido.service';
+import { PedidoService } from '../pedido.service';
 import { PedidosWoocommerceService } from '../../../Services/pedidos-woocommerce.service';
 import { UsuariosService } from '../../../Services/usuarios.service';
 import { OrdersService } from '../../../Services/woocommerce/orders.service';

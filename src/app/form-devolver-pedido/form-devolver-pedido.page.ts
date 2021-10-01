@@ -20,7 +20,7 @@ import { ImpresoraService } from '../Services/impresora/impresora.service';
 import { LoadingService } from '../Services/loading.service';
 import { ModalNotificacionService } from '../Services/modal-notificacion.service';
 import { MovimientosService } from '../Services/movimientos.service';
-import { PedidoService } from '../Services/pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { ProductosService } from '../Services/productos.service';
 import { ToastService } from '../Services/toast.service';
 

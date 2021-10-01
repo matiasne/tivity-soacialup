@@ -6,7 +6,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { IonicModule } from '@ionic/angular';
 import { CardSubscriptionComponent } from './card-subscription/card-subscription.component';
 import { CardUsuarioComponent } from './card-usuario/card-usuario.component';
-import { CardPedidoComponent } from './card-pedido/card-pedido.component';
 import { CardComandaV2Component } from './card-comanda-v2/card-comanda-v2.component';
 import { BtnSeleccionarImagenComponent } from './btn-seleccionar-imagen/btn-seleccionar-imagen.component';
 import { CardPedidoWoocommerceComponent } from './card-pedido-woocommerce/card-pedido-woocommerce.component';
@@ -43,7 +42,6 @@ imports: [
     CardItemPedidoComponent,
     ListReservasManagerComponent,
     CardSubscriptionComponent,
-    CardPedidoComponent,
     CardReservaComponent,
     CardPedidoWoocommerceComponent,
     CardProductoWoocommerceComponent,
@@ -61,7 +59,6 @@ imports: [
     CardItemPedidoComponent,
     ListReservasManagerComponent,
     CardSubscriptionComponent,
-    CardPedidoComponent,
     CardReservaComponent,
     CardPedidoWoocommerceComponent,
     CardProductoWoocommerceComponent, 

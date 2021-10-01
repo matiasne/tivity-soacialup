@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../Modules/authentication/authenticati
 import { Item } from 'src/app/models/item';
 import { Descuento, EnumTipoDescuento } from 'src/app/models/descuento';
 import { EnumTipoRecargo, Recargo } from 'src/app/models/recargo';
-import { PedidoService } from '../pedido.service';
+import { PedidoService } from '../../Modules/pedidos/pedido.service';
 import { Pedido } from 'src/app/models/pedido';
 import { ModalNotificacionService } from '../modal-notificacion.service';
 import { ComentariosService } from '../comentarios.service';

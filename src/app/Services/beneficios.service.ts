@@ -7,7 +7,7 @@ import { User } from '../models/user';
 import { Cliente } from '../Modules/clientes/cliente';
 import { BaseService } from './base.service';
 import { ComerciosService } from './comercios.service';
-import { PedidoService } from './pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { UsuariosService } from './usuarios.service';
 
 @Injectable({

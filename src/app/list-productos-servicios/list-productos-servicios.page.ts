@@ -24,7 +24,7 @@ import { WordpressService } from '../Services/wordpress/wordpress.service';
 import { Item } from '../models/item';
 import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
-import { PedidoService } from '../Services/pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { FormProductoPage } from '../form-producto/form-producto.page';
 import { DetailsCarritoPage } from '../details-carrito/details-carrito.page';
 import { ImpresoraService } from '../Services/impresora/impresora.service';
