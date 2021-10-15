@@ -12,31 +12,11 @@ import { BluetoothService } from '../Services/bluetooth.service';
 })
 export class ListSelectBluetoothDevicePage implements OnInit {
 
-  public impresoras = []
   constructor(
-    private bluetoothSerial:BluetoothSerial,
     private modalCtrl:ModalController,
-    private platform:Platform
   ) {
 
-    if (this.platform.is('cordova')) {
-      this.bluetoothSerial.list().then((data) => {      
-        console.log("dispositivos emparejados")  
-        console.log(data);
-        data.forEach(element => {
-          if(element.class== "1664"){
-            this.impresoras.push(element);
-          }
-        });      
-      },
-      (error) => {
-        console.log("could not find paired devices because: " + error);
-        alert(error);
-      });
-    }
-   
-
-}
+  }
 
   ngOnInit() {
 

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Comercio } from '../../../models/comercio';
-import { ComerciosService } from '../../../Services/comercios.service';
+import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { LoadingService } from '../../../Services/loading.service';
 
 declare var MercadoPago: any

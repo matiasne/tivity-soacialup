@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CajasService } from '../Services/cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { FormCajaPage } from '../form-caja/form-caja.page';
 import { Router } from '@angular/router';
 import { LoadingService } from '../Services/loading.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
 

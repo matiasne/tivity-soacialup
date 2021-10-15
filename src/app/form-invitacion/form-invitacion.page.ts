@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../Services/roles.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Invitacion } from '../models/invitacion';

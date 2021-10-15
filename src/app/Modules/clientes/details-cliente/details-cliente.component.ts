@@ -5,7 +5,6 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormComentarioPage } from '../../../form-comentario/form-comentario.page';
-import { ComentariosService } from '../../../Services/comentarios.service';
 import { FormClienteEstadoPage } from '../../../form-cliente-estado/form-cliente-estado.page';
 import { ClientesEstadosService } from '../../../Services/clientes-estados.service';
 import { BeneficiosService } from '../../../Services/beneficios.service';
@@ -36,7 +35,6 @@ export class DetailsClienteComponent implements OnInit {
     private emailComposer: EmailComposer,
     private alertController:AlertController,
     private modalController:ModalController,
-    private comentarioService:ComentariosService,
     private clientesEstadosService:ClientesEstadosService,
     private beneficiosService:BeneficiosService,
   ) { 
@@ -189,8 +187,5 @@ export class DetailsClienteComponent implements OnInit {
     return await modal.present();
   }
 
-  eliminarComentario(item){
-    this.comentarioService.delete(item.id);
-  }
 
 }

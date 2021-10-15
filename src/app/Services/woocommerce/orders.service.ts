@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ComerciosService } from '../comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { WordpressService } from '../wordpress/wordpress.service';
 
 @Injectable({

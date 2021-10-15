@@ -3,7 +3,7 @@ import { IonContent, ModalController, NavParams } from '@ionic/angular';
 import { AutosizeModule} from 'ngx-autosize'
 import { Comentario } from '../models/comentario';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { ComentariosService } from '../Services/comentarios.service';
+import { ComentariosService } from '../Modules/chat/comentarios.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -11,78 +11,38 @@ import { ComentariosService } from '../Services/comentarios.service';
 })
 export class ChatPage implements OnInit {
 
-  public comentario:Comentario;
-
   @ViewChild(IonContent) content:IonContent
   
-  @Input() objeto
-  @Input() id
-  private obs:any
-  public mensajes =[];
-  public user:any
+  public id:any;
+  public objeto:any;
+  private obs:any;
   constructor(
-    private authService:AuthenticationService,
-    private comentariosService:ComentariosService ,
     private modalController:ModalController,
-    private navParams:NavParams
-
-  ) { 
-    this.comentario = new Comentario()
-    this.user = this.authService.getActualUser();
-    this.user.id = this.authService.getUID();
-    console.log(this.navParams.get('objeto')+" "+this.navParams.get('id'));
-
-    this.comentariosService.setearPath(this.navParams.get('objeto'),this.navParams.get('id'));   
+    private navParams:NavParams,
+    private comentariosService:ComentariosService
+  ) {  
       this.obs = this.comentariosService.obtener().subscribe(data =>{
-        data.forEach((item:any) =>{
-          let agregar = true;
-          this.mensajes.forEach(mensaje =>{
-            if(mensaje.id == item.id){
-              agregar = false
-            }
-          })
-          console.log(agregar)
-          if(agregar){
-            this.mensajes.push(item)
-          }
-        })
+       
         setTimeout(()=>{
           this.content.scrollToBottom(200)
         })   
       })
   }
 
-  
-
-  enviar(){   
-
-    this.comentario.senderEmail = this.user.email;
-    this.comentario.senderId = this.user.id;
-    this.comentariosService.add(this.comentario).then(data=>{
-      console.log(data);
-      this.comentariosService.incrementarNumeroMensajes(this.navParams.get('objeto'),this.navParams.get('id'))     
-    })
-    
+  ngOnInit(){
+    this.id = this.navParams.get('id')
+    this.objeto = this.navParams.get('objeto')
+    console.log(this.id)
   }
 
-  eliminar(mensaje){
-    this.comentariosService.delete(mensaje.id).then(data=>{
-      this.comentariosService.decrementarNumeroMensajes(this.navParams.get('objeto'),this.navParams.get('id'))
-    })
-  }
-
-  cerrar(){
-    this.modalController.dismiss()
-  }
-  
-  ionViewDidEnter(){
-   
-  }
   ionViewDidLeave(){
     this.obs.unsubscribe();
   }
 
-  ngOnInit() {
+  
+  cerrar(){
+    this.modalController.dismiss()
   }
+  
 
 }

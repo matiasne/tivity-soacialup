@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { HorariosService } from '../Services/horarios.service';
 import { FormHorarioPage } from '../form-horario/form-horario.page';
 import { ModalController, AlertController } from '@ionic/angular';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 
 @Component({

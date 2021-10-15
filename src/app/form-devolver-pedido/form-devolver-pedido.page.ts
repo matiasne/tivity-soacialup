@@ -10,13 +10,13 @@ import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { EnumEstadoCobro, Pedido } from '../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
-import { AfipServiceService } from '../Services/afip/afip-service.service';
+import { AfipServiceService } from '../Modules/afip/afip-service.service';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { CajasService } from '../Services/cajas.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { CarritoService } from '../Services/global/carrito.service';
-import { ImpresoraService } from '../Services/impresora/impresora.service';
+import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { LoadingService } from '../Services/loading.service';
 import { ModalNotificacionService } from '../Services/modal-notificacion.service';
 import { MovimientosService } from '../Services/movimientos.service';

@@ -8,48 +8,5 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="10">
-        <p>
-          <b>Habilitar bandeja impresion por defecto</b><br>
-        </p>
-      </ion-col>
-      <ion-col size="2">
-        <ion-toggle [(ngModel)]="impresionBandeja" (ionChange)="updateBandeja()"  [ngModelOptions]="{standalone: true}"></ion-toggle>    
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-button *ngIf="impresora.address == ''" class="button-rounded" color="primary" (click)="agregarImpresora()">Agregar Impresora Bluetooth</ion-button>
-
-  <ion-button  class="button-rounded" color="primary" (click)="agregarImpresoraUSB()">Agregar Impresora USB</ion-button>
-
-  <span *ngIf="impresora.address!=''">
-    <ion-item-sliding class="item-card fivePhasesFadeOut FadeIn"> 
-      <app-item-bluetooth-printer
-        [item] = "impresora"
-        (seleccionar) = "seleccionar(impresora)"
-      ></app-item-bluetooth-printer>
-      <ion-item-options side="end" (click)="eliminar()">
-        <ion-item-option color="danger"><ion-icon name="trash" ></ion-icon>Eliminar</ion-item-option>
-      </ion-item-options>  
-    </ion-item-sliding>
-    <ion-button class="button-rounded" color="primary" (click)="conectar()">Probar impresión</ion-button> 
-  </span>
-
-  <span *ngIf="impresoraUSB != undefined">
-    <ion-item-sliding class="item-card fivePhasesFadeOut FadeIn"> 
-      Aca poner el nombre
-      <ion-item-options side="end" (click)="eliminarImpresoraUSB()">
-        <ion-item-option color="danger"><ion-icon name="trash" ></ion-icon>Eliminar</ion-item-option>
-      </ion-item-options>  
-    </ion-item-sliding>
-    <ion-button class="button-rounded" color="primary" (click)="conectar()">Probar impresión</ion-button> 
-  </span>
-    
-
-
-  
+  <app-config-impresora></app-config-impresora> 
 </ion-content>

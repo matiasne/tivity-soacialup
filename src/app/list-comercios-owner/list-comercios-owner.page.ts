@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, LoadingController } from '@ionic/angular';

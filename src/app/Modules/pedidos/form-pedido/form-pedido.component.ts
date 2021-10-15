@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
 import { ChatPage } from '../../../chat/chat.page';
-import { FormClientePage } from '../../../form-cliente/form-cliente.page';
 import { FormCobrarPedidoPage } from '../../../form-cobrar-pedido/form-cobrar-pedido.page';
 import { FormConfiguracionAfipPage } from '../../../form-configuracion-afip/form-configuracion-afip.page';
 import { FormDevolverPedidoPage } from '../../../form-devolver-pedido/form-devolver-pedido.page';
@@ -18,13 +17,12 @@ import { Item } from '../../../models/item';
 import { Recargo } from '../../../models/recargo';
 import { SelectClientePage } from '../../../select-cliente/select-cliente.page';
 import { SelectProductPage } from '../../../select-product/select-product.page';
-import { AfipServiceService } from '../../../Services/afip/afip-service.service';
-import { CajasService } from '../../../Services/cajas.service';
-import { ComentariosService } from '../../../Services/comentarios.service';
-import { ComerciosService } from '../../../Services/comercios.service';
+import { AfipServiceService } from '../../afip/afip-service.service';
+import { CajasService } from '../../cajas/cajas.service';
+import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { CarritoService } from '../../../Services/global/carrito.service';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
-import { ImpresoraService } from '../../../Services/impresora/impresora.service';
+import { ImpresoraService } from '../../../Modules/impresion/impresora.service';
 import { ModalNotificacionService } from '../../../Services/modal-notificacion.service';
 import { PedidoService } from '../pedido.service';
 import { ActivatedRoute } from '@angular/router';
@@ -33,6 +31,7 @@ import { UsuariosService } from '../../../Services/usuarios.service';
 import { SelectDivisionPage } from '../../../select-division/select-division.page';
 import { Division } from '../../../models/subdivision';
 import { Cliente } from '../../../Modules/clientes/cliente';
+import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
 
 @Component({
   selector: 'app-form-pedido',
@@ -46,18 +45,8 @@ export class FormPedidoComponent implements OnInit {
   private enumTipoMovimientoCaja = EnumTipoMovimientoCaja
   public comercio:Comercio;
   
-  public cajas = []
-  public cajaSeleccionadaIndex=0;
-  public cajaSeleccionada:Caja;
   public division:Division;
   public cliente:Cliente;
-  public metodoPagoSeleccionado =[];
-  public cantidadMetodos=0;
-
-  public ctasCorrientes =[];
-  public metodoTexto =""; 
-  public ctaCorrienteSelecccionada:any;
-  public ctaCorrienteSelecccionadaId ="";
 
   public pEstado = EnumEstadoCocina; 
   
@@ -75,8 +64,6 @@ export class FormPedidoComponent implements OnInit {
     public cajasService:CajasService,
     private modalController:ModalController,
     private pedidosService:PedidoService,
-    private impresoraService:ImpresoraService,
-    private comentariosService:ComentariosService,
     private alertController:AlertController,
     private carritoService:CarritoService,
     private modalNotificacion:ModalNotificacionService,
@@ -96,13 +83,7 @@ export class FormPedidoComponent implements OnInit {
       this.isUpdating = true;
     }  
 
-    if(this.pedido.id){
-      this.comentariosService.setearPath("pedidos",this.pedido.id);   
-      let obs =this.comentariosService.list().subscribe(data =>{
-        this.comentarios = data; 
-        obs.unsubscribe();
-      })
-    }  
+   
 
     if(this.pedido.afipFactura.voucherNumber){
       this.afipQR = this.afipService.getURLforQR(this.pedido)
@@ -194,7 +175,7 @@ export class FormPedidoComponent implements OnInit {
 
   async abrirNuevoCliente(){
     const modal = await this.modalController.create({
-      component: FormClientePage,     
+      component: EditClientePage,     
       cssClass:'modal-custom-wrapper' 
     });    
     modal.present().then(()=>{
@@ -432,17 +413,7 @@ export class FormPedidoComponent implements OnInit {
   } 
 
 
-  async chat(){
-    const modal = await this.modalController.create({
-      component: ChatPage,     
-      cssClass:'modal-custom-wrapper',
-      componentProps:{
-        id:this.pedido.id,
-        objeto:"pedidos"
-      }      
-    });
-    return await modal.present(); 
-  }
+  
 
   public getTotal(){ 
     this.pedido.total =  this.pedidosService.getTotal(this.pedido) 
@@ -450,9 +421,7 @@ export class FormPedidoComponent implements OnInit {
   }
 
 
-  imprimir(){
-    this.impresoraService.impresionTicket(this.pedido)
-  }
+  
   
 
   facturar(){

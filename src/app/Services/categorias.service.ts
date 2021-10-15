@@ -3,7 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { snapshotChanges } from 'angularfire2/database';
 import { Categoria } from '../models/categoria';
 import { BaseService } from './base.service';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

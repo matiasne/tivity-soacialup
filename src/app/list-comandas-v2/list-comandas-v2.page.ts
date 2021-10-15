@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ComentariosService } from '../Services/comentarios.service';
+import { ComentariosService } from '../Modules/chat/comentarios.service';
 import { LoadingService } from '../Services/loading.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { EnumEstadoCocina } from 'src/app/models/item';

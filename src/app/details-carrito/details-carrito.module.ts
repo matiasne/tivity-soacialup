@@ -8,12 +8,14 @@ import { DetailsCarritoPageRoutingModule } from './details-carrito-routing.modul
 
 import { DetailsCarritoPage } from './details-carrito.page';
 import { ComponentsModule } from '../Components/components.module';
+import { ImpresionModule } from '../Modules/impresion/impresion.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
     FormsModule,
+    ImpresionModule,
     IonicModule,
     DetailsCarritoPageRoutingModule
   ],

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {  AlertController, ModalController, NavController } from '@ionic/angular';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -10,13 +10,13 @@ import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { EnumEstadoCobro, Pedido } from '../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
-import { AfipServiceService } from '../Services/afip/afip-service.service';
+import { AfipServiceService } from '../Modules/afip/afip-service.service';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { CajasService } from '../Services/cajas.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { CarritoService } from '../Services/global/carrito.service';
-import { ImpresoraService } from '../Services/impresora/impresora.service';
+import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { LoadingService } from '../Services/loading.service';
 import { ModalNotificacionService } from '../Services/modal-notificacion.service';
 import { MovimientosService } from '../Services/movimientos.service';
@@ -25,6 +25,7 @@ import { ProductosService } from '../Services/productos.service';
 import { ToastService } from '../Services/toast.service';
 import { MercadopagoService } from '../Modules/mercadopago/mercadopago.service';
 import { FormCardTokenPage } from '../form-card-token/form-card-token.page';
+import { AfipCheckboxComponent } from '../Modules/afip/afip-checkbox/afip-checkbox.component';
 
 @Component({
   selector: 'app-form-cobrar-pedido', 
@@ -33,6 +34,8 @@ import { FormCardTokenPage } from '../form-card-token/form-card-token.page';
 })
 export class FormCobrarPedidoPage implements OnInit {
 
+  @ViewChild('afipCheckBox') afipCheckBox:AfipCheckboxComponent;
+  
   private enumTipoMovimientoCaja = EnumTipoMovimientoCaja
   public pEstado = EnumEstadoCocina;
   public cEstado = EnumEstadoCobro
@@ -58,7 +61,6 @@ export class FormCobrarPedidoPage implements OnInit {
   public comentarios = [];
 
   public habilitadoFacturar = false;
-  public facturar = false
 
   public total = 0;
 
@@ -85,14 +87,10 @@ export class FormCobrarPedidoPage implements OnInit {
 
   ngOnInit() {
 
-    if(this.comercio.afip.token !=""){
-      this.habilitadoFacturar = true;
-      this.facturar = (localStorage.getItem('facturar') === "true")
-    }
-    else{
-      this.habilitadoFacturar = false;
-    }
-    console.log(this.facturar)
+    
+    this.habilitadoFacturar = (this.comercio.afip.token !="");     
+    
+    
 
     console.log(this.pedido)
     this.cajasService.list().subscribe((cajas:any)=>{      
@@ -125,10 +123,7 @@ export class FormCobrarPedidoPage implements OnInit {
     }
   }
 
-  updateFacturar(event){
-    console.log(event.target.checked)
-    localStorage.setItem('facturar',event.target.checked)
-  }
+  
 
 
   setMontos(){
@@ -264,13 +259,7 @@ async alertRechazado(){
 
     try{
 
-      if(this.facturar){
-        this.loadingService.presentLoadingText("Creando factura electrónica")
-        let res:any = await this.afipService.facturarPedido(this.pedido.id)
-        console.log(res);
-        this.pedido.afipFactura = res.afipFactura //para poder imprimirlo
-        this.loadingService.dismissLoading();
-      } 
+      this.afipCheckBox.realizarFactura(this.pedido);
 
       this.cajaSeleccionada = this.cajas[this.cajaSeleccionadaIndex];
       console.log(this.cajaSeleccionada)

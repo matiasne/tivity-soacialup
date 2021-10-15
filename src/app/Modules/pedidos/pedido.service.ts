@@ -6,7 +6,7 @@ import { BaseService } from '../../Services/base.service';
 import { map } from 'rxjs/operators';
 import { EnumTipoDescuento } from '../../models/descuento';
 import { EnumTipoRecargo } from '../../models/recargo';
-import { ComerciosService } from '../../Services/comercios.service';
+import { ComerciosService } from '../../Modules/comercio/comercios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -63,26 +63,6 @@ export class PedidoService extends BaseService{
                 const data:any = a.payload.doc.data();
                 data.id = a.payload.doc.id;
                 data.fromCache = a.payload.doc.metadata.fromCache;                     
-
-            /*    if(this.memoriaDias > 0){
-                //================= borra lo anterior a la fecha configurada de almacenamiento
-                  var batch = this.afs.firestore.batch();
-
-                  let fechaDiasMemoria = new Date();
-                  fechaDiasMemoria.setDate(fechaDiasMemoria.getDate() - Number(this.memoriaDias));
-
-                  let borrar = false;
-                  if(data.createdAt.toDate().getTime() < fechaDiasMemoria.getTime()){
-                    borrar = true
-                    var pedidoRef:any = this.getRef(data.id)
-                    batch.delete(pedidoRef)
-                    console.log("borrando pedido id: "+data.id)
-                  }
-
-                  if(borrar){
-                    batch.commit()
-                  }
-                }*/
 
                 return data;
             });

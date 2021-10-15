@@ -11,13 +11,10 @@ import { BtnSeleccionarImagenComponent } from './btn-seleccionar-imagen/btn-sele
 import { CardPedidoWoocommerceComponent } from './card-pedido-woocommerce/card-pedido-woocommerce.component';
 import { CardProductoWoocommerceComponent } from './card-producto-woocommerce/card-producto-woocommerce.component';
 import { ItemBluetoothDeviceComponent } from './item-bluetooth-device/item-bluetooth-device.component';
-import { ItemBluetoothPrinterComponent } from './item-bluetooth-printer/item-bluetooth-printer.component';
-import { CardItemComponent } from './card-item/card-item.component';
-import { CardItemPedidoComponent } from './card-item-pedido/card-item-pedido.component';
+import { ItemBluetoothPrinterComponent } from '../Modules/impresion/item-bluetooth-printer/item-bluetooth-printer.component';
 import { SearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
 import { CardReservaComponent } from './card-reserva/card-reserva.component';
 import { DirectivesModule } from '../Directives/directives.module';
-import { ListReservasManagerComponent } from './list-reservas-manager/list-reservas-manager.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CarritoComponent } from './carrito/carrito.component';
 
@@ -38,9 +35,6 @@ imports: [
     SeleccionarImagenComponent,
     CardComandaV2Component,
     CardUsuarioComponent,
-    CardItemComponent,
-    CardItemPedidoComponent,
-    ListReservasManagerComponent,
     CardSubscriptionComponent,
     CardReservaComponent,
     CardPedidoWoocommerceComponent,
@@ -55,9 +49,6 @@ imports: [
     SeleccionarImagenComponent,
     CardComandaV2Component,
     CardUsuarioComponent,
-    CardItemComponent,
-    CardItemPedidoComponent,
-    ListReservasManagerComponent,
     CardSubscriptionComponent,
     CardReservaComponent,
     CardPedidoWoocommerceComponent,

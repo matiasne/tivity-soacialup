@@ -9,6 +9,7 @@ import { FormSubscripcionPageRoutingModule } from './form-subscripcion-routing.m
 import { FormSubscripcionPage } from './form-subscripcion.page';
 import { ComponentsModule } from '../Components/components.module';
 import { DirectivesModule } from '../Directives/directives.module';
+import { ChatModule } from '../Modules/chat/chat.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { DirectivesModule } from '../Directives/directives.module';
     ComponentsModule,
     DirectivesModule,
     FormsModule,
+    ChatModule,
     IonicModule,
     FormSubscripcionPageRoutingModule
   ],

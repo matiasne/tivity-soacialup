@@ -3,7 +3,7 @@ import { Printer, PrintOptions } from '@ionic-native/printer/ngx';
 import { ModalController, NavController, NavParams, Platform } from '@ionic/angular';
 import { Comercio } from 'src/app/models/comercio';
 import { Pedido } from 'src/app/models/pedido';
-import { ComerciosService } from 'src/app/Services/comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-comanda',

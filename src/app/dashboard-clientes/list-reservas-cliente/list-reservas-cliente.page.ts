@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { ListReservasManagerComponent } from 'src/app/Components/list-reservas-manager/list-reservas-manager.component';
 import { FormReservaPage } from 'src/app/form-reserva/form-reserva.page';
 import { Reserva } from 'src/app/models/reserva';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
 import { NavegacionParametrosService } from 'src/app/Services/global/navegacion-parametros.service';
-import { ReservasService } from 'src/app/Services/reservas.service';
+import { ReservasService } from 'src/app/Modules/reservas/reservas.service';
+import { ListReservasComponent } from 'src/app/Modules/reservas/list-reservas/list-reservas.component';
 
 @Component({
   selector: 'app-list-reservas-cliente',
@@ -15,7 +15,7 @@ import { ReservasService } from 'src/app/Services/reservas.service';
 })
 export class ListReservasClientePage implements OnInit {
 
-  @ViewChild(ListReservasManagerComponent) listReservasManagerChild:ListReservasManagerComponent;
+  @ViewChild(ListReservasComponent) listReservasChild:ListReservasComponent;
   public vistaLista = false;
   public cliente:Cliente;
   
@@ -40,7 +40,7 @@ export class ListReservasClientePage implements OnInit {
   }
 
   ionViewDidLeave(){
-    this.listReservasManagerChild.borrarDatosComponente()
+    this.listReservasChild.borrarDatosComponente()
   }
 
   verLista(){

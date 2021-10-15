@@ -3,7 +3,7 @@ import { NavParams } from '@ionic/angular';
 import { Comercio } from 'src/app/models/comercio';
 import { Pedido } from 'src/app/models/pedido';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
-import { ComerciosService } from 'src/app/Services/comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-a-con-resp-inscripto',

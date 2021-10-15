@@ -7,7 +7,7 @@ import { Cliente } from '../../clientes/cliente';
 import { LoadingService } from '../../../Services/loading.service';
 import { FormClientePage } from '../../../form-cliente/form-cliente.page';
 import { CambiarPlanPage } from '../../../cambiar-plan/cambiar-plan.page';
-import { ComerciosService } from '../../../Services/comercios.service';
+import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { Comercio } from '../../../models/comercio';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
 
@@ -19,6 +19,7 @@ import { NavegacionParametrosService } from '../../../Services/global/navegacion
 export class ListClienteComponent implements OnInit, OnDestroy {
 
   @Output() seleccionado = new EventEmitter<Cliente>();
+  @Output() editar = new EventEmitter<Cliente>();
 
   public itemsFiltrados:any = [];
   public itemsAll:any = [];
@@ -85,21 +86,11 @@ export class ListClienteComponent implements OnInit, OnDestroy {
     this.seleccionado.emit(cliente)
   }
 
-  async editar(item){  
-
-    const modal = await this.modalController.create({
-      component: FormClientePage,
-      componentProps:{
-        client:item
-      }      
-    });
-    
-    modal.present().then(()=>{
-      
-    })
-
-    return await modal.present();
+  editarClick(cliente){
+    console.log(cliente)
+    this.editar.emit(cliente)
   }
 
+  
 
 }

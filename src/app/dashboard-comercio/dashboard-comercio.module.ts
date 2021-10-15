@@ -8,10 +8,12 @@ import { DashboardComercioPageRoutingModule } from './dashboard-comercio-routing
 
 import { DashboardComercioPage } from './dashboard-comercio.page';
 import { DirectivesModule } from '../Directives/directives.module';
+import { ComercioModule } from '../Modules/comercio/comercio.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComercioModule,
     DirectivesModule,
     FormsModule,
     IonicModule,

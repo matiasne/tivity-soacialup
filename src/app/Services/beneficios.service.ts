@@ -6,7 +6,7 @@ import { Pedido } from '../models/pedido';
 import { User } from '../models/user';
 import { Cliente } from '../Modules/clientes/cliente';
 import { BaseService } from './base.service';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { UsuariosService } from './usuarios.service';
 

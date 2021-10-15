@@ -69,7 +69,7 @@
            
             <span *appCheckUsuarioPermisos="{feature:'reservas',permiso:'Visible'}">
             <span *ngIf="rolActual == 'Administrador' || rolActual=='Cocinero'">
-              <ion-item *appCheckComercioConfig="'reservas'" [routerLink]="['/list-reservas']" lines="none" detail="false">
+              <ion-item *appCheckComercioConfig="'reservas'" [routerLink]="['/dashboard-reservas']" lines="none" detail="false">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
                 <ion-label>Reservas</ion-label>
               </ion-item>

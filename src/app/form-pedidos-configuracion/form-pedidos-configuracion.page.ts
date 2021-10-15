@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 import { SelectEmpleadoPage } from '../select-empleado/select-empleado.page';
 import { ModalController, NavController, AlertController } from '@ionic/angular';

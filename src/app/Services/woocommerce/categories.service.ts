@@ -7,7 +7,7 @@ import { Categoria } from 'src/app/models/categoria';
 import { WCCategory } from 'src/app/models/woocommerce/category';
 import { WCImage } from 'src/app/models/woocommerce/image';
 import { CategoriasService } from '../categorias.service';
-import { ComerciosService } from '../comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { WordpressService } from '../wordpress/wordpress.service';
 
 @Injectable({

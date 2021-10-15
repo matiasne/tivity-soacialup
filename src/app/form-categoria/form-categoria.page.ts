@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Categoria } from '../models/categoria';
 import { ToastService } from '../Services/toast.service';
 import { WoocommerceSyncData } from '../models/woocommerceSyncData';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 import { AngularFirestore } from 'angularfire2/firestore';
 

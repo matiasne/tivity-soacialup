@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { WebHook } from 'src/app/models/woocommerce/webhook';
-import { ComerciosService } from '../comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { WordpressService } from '../wordpress/wordpress.service';
 
 @Injectable({

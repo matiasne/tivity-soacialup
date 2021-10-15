@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { ModalController } from '@ionic/angular';
 import { Localizacion } from '../models/localizacion';
 import * as geofirex from 'geofirex';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 declare var google: any;
 import * as firebase from 'firebase/app';

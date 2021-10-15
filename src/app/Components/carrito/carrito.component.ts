@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../Services/global/carrito.service';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { ComerciosService } from '../../Services/comercios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../Services/toast.service';
 import { SelectClientePage } from '../../select-cliente/select-cliente.page';
@@ -15,11 +14,12 @@ import { EnumTipoDescuento } from '../../models/descuento';
 import { ModalNotificacionService } from '../../Services/modal-notificacion.service';
 import { ModalInputDireccionPage } from '../../modal-input-direccion/modal-input-direccion.page';
 import { Localizacion } from '../../models/localizacion';
-import { ImpresoraService } from '../../Services/impresora/impresora.service';
+import { ImpresoraService } from '../../Modules/impresion/impresora.service';
 import { SelectDivisionPage } from '../../select-division/select-division.page';
 import { Division, Subdivision } from '../../models/subdivision';
 import { FormCobrarPedidoPage } from '../../form-cobrar-pedido/form-cobrar-pedido.page';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 
 @Component({

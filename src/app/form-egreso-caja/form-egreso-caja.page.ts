@@ -4,14 +4,14 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { CajasService } from '../Services/cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import { MovimientosService } from '../Services/movimientos.service';
 import { Caja } from '../models/caja';
 import { ToastService } from '../Services/toast.service';
 import { Subscription } from 'rxjs';
 import { Comercio } from '../models/comercio';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-form-egreso-caja',

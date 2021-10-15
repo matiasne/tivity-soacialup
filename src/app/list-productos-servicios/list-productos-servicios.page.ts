@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
 import { CarritoService } from '../Services/global/carrito.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { ComerciosService } from '../Services/comercios.service';
 import { LoadingService } from '../Services/loading.service';
 import { CargaPorVozService } from '../Services/carga-por-voz.service';
 import { ChangeDetectorRef } from '@angular/core'
@@ -27,9 +26,10 @@ import { NotifificacionesAppService } from '../Services/notifificaciones-app.ser
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { FormProductoPage } from '../form-producto/form-producto.page';
 import { DetailsCarritoPage } from '../details-carrito/details-carrito.page';
-import { ImpresoraService } from '../Services/impresora/impresora.service';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
 import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
+import { ImpresoraService } from '../Modules/impresion/impresora.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-list-productos-servicios',

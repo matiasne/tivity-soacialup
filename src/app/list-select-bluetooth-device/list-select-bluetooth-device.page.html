@@ -8,10 +8,5 @@
 </ion-header>
 
 <ion-content>
-  <span *ngFor="let printer of impresoras">
-    <app-item-bluetooth-device
-      [item] = "printer"
-      (seleccionar) = seleccionar(printer)
-    ></app-item-bluetooth-device>
-  </span>
+  <app-select-impresora-bluetooth (select)="seleccionar($event)"></app-select-impresora-bluetooth>
 </ion-content>

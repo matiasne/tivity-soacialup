@@ -6,11 +6,11 @@ import { Mesa } from '../models/mesa';
 import { EnumTipoMovimientoCaja } from '../models/movimientoCaja';
 import { Pedido } from '../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
-import { CajasService } from '../Services/cajas.service';
-import { ComentariosService } from '../Services/comentarios.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
+import { ComentariosService } from '../Modules/chat/comentarios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
-import { ImpresoraService } from '../Services/impresora/impresora.service';
+import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 
 @Component({

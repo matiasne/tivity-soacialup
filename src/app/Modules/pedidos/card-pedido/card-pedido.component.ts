@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 import { Comercio } from 'src/app/models/comercio';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
-import { ComerciosService } from 'src/app/Services/comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-card-pedido',

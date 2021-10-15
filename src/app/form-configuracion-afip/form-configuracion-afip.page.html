@@ -12,19 +12,7 @@
 
 <ion-content class="ion-padding ion-text-center">
 
-  <img class="afip-logo" src="../../assets/img/logo_afip.png" alt="">
-
-  <ion-item *ngIf="comercio.afip.token" class="item-card">
-    Conectado con el punto de venta: {{comercio.afip.puntoVenta}}
-  </ion-item>
-  
- 
-  <ion-item *ngIf="!comercio.afip.token" class="form-card">
-    Contacta a nuestro equipo y solicita la activación del módulo de Afip
-  </ion-item>
-
-  <ion-button *ngIf="comercio.afip.token" class="button-rounded" color="danger" (click)="desvincular()">Desvincular Punto de Venta</ion-button>
-
+  <app-afip-status></app-afip-status>
 
 </ion-content>
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../Services/global/carrito.service';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '../Services/loading.service';
 import { ToastService } from '../Services/toast.service';
@@ -16,7 +16,7 @@ import { EnumTipoDescuento } from '../models/descuento';
 import { ModalNotificacionService } from '../Services/modal-notificacion.service';
 import { ModalInputDireccionPage } from '../modal-input-direccion/modal-input-direccion.page';
 import { Localizacion } from '../models/localizacion';
-import { ImpresoraService } from '../Services/impresora/impresora.service';
+import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { SelectDivisionPage } from '../select-division/select-division.page';
 import { Division, Subdivision } from '../models/subdivision';
 import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
@@ -45,12 +45,6 @@ export class DetailsCarritoPage implements OnInit {
     private loadingService:LoadingService,
     private toastServices:ToastService,
     private impresoraService:ImpresoraService,
-    
-    private route:ActivatedRoute,
-    private router:Router,
-    
-    private alertController:AlertController,
-    private modalNotificacion:ModalNotificacionService
   ) {
     this.comercio = new Comercio();
     this.carrito = new Pedido(); 

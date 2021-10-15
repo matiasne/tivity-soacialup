@@ -9,12 +9,14 @@ import { ListProductosServiciosPageRoutingModule } from './list-productos-servic
 import { ListProductosServiciosPage } from './list-productos-servicios.page';
 import { ComponentsModule } from '../Components/components.module';
 import { DirectivesModule } from '../Directives/directives.module';
+import { ItemsModule } from '../Modules/items/items.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
+    ItemsModule,
     DirectivesModule,
     FormsModule,
     IonicModule,

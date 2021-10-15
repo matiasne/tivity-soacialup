@@ -1,0 +1,37 @@
+.message{
+    border-radius:10px;
+    white-space: pre-wrap;
+   }
+   
+   .other-message{
+       background-color: var(--ion-color-tertiary);
+       color:white;
+   }
+   
+   .other-message ion-item{
+       --ion-background-color: var(--ion-color-tertiary) !important;
+       color:white !important;
+   }
+   
+   .my-message{
+       background-color: var(--ion-color-secondary);
+       color:white;
+   }
+   
+   .my-message ion-item{
+       --ion-background-color: var(--ion-color-secondary) !important;
+       color:white !important;
+   }
+   
+   .email{
+       font-size: small;
+   }
+   
+   .time{
+       color:lightgray;
+       float: right;
+       font-size: small;
+   }
+   
+   
+   
