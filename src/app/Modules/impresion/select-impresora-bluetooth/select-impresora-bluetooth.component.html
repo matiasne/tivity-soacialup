@@ -1,0 +1,6 @@
+<span *ngFor="let printer of impresoras">
+  <app-item-bluetooth-device
+    [item] = "printer"
+    (seleccionar) = seleccionar(printer)
+  ></app-item-bluetooth-device>
+</span>

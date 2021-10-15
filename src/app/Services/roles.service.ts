@@ -4,7 +4,7 @@ import { AuthenticationService } from '../Modules/authentication/authentication.
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 import { Permisos, Rol } from '../models/rol';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { BaseService } from './base.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 

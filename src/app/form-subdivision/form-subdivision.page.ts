@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '../Services/toast.service';
 import { FormDivisionPage } from '../form-division/form-division.page';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 

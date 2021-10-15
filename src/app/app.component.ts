@@ -6,13 +6,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenticationService } from './Modules/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
-import { ComerciosService } from './Services/comercios.service';
 import { NotifificacionesAppService } from './Services/notifificaciones-app.service';
 import { Comercio } from './models/comercio';
 import { ToastService } from './Services/toast.service';
 import { PresenceService } from './Services/presence.service';
 import { UsuariosService } from './Services/usuarios.service';
-import { ImpresoraService } from './Services/impresora/impresora.service';
 import { RolesService } from './Services/roles.service';
 import { BluetoothService } from './Services/bluetooth.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
@@ -23,6 +21,8 @@ import { NavegacionParametrosService } from './Services/global/navegacion-parame
 import { Division } from './models/subdivision';
 import { SelectClientePage } from './select-cliente/select-cliente.page';
 import { Cliente } from './Modules/clientes/cliente';
+import { ImpresoraService } from './Modules/impresion/impresora.service';
+import { ComerciosService } from './Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-root',

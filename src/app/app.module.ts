@@ -38,7 +38,6 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin
 import { Network } from '@ionic-native/network/ngx';
 
 import { Printer, PrintOptions } from '@ionic-native/printer/ngx';
-import { FormComercioPage } from './form-comercio/form-comercio.page';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { HTTPInterceptorService } from './Services/http-interceptor.service';
 

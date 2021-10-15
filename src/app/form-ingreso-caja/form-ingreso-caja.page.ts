@@ -7,12 +7,12 @@ import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { LoadingService } from '../Services/loading.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
-import { CajasService } from '../Services/cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { MovimientosService } from '../Services/movimientos.service';
 import { Caja } from '../models/caja';
 import { ToastService } from '../Services/toast.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
 import { Cliente } from '../Modules/clientes/cliente';
 
@@ -20,7 +20,7 @@ import { Cliente } from '../Modules/clientes/cliente';
   selector: 'app-form-ingreso-caja',
   templateUrl: './form-ingreso-caja.page.html',
   styleUrls: ['./form-ingreso-caja.page.scss'],
-})
+}) 
 export class FormIngresoCajaPage implements OnInit {
 
   private enumTipoMovimientoCaja = EnumTipoMovimientoCaja

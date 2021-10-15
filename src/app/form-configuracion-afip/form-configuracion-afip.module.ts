@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { FormConfiguracionAfipPageRoutingModule } from './form-configuracion-afip-routing.module';
 
 import { FormConfiguracionAfipPage } from './form-configuracion-afip.page';
+import { AfipModule } from '../Modules/afip/afip.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    AfipModule,
     IonicModule,
     FormConfiguracionAfipPageRoutingModule
   ],

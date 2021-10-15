@@ -8,12 +8,14 @@ import { FormImpresoraConfigPageRoutingModule } from './form-impresora-config-ro
 
 import { FormImpresoraConfigPage } from './form-impresora-config.page';
 import { ComponentsModule } from '../Components/components.module';
+import { ImpresionModule } from '../Modules/impresion/impresion.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
     ReactiveFormsModule,
+    ImpresionModule,
     FormsModule,
     IonicModule,
     FormImpresoraConfigPageRoutingModule

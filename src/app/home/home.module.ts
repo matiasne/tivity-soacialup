@@ -9,11 +9,13 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { ComponentsModule } from '../Components/components.module';
 import { DirectivesModule } from '../Directives/directives.module';
+import { ComercioModule } from '../Modules/comercio/comercio.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
+    ComercioModule,
     DirectivesModule,
     FormsModule,
     IonicModule,

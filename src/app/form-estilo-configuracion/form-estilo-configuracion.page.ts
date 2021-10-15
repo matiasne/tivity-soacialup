@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Comercio } from '../models/comercio';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-form-estilo-configuracion',

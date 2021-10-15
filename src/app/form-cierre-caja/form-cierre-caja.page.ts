@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { CajasService } from '../Services/cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { Caja } from '../models/caja';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import { MovimientosService } from '../Services/movimientos.service';

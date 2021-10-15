@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Item } from '../models/item';
 import { variacionStock } from '../models/variacionStock';
 import { BaseService } from './base.service';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { KeywordService } from './keyword.service';
 import { VariacionesStocksService } from './variaciones-stocks.service';
 

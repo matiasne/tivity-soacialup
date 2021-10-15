@@ -1,0 +1,4 @@
+<ion-item class="item-card">
+  <ion-checkbox color="primary" slot="start" [(ngModel)]="facturar" (ionChange)="updateFacturar($event)"  [disabled]="!habilitadoFacturar"></ion-checkbox>
+  <ion-label> <img class="afip-logo" src="../../assets/img/logo_afip.png" alt=""> Generar Factura Afip</ion-label>
+</ion-item>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ComerciosService } from '../../Services/comercios.service';
+import { ComerciosService } from '../../Modules/comercio/comercios.service';
 
 @Injectable({
   providedIn: 'root'

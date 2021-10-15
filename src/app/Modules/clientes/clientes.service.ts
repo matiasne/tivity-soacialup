@@ -5,8 +5,8 @@ import { map, subscribeOn } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Cliente } from './cliente';
 import { KeywordService } from '../../Services/keyword.service';
-import { ComerciosService } from '../../Services/comercios.service';
 import { BaseService } from '../../Services/base.service';
+import { ComerciosService } from '../comercio/comercios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,14 +41,6 @@ export class ClientesService extends BaseService {
 
     return super.add(param);
      
-  }
-
-  getByEmail(email){
-    return this.afs.collection(this.path, ref =>  ref.where('email','==',email)).valueChanges();    
-  }
-
-  getByNombre(nombre){
-    return this.afs.collection(this.path, ref =>  ref.where('nombre','==',nombre)).valueChanges();    
   }
 
   getRef(id){
@@ -111,21 +103,5 @@ export class ClientesService extends BaseService {
             .limit(limit)).snapshotChanges();    
     }    
   }  
-
-  //Esto para ver todos los beneficios o cuestiones del cliente particular en todo el entorno
-  public getAllClientesbyEmail(email) {  
-    return this.afs.collectionGroup(this.collectionGroup, ref => ref.where('email', '==', email)).get(/*{ source: 'server' }*/)
-    .pipe(
-      map(actions => {
-        const data = [];       
-        actions.forEach(a => {
-          const item = a.data() ;
-          item.id = a.id;
-          data.push(item);
-        });
-        return data;
-      })
-    )
-  }
 
 }

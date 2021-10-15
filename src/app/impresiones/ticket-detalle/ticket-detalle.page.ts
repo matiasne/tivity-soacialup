@@ -5,7 +5,7 @@ import { Comercio } from 'src/app/models/comercio';
 import { EnumTipoDescuento } from 'src/app/models/descuento';
 import { Pedido } from 'src/app/models/pedido';
 import { EnumTipoRecargo } from 'src/app/models/recargo';
-import { ComerciosService } from 'src/app/Services/comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { PedidoService } from 'src/app/Modules/pedidos/pedido.service';
 
 @Component({

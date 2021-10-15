@@ -1,7 +1,7 @@
 import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Comercio } from '../models/comercio';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 
 @Directive({
   selector: '[appCheckComercioConfig]'

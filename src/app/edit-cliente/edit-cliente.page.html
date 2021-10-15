@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  size="small">{{titulo}}</ion-title>    
+    <ion-button fill="clear" (click)="cerrar()" color="primary" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>        
+  <app-form-cliente 
+  [cliente]="cliente"
+  (finalizado)="cerrar()"
+  ></app-form-cliente>  
+ </ion-content>

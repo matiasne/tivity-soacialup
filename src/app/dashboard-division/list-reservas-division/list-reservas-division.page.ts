@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { ListReservasManagerComponent } from 'src/app/Components/list-reservas-manager/list-reservas-manager.component';
 import { FormReservaPage } from 'src/app/form-reserva/form-reserva.page';
 import { Reserva } from 'src/app/models/reserva';
 import { Division } from 'src/app/models/subdivision';
 import { NavegacionParametrosService } from 'src/app/Services/global/navegacion-parametros.service';
-import { ReservasService } from 'src/app/Services/reservas.service';
+import { ReservasService } from 'src/app/Modules/reservas/reservas.service';
+import { ListReservasComponent } from 'src/app/Modules/reservas/list-reservas/list-reservas.component';
 
 @Component({
   selector: 'app-list-reservas-division',
@@ -17,7 +17,7 @@ export class ListReservasDivisionPage implements OnInit {
 
   public vistaLista = false;
 
-  @ViewChild(ListReservasManagerComponent) listReservasManagerChild:ListReservasManagerComponent;
+  @ViewChild(ListReservasComponent) listReservasChild:ListReservasComponent;
   public division:Division
 
   constructor(
@@ -39,7 +39,7 @@ export class ListReservasDivisionPage implements OnInit {
   }
 
   ionViewDidLeave(){
-    this.listReservasManagerChild.borrarDatosComponente()
+    this.listReservasChild.borrarDatosComponente()
   }
 
   verLista(){

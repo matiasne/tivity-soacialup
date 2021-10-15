@@ -10,16 +10,15 @@ import { FormProductoPage } from './form-producto.page';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ComponentsModule } from '../Components/components.module';
+import { ItemsModule } from '../Modules/items/items.module';
 
 
 @NgModule({
   imports: [
     CommonModule,    
-    ComponentsModule,
-    FormsModule,
+    ItemsModule,
     ReactiveFormsModule,
     IonicModule,
-    ImageCropperModule,
     FormProductoPageRoutingModule
   ],
   declarations: [

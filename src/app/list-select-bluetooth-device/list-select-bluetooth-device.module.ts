@@ -8,11 +8,13 @@ import { ListSelectBluetoothDevicePageRoutingModule } from './list-select-blueto
 
 import { ListSelectBluetoothDevicePage } from './list-select-bluetooth-device.page';
 import { ComponentsModule } from '../Components/components.module';
+import { ImpresionModule } from '../Modules/impresion/impresion.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
+    ImpresionModule,
     FormsModule,
     IonicModule,
     ListSelectBluetoothDevicePageRoutingModule

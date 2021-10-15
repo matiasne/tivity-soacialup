@@ -3,19 +3,15 @@ import { Router } from '@angular/router';
 import { AlertController, IonSearchbar, ModalController, NavController } from '@ionic/angular';
 import Fuse from 'fuse.js'
 import { Observable, Subscriber } from 'rxjs';
-import { DetailsPedidoPage } from '../../../details-pedido/details-pedido.page';
 import { FormFilterPedidosPage } from '../../../form-filter-pedidos/form-filter-pedidos.page';
 import { EnumEstadoCobro, Pedido } from '../../../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { WCOrder } from '../../../models/woocommerce/order';
 import { AuthenticationService } from '../../../Modules/authentication/authentication.service';
-import { ComentariosService } from '../../../Services/comentarios.service';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
 import { LoadingService } from '../../../Services/loading.service';
 import { PedidoService } from '../pedido.service';
 import { PedidosWoocommerceService } from '../../../Services/pedidos-woocommerce.service';
-import { UsuariosService } from '../../../Services/usuarios.service';
-import { OrdersService } from '../../../Services/woocommerce/orders.service';
 
 import {
   CalendarModal,
@@ -23,15 +19,16 @@ import {
   DayConfig,
   CalendarResult
 } from 'ion2-calendar';
-import { ComerciosService } from '../../../Services/comercios.service';
+import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { Comercio } from '../../../models/comercio';
 import { Rol } from '../../../models/rol';
+import { EditPedidoPage } from 'src/app/edit-pedido/edit-pedido.page';
 @Component({
   selector: 'app-list-pedidos',
   templateUrl: './list-pedidos.component.html',
   styleUrls: ['./list-pedidos.component.scss'],
 })
-export class ListPedidosComponent implements OnInit {
+export class ListPedidosComponent implements OnInit, AfterViewInit , OnDestroy {
 
 
   @Input() clienteIdFiltro= "";
@@ -73,14 +70,11 @@ export class ListPedidosComponent implements OnInit {
     public router:Router,
     public modalController:ModalController,
     public loadingService:LoadingService,
-    public comentariosService:ComentariosService,
     public authService:AuthenticationService,
     public changeRef:ChangeDetectorRef,
     public navParametrosService:NavegacionParametrosService,
     public pedidosWoocommerceService:PedidosWoocommerceService,
-    private usuariosServices:UsuariosService,
-    private comercioService:ComerciosService,
-    private navCtrl: NavController,
+    private comercioService:ComerciosService, 
   ) { 
     this.comercio = new Comercio();
   }
@@ -192,7 +186,7 @@ export class ListPedidosComponent implements OnInit {
     editarPedido.asignarValores(item);
 
     const modal = await this.modalController.create({
-      component: DetailsPedidoPage,
+      component: EditPedidoPage,
       componentProps:{
         pedido: editarPedido
       },

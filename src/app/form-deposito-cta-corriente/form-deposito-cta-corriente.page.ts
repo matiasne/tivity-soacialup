@@ -5,7 +5,7 @@ import { AuthenticationService } from '../Modules/authentication/authentication.
 import { Subscription } from 'rxjs';
 import { CarritoService } from '../Services/global/carrito.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { CajasService } from '../Services/cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { ActivatedRoute } from '@angular/router';
 import { Caja } from '../models/caja';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';

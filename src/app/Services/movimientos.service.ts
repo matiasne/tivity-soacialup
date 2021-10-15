@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { CtaCorrientesService } from './cta-corrientes.service';
-import { CajasService } from './cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import * as firebase from 'firebase';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
@@ -9,7 +9,7 @@ import { Mock } from 'protractor/built/driverProviders';
 import { Caja } from '../models/caja';
 import { CtaCorriente } from '../models/ctacorriente';
 import { BaseService } from './base.service';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { map } from 'rxjs/operators';
 

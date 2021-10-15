@@ -5,7 +5,7 @@ import { AuthenticationService } from '../Modules/authentication/authentication.
 import { CtaCorriente } from '../models/ctacorriente';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { ActivatedRoute } from '@angular/router';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Subscription } from 'rxjs';
 import { ToastService } from '../Services/toast.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';

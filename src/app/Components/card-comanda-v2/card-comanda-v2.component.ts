@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Comercio } from 'src/app/models/comercio';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
-import { ComerciosService } from 'src/app/Services/comercios.service';
 import { PedidoService } from 'src/app/Modules/pedidos/pedido.service';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormComentarioPage } from 'src/app/form-comentario/form-comentario.page';
-import { ComentariosService } from 'src/app/Services/comentarios.service';
+import { ComentariosService } from 'src/app/Modules/chat/comentarios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 @Component({
   selector: 'app-card-comanda-v2',

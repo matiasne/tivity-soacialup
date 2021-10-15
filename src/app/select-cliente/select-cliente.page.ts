@@ -42,6 +42,21 @@ export class SelectClientePage implements OnInit {
     this.modalController.dismiss(cliente)
   }
 
+  async editar(cliente){
+    const modal = await this.modalController.create({
+      component: FormClientePage,
+      componentProps:{
+        client:cliente
+      }      
+    });
+    
+    modal.present().then(()=>{
+      
+    })
+
+    return await modal.present();
+  }
+
 
 
  

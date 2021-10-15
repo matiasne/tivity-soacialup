@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ComerciosService } from '../comercios.service';
+import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../Services/productos.service';
 import { Subscription } from 'rxjs';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { LoadingService } from '../Services/loading.service';
 import { CargaPorVozService } from '../Services/carga-por-voz.service';
 import { ChangeDetectorRef } from '@angular/core'

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
 import { ListClienteComponent } from './list-cliente/list-cliente.component';
 import { IonicModule } from '@ionic/angular';
 import { DirectivesModule } from '../../Directives/directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../../Components/components.module';
 import { DetailsClienteComponent } from './details-cliente/details-cliente.component';
+import { FormClienteComponent } from './form-cliente/form-cliente.component';
 
 
 
@@ -20,12 +20,12 @@ import { DetailsClienteComponent } from './details-cliente/details-cliente.compo
   ],
   declarations: [
     ListClienteComponent,
-    EditClienteComponent,
+    FormClienteComponent,
     DetailsClienteComponent
   ],
   exports:[
     ListClienteComponent,
-    EditClienteComponent,
+    FormClienteComponent,
     DetailsClienteComponent
   ]
 })

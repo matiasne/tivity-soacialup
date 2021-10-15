@@ -4,9 +4,9 @@ import * as firebase from 'firebase';
 import { CtaCorriente } from '../models/ctacorriente';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { MovimientoCaja } from '../models/movimientoCaja';
-import { CajasService } from './cajas.service';
+import { CajasService } from '../Modules/cajas/cajas.service';
 import { BaseService } from './base.service';
-import { ComerciosService } from './comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Injectable({

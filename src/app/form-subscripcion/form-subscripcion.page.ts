@@ -12,9 +12,9 @@ import { SelectClientePage } from '../select-cliente/select-cliente.page';
 import { SelectPersonalPage } from '../select-personal/select-personal.page';
 import { SelectProductPage } from '../select-product/select-product.page';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
-import { ReservasService } from '../Services/reservas.service';
+import { ReservasService } from '../Modules/reservas/reservas.service';
 import { SubscripcionesService } from '../Services/subscripciones.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Comercio } from '../models/comercio';
 import { CategoriasService } from '../Services/categorias.service';
-import { ComerciosService } from '../Services/comercios.service';
+import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { LoadingService } from '../Services/loading.service';
 import { ProductosService } from '../Services/productos.service';
 import { ToastService } from '../Services/toast.service';
