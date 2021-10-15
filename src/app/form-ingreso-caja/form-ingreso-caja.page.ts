@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { NavController, ModalController } from '@ionic/angular';
-import { Cliente } from '../models/cliente';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
-import { ListClientesPage } from '../list-clientes/list-clientes.page';
 import { LoadingService } from '../Services/loading.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import { CajasService } from '../Services/cajas.service';
 import { MovimientosService } from '../Services/movimientos.service';
@@ -17,6 +14,7 @@ import { ToastService } from '../Services/toast.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
 import { ComerciosService } from '../Services/comercios.service';
 import { Comercio } from '../models/comercio';
+import { Cliente } from '../Modules/clientes/cliente';
 
 @Component({
   selector: 'app-form-ingreso-caja',

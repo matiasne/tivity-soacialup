@@ -12,7 +12,7 @@ import { ToastService } from '../Services/toast.service';
 import { CategoriasService } from '../Services/categorias.service';
 import { FormStockPage } from '../form-stock/form-stock.page';
 import { Comercio } from '../models/comercio';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { VariacionesStocksService } from '../Services/variaciones-stocks.service';
 import { FormDescuentoPage } from '../form-descuento/form-descuento.page';
 import { FormRecargoPage } from '../form-recargo/form-recargo.page';

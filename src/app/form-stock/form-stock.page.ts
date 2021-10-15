@@ -37,22 +37,9 @@ export class FormStockPage implements OnInit {
 
   guardar(){
     this.item.stock =  this.item.stock + this.nuevoStock;
-    this.modalCtrl.dismiss();   
+    this.modalCtrl.dismiss(this.item);   
 
-    this.productosService.update(this.item).then(data=>{
-      console.log(data);      
-      this.woocommerceService.setPart("products")
-      this.woocommerceService.actualizarProductoInWC(this.item)
-    });
-
-    let vStock:variacionStock = new variacionStock();
-    vStock.productoId = this.item.id;
-    vStock.stock = this.item.stock;
-    this.variacionesStockService.setPathProducto(this.item.id);
     
-    this.variacionesStockService.add(vStock).then(resp =>{
-      console.log("variacion Guardada");        
-    })
 
     //guardar el registro del stock actual con fecha
   }

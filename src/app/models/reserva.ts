@@ -3,7 +3,7 @@ import { ItemPedido } from "./itemPedido";
 import { Descuento } from "./descuento";
 import { Recargo } from "./recargo";
 import { User } from "./user";
-import { Cliente } from "./cliente";
+import { Cliente } from "../Modules/clientes/cliente";
 
 export enum EstadoReserva{
     cargada = 1,

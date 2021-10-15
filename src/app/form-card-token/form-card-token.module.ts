@@ -7,10 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { FormCardTokenPageRoutingModule } from './form-card-token-routing.module';
 
 import { FormCardTokenPage } from './form-card-token.page';
+import { MercadopagoModule } from '../Modules/mercadopago/mercadopago.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    MercadopagoModule,
     FormsModule,
     IonicModule,
     FormCardTokenPageRoutingModule

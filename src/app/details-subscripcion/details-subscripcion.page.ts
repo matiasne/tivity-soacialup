@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SubscripcionesService } from '../Services/subscripciones.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscripcion } from '../models/subscripcion';
-import { Cliente } from '../models/cliente';
 import { PagaresService } from '../Services/pagares.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { ModalController } from '@ionic/angular';
+import { Cliente } from '../Modules/clientes/cliente';
 
 @Component({
   selector: 'app-details-subscripcion',

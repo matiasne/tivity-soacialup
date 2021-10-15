@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { Comercio } from '../models/comercio';
-import { ClientesService } from '../Services/clientes.service';
 import { Router } from '@angular/router';
 import { CtaCorriente } from '../models/ctacorriente';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { LoadingService } from '../Services/loading.service';
+import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Component({
   selector: 'app-list-cta-corrientes',

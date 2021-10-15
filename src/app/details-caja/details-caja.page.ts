@@ -10,7 +10,7 @@ import { Caja } from '../models/caja';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
 import { MovimientosService } from '../Services/movimientos.service';
 import { Comercio } from '../models/comercio';
-import { PedidoService } from '../Services/pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { Pedido } from '../models/pedido';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';

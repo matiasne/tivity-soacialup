@@ -8,13 +8,15 @@ import { FormClientePageRoutingModule } from './form-cliente-routing.module';
 
 import { FormClientePage } from './form-cliente.page';
 import { ComponentsModule } from '../Components/components.module';
+import { ClientesModule } from '../Modules/clientes/clientes.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ClientesModule,
     FormsModule,
     ComponentsModule, 
-    ReactiveFormsModule,
+    
     IonicModule,
     FormClientePageRoutingModule
   ],

@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { UsuariosService } from './usuarios.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'

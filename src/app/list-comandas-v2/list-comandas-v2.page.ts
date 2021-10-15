@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComentariosService } from '../Services/comentarios.service';
 import { LoadingService } from '../Services/loading.service';
-import { PedidoService } from '../Services/pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { CocinasService } from '../Services/cocinas.service';
 import { AlertController, ModalController, Platform } from '@ionic/angular';

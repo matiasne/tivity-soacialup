@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalendarOptions, EventAddArg, FullCalendarComponent, Calendar, EventInput } from '@fullcalendar/angular'; // useful for typechecking
 import { ModalController } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { ReservasService } from '../../Services/reservas.service';
   templateUrl: './list-reservas-manager.component.html',
   styleUrls: ['./list-reservas-manager.component.scss'],
 })
-export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
+export class ListReservasManagerComponent implements AfterViewInit , OnChanges, OnDestroy {
 
   //Filtros externos
   @Input() clienteIdFiltro= "";
@@ -87,17 +87,16 @@ export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
 
     if(this.initCalendar){
       this.initCalendar = false
-      this.calendarApi = this.calendarComponent.getApi();
-      
+      this.calendarApi = this.calendarComponent.getApi();      
     }
      
       
-      this.obsReserva = this.reservasService.listReservas().subscribe((data:any)=>{
-        this.itemsAll = data;      
-        this.mostrar(this.itemsAll)
-      })
-      this.comercio = new Comercio()
-      this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue())
+    this.obsReserva = this.reservasService.listReservas().subscribe((data:any)=>{
+      this.itemsAll = data;      
+      this.mostrar(this.itemsAll)
+    })
+    this.comercio = new Comercio()
+    this.comercio.asignarValores(this.comercioService.getSelectedCommerceValue())
     
   }
 
@@ -108,6 +107,10 @@ export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
     }
     this.mostrar(this.itemsAll)        
   } 
+
+  ngOnDestroy(){
+    this.obsReserva.unsubscribe()
+  }
 
   editar(reserva){
     this.editarReserva(reserva)
@@ -266,9 +269,7 @@ export class ListReservasManagerComponent implements AfterViewInit , OnChanges {
         }
     }
 
-    this.updateCalendar();
-
-    
+    this.updateCalendar();    
   }
 
   borrarDatosComponente() { // debe ser llamado por la página que contiene el componente

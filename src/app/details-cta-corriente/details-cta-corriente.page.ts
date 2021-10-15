@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { CtaCorriente } from '../models/ctacorriente';
 import { Subscription } from 'rxjs';
-import { ClientesService } from '../Services/clientes.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { LoadingService } from '../Services/loading.service';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { MovimientosService } from '../Services/movimientos.service';
 import { UsuariosService } from '../Services/usuarios.service';
+import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Component({
   selector: 'app-details-cta-corriente',

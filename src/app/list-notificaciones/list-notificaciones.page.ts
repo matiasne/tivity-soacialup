@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 
 @Component({
   selector: 'app-list-notificaciones',

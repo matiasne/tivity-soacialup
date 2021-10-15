@@ -19,7 +19,7 @@ import { SelectClientePage } from '../select-cliente/select-cliente.page';
 import { SelectDivisionPage } from '../select-division/select-division.page';
 import { SelectPersonalPage } from '../select-personal/select-personal.page';
 import { SelectProductPage } from '../select-product/select-product.page';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { ComerciosService } from '../Services/comercios.service';
 import { EstadosReservasService } from '../Services/estados-reservas.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
@@ -179,13 +179,12 @@ export class FormReservaPage implements OnInit {
           this.abrirNuevoCliente();
         }
         if(retorno.data != "nuevo"){
-          let cliente = retorno.data.item;
+          let cliente = retorno.data;
           this.reserva.clienteEmail = cliente.email
           this.reserva.clienteId = cliente.id;
           this.reserva.clienteNombre = cliente.nombre
         }   
-      }
-           
+      }           
     });
     return await modal.present();
   }

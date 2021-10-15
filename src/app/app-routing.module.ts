@@ -39,16 +39,8 @@ const routes: Routes = [
     loadChildren: () => import('./form-categoria/form-categoria.module').then( m => m.FormCategoriaPageModule)
   },
   {
-    path: 'list-clientes',
-    loadChildren: () => import('./list-clientes/list-clientes.module').then( m => m.ListClientesPageModule)
-  },
-  {
     path: 'list-subscripciones',
     loadChildren: () => import('./list-subscripciones/list-subscripciones.module').then( m => m.ListSubscripcionesPageModule)
-  },
-  {
-    path: 'details-cliente',
-    loadChildren: () => import('./details-cliente/details-cliente.module').then( m => m.DetailsClientePageModule)
   },
   {
     path: 'details-subscripcion',
@@ -256,10 +248,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-stock/form-stock.module').then( m => m.FormStockPageModule)
   },
   {
-    path: 'list-pedidos',
-    loadChildren: () => import('./list-pedidos/list-pedidos.module').then( m => m.ListPedidosPageModule)
-  },
-  {
     path: 'form-cocina',
     loadChildren: () => import('./form-cocina/form-cocina.module').then( m => m.FormCocinaPageModule)
   },
@@ -403,10 +391,6 @@ const routes: Routes = [
     loadChildren: () => import('./list-reservas/list-reservas.module').then( m => m.ListReservasPageModule)
   },
   {
-    path: 'form-card-payment',
-    loadChildren: () => import('./form-card-payment/form-card-payment.module').then( m => m.FormCardPaymentPageModule)
-  },
-  {
     path: 'form-config-mercadopago',
     loadChildren: () => import('./form-config-mercadopago/form-config-mercadopago.module').then( m => m.FormConfigMercadopagoPageModule)
   },
@@ -475,15 +459,14 @@ const routes: Routes = [
     loadChildren: () => import('./select-division/select-division.module').then( m => m.SelectDivisionPageModule)
   },
   {
-    path: 'details-division',
-    loadChildren: () => import('./details-division/details-division.module').then( m => m.DetailsDivisionPageModule)
-    
+    path: 'dashboard-pedidos',
+    loadChildren: () => import('./dashboard-pedidos/dashboard-pedidos.module').then( m => m.DashboardPedidosPageModule)
   },
   {
-    path: 'details-cliente',
-    loadChildren: () => import('./details-cliente/details-cliente.module').then( m => m.DetailsClientePageModule)
-    
+    path: 'dashboard-division',
+    loadChildren: () => import('./dashboard-division/dashboard-division.module').then( m => m.DashboardDivisionPageModule)
   },
+
 ];
 
 @NgModule({

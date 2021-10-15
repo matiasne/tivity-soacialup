@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ListClientesPage } from '../list-clientes/list-clientes.page';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ListComerciosOwnerPage } from '../list-comercios-owner/list-comercios-owner.page';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { CtaCorriente } from '../models/ctacorriente';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
 import { ActivatedRoute } from '@angular/router';
-import { ClientesService } from '../Services/clientes.service';
 import { ComerciosService } from '../Services/comercios.service';
 import { Subscription } from 'rxjs';
 import { ToastService } from '../Services/toast.service';
 import { SelectClientePage } from '../select-cliente/select-cliente.page';
+import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Component({
   selector: 'app-form-cta-corriente',

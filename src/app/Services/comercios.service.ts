@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import * as firebase from 'firebase';
 import { Comercio } from '../models/comercio';
 import { map } from 'rxjs/operators';

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonContent, ModalController, NavParams } from '@ionic/angular';
 import { AutosizeModule} from 'ngx-autosize'
 import { Comentario } from '../models/comentario';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { ComentariosService } from '../Services/comentarios.service';
 @Component({
   selector: 'app-chat',

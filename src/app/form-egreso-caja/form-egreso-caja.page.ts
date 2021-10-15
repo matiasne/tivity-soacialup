@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { CajasService } from '../Services/cajas.service';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';

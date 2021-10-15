@@ -3,7 +3,7 @@ import { ComerciosService } from '../Services/comercios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comercio } from '../models/comercio';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { FormComercioPage } from '../form-comercio/form-comercio.page';
 import { AlertController, ModalController } from '@ionic/angular';
 import { RolesService } from '../Services/roles.service';

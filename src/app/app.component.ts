@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthenticationService } from './Services/authentication.service';
+import { AuthenticationService } from './Modules/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { ComerciosService } from './Services/comercios.service';
@@ -21,6 +21,8 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { SelectDivisionPage } from './select-division/select-division.page';
 import { NavegacionParametrosService } from './Services/global/navegacion-parametros.service';
 import { Division } from './models/subdivision';
+import { SelectClientePage } from './select-cliente/select-cliente.page';
+import { Cliente } from './Modules/clientes/cliente';
 
 @Component({
   selector: 'app-root',
@@ -346,23 +348,41 @@ tagListenerSuccess(tagEvent) {
   console.log("Ceci est un tag : " + tagEvent)  
 }
 
-  async selectDivision(){
-    
-    let modal = await this.modalCtrl.create({
-      component: SelectDivisionPage,
-    });  
-    modal.onDidDismiss()
-      .then((retorno) => {
-        if(retorno.data){
-          let division = new Division();
-          division.asignarValores(retorno.data)
-          this.navParametrosService.param = division;
-          this.router.navigate(['/details-division'])
-        }
-                
-    });
-    
-    return await modal.present()
+async selectDivision(){  
+  let modal = await this.modalCtrl.create({
+    component: SelectDivisionPage,
+  });  
+  modal.onDidDismiss().then((retorno) => {
+    if(retorno.data){
+      let division = new Division();
+      division.asignarValores(retorno.data)
+      this.navParametrosService.param = division;
+      this.router.navigate(['/dashboard-division'])
+    }
+              
+  });
+  
+  return await modal.present()
+}
+
+
+
+async selectCliente(){  
+  let modal = await this.modalCtrl.create({
+    component: SelectClientePage,
+  });  
+  modal.onDidDismiss().then((retorno) => {
+    console.log(retorno.data)
+    if(retorno.data){
+      let cliente = new Cliente();
+      cliente.asignarValores(retorno.data)
+      this.navParametrosService.setParam(cliente)
+      this.router.navigate(['/dashboard-clientes'])
+    }
+              
+  });
+  
+  return await modal.present()
 }
 
 }

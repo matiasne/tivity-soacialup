@@ -5,7 +5,7 @@ import * as firebase from 'firebase/app';
 import { tap, map, switchMap, first } from 'rxjs/operators';
 import { TouchSequence } from 'selenium-webdriver';
 import { of } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AlertController } from '@ionic/angular';
 

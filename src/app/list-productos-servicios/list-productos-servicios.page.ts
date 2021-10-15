@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
-import { ModalController, LoadingController, AlertController, NavController, Platform, IonInfiniteScroll, IonSearchbar } from '@ionic/angular';
+import { ModalController, AlertController,  Platform,  IonSearchbar } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../Services/productos.service';
 import { Subscription } from 'rxjs';
@@ -13,11 +13,10 @@ import { ChangeDetectorRef } from '@angular/core'
 import { ToastService } from '../Services/toast.service';
 import { CategoriasService } from '../Services/categorias.service';
 import { Comercio } from '../models/comercio';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { VariacionesStocksService } from '../Services/variaciones-stocks.service';
 import { FormDescuentoPage } from '../form-descuento/form-descuento.page';
 import { FormRecargoPage } from '../form-recargo/form-recargo.page';
-import { Pedido } from '../models/pedido';
 import { ComandaPage } from '../impresiones/comanda/comanda.page';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
@@ -25,12 +24,10 @@ import { WordpressService } from '../Services/wordpress/wordpress.service';
 import { Item } from '../models/item';
 import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
-import { PedidoService } from '../Services/pedido.service';
+import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { FormProductoPage } from '../form-producto/form-producto.page';
 import { DetailsCarritoPage } from '../details-carrito/details-carrito.page';
-import Fuse from 'fuse.js'
 import { ImpresoraService } from '../Services/impresora/impresora.service';
-import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
 import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
 
@@ -102,7 +99,6 @@ export class ListProductosServiciosPage implements OnInit {
   public devWidth = 0;
 
   constructor(
-    public loadingController: LoadingController,
     private router: Router,
     private route: ActivatedRoute,
     public productosService:ProductosService,
@@ -120,14 +116,13 @@ export class ListProductosServiciosPage implements OnInit {
     private AuthenticationService:AuthenticationService,
     private modalController:ModalController,
     private authenticationService:AuthenticationService,
-    private navParametrosService:NavegacionParametrosService,
     private platform:Platform,
-    private wordpressService:WordpressService,
     private usuariosServices:UsuariosService,
     private notificacionesAppService:NotifificacionesAppService,
     private pedidosService:PedidoService,
     private escanerCodigoBarraService:EscanerCodigoBarraService,
-    private impresoraService:ImpresoraService
+    private impresoraService:ImpresoraService,
+    private productosServices:ProductosService
     
   ) { 
     
@@ -282,6 +277,15 @@ export class ListProductosServiciosPage implements OnInit {
         item:item
       }
     });  
+
+    modal.onDidDismiss().then(response =>{
+      if(response.data){
+        this.productosServices.update(response.data).then(reps =>{
+          console.log("ok")
+        })
+      }
+    })
+
     return await modal.present();
 
   }
@@ -571,6 +575,15 @@ export class ListProductosServiciosPage implements OnInit {
       let modal = await this.modalController.create({
         component: FormProductoPage
       });  
+
+      modal.onDidDismiss().then(response =>{
+        if(response.data){
+          this.productosServices.add(response.data).then(reps =>{
+            console.log("ok")
+          })
+        }
+      })
+
       return await modal.present();
 
     }

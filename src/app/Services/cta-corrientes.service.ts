@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import { CtaCorriente } from '../models/ctacorriente';
-import { ClientesService } from './clientes.service';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { MovimientoCaja } from '../models/movimientoCaja';
 import { CajasService } from './cajas.service';
 import { BaseService } from './base.service';
 import { ComerciosService } from './comercios.service';
+import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Injectable({
   providedIn: 'root'

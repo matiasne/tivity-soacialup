@@ -27,6 +27,7 @@ import { DetailsImagePage } from '../details-image/details-image.page';
 import { WoocommerceService } from '../Services/woocommerce/woocommerce.service';
 import { LoadingService } from '../Services/loading.service';
 import { WoocommerceSyncData } from '../models/woocommerceSyncData';
+import { variacionStock } from '../models/variacionStock';
 
 @Component({
   selector: 'app-form-producto',
@@ -334,18 +335,8 @@ export class FormProductoPage implements OnInit {
     }
 
    
-    if(this.updating){
-      this.productosService.update(itemGuardar).then((data:any)=>{
-        
-      })
-     
-    } 
-    else{
-      this.productosService.set(itemGuardar.id,itemGuardar).then((data:any)=>{
-      })
-      
-    }    
-    this.modalCtrl.dismiss()
+   
+    this.modalCtrl.dismiss(itemGuardar)
     //this.navCtrl.back();
 
   }
@@ -370,6 +361,20 @@ export class FormProductoPage implements OnInit {
       }
     });  
 
+    modal.onDidDismiss().then(response =>{
+      if(response.data){
+        this.item = response.data;
+    
+        // let vStock:variacionStock = new variacionStock();
+        // vStock.productoId = this.item.id;
+        // vStock.stock = this.item.stock;
+        // this.variacionesStockService.setPathProducto(this.item.id);
+        
+        // this.variacionesStockService.add(vStock).then(resp =>{
+        //   console.log("variacion Guardada");        
+        // })
+      }
+    })
     return await modal.present();
   }
 

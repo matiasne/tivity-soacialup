@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { FormConfigMercadopagoPageRoutingModule } from './form-config-mercadopago-routing.module';
 
 import { FormConfigMercadopagoPage } from './form-config-mercadopago.page';
+import { MercadopagoModule } from '../Modules/mercadopago/mercadopago.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    MercadopagoModule,
     IonicModule,
     FormConfigMercadopagoPageRoutingModule
   ],

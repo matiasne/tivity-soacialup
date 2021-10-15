@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { CajasService } from '../Services/cajas.service';
 import { Caja } from '../models/caja';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
