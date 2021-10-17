@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { CalendarOptions, EventAddArg, FullCalendarComponent, Calendar, EventInput } from '@fullcalendar/angular'; // useful for typechecking
 import { ModalController } from '@ionic/angular';
 import { CalendarModal, CalendarModalOptions } from 'ion2-calendar';
+import { EditReservaPage } from 'src/app/edit-reserva/edit-reserva.page';
 import { Comercio } from 'src/app/models/comercio';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { ToastService } from 'src/app/Services/toast.service';
-import { FormReservaPage } from '../../../form-reserva/form-reserva.page';
 import { Reserva } from '../../../models/reserva';
 import { Subscripcion } from '../../../models/subscripcion';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
@@ -80,7 +80,7 @@ export class ListReservasComponent implements AfterViewInit , OnDestroy {
   
       this.navParametrosService.param = res
       const modal = await this.modalCtrl.create({
-        component: FormReservaPage,  
+        component: EditReservaPage,  
         componentProps:{
           reserva:res
         },
@@ -128,7 +128,7 @@ export class ListReservasComponent implements AfterViewInit , OnDestroy {
       }
       console.log(res)
       const modal = await this.modalCtrl.create({
-        component: FormReservaPage,
+        component: EditReservaPage,
         componentProps:{
           reserva: res,
        },     

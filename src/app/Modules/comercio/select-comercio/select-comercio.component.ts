@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { CambiarPlanPage } from 'src/app/cambiar-plan/cambiar-plan.page';
-import { FormComercioPage } from 'src/app/form-comercio/form-comercio.page';
+import { EditComercioPage } from 'src/app/edit-comercio/edit-comercio.page';
 import { EnumPlanes, User } from 'src/app/models/user';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { LoadingService } from 'src/app/Services/loading.service';
@@ -91,7 +91,7 @@ export class SelectComercioComponent implements OnInit {
    
 
     const modal = await this.modalCtrl.create({
-      component: FormComercioPage,
+      component: EditComercioPage,
       componentProps:undefined
     });
     modal.onDidDismiss()

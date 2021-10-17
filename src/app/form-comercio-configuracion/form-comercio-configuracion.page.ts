@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comercio } from '../models/comercio';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { FormComercioPage } from '../form-comercio/form-comercio.page';
 import { AlertController, ModalController } from '@ionic/angular';
 import { RolesService } from '../Services/roles.service';
 import { FormConfiguracionAfipPage } from '../form-configuracion-afip/form-configuracion-afip.page';
 import { FormConfigMercadopagoPage } from '../form-config-mercadopago/form-config-mercadopago.page';
+import { EditComercioPage } from '../edit-comercio/edit-comercio.page';
 
 @Component({
   selector: 'app-form-comercio-configuracion',
@@ -59,7 +59,7 @@ export class FormComercioConfiguracionPage implements OnInit {
     // this.seleccionar(item);
  
      const modal = await this.modalCtrl.create({
-       component: FormComercioPage,
+       component: EditComercioPage,
        componentProps: {
          comercio:this.comercio      
        }

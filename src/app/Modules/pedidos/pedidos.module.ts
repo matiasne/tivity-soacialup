@@ -5,6 +5,7 @@ import { ListPedidosComponent } from './list-pedidos/list-pedidos.component';
 import { DirectivesModule } from 'src/app/Directives/directives.module';
 import { ComponentsModule } from 'src/app/Components/components.module';
 import { CardPedidoComponent } from './card-pedido/card-pedido.component';
+import { CardItemPedidoComponent } from './card-item-pedido/card-item-pedido.component';
 
 
 
@@ -16,13 +17,15 @@ import { CardPedidoComponent } from './card-pedido/card-pedido.component';
   ],
   declarations: [
     CardPedidoComponent,
+    CardItemPedidoComponent,
     FormPedidoComponent,
-    ListPedidosComponent
+    ListPedidosComponent,
   ],
   exports:[
     CardPedidoComponent,
+    CardItemPedidoComponent,
     FormPedidoComponent,
-    ListPedidosComponent
+    ListPedidosComponent,
   ]
 })
 export class PedidosModule { }

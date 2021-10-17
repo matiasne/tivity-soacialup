@@ -8,10 +8,12 @@ import { AddProductoVentaPageRoutingModule } from './add-producto-venta-routing.
 
 import { AddProductoVentaPage } from './add-producto-venta.page';
 import { ComponentsModule } from '../Components/components.module';
+import { ItemsModule } from '../Modules/items/items.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ItemsModule,
     ComponentsModule,
     FormsModule,
     IonicModule,

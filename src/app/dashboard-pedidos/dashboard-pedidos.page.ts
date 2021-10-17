@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
+import { EditPedidoPage } from '../edit-pedido/edit-pedido.page';
 import { Pedido } from '../models/pedido';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 
@@ -27,7 +27,7 @@ export class DashboardPedidosPage implements OnInit {
  async nuevoPedido(){
   this.navParamService.param = undefined;
   const modal = await this.modalController.create({
-    component: DetailsPedidoPage,
+    component: EditPedidoPage,
     componentProps:{
       pedido:new Pedido(),
     },

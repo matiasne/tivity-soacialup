@@ -16,7 +16,6 @@ import { SearchFilterInputComponent } from './search-filter-input/search-filter-
 import { CardReservaComponent } from './card-reserva/card-reserva.component';
 import { DirectivesModule } from '../Directives/directives.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CarritoComponent } from './carrito/carrito.component';
 
 
 
@@ -42,7 +41,7 @@ imports: [
     ItemBluetoothDeviceComponent,
     ItemBluetoothPrinterComponent,
     SearchFilterInputComponent,
-    CarritoComponent,
+    
   ],
   exports: [
     BtnSeleccionarImagenComponent,
@@ -56,7 +55,7 @@ imports: [
     ItemBluetoothDeviceComponent,
     ItemBluetoothPrinterComponent,
     SearchFilterInputComponent,
-    CarritoComponent
+    
   ]
 })
 export class ComponentsModule {}

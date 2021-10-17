@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController } from '@ionic/angular';
+import { EditClientePage } from '../edit-cliente/edit-cliente.page';
 import { ClientesService } from '../Modules/clientes/clientes.service';
-import { FormClientePage } from '../form-cliente/form-cliente.page';
 
 @Component({
   selector: 'app-select-cliente',
@@ -23,7 +23,7 @@ export class SelectClientePage implements OnInit {
 
   async nuevo(){
     const modal = await this.modalController.create({
-      component: FormClientePage      
+      component: EditClientePage      
     });
     
     modal.present().then(()=>{
@@ -44,7 +44,7 @@ export class SelectClientePage implements OnInit {
 
   async editar(cliente){
     const modal = await this.modalController.create({
-      component: FormClientePage,
+      component: EditClientePage,
       componentProps:{
         client:cliente
       }      

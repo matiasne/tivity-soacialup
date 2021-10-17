@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../Services/productos.service';
 import { Subscription } from 'rxjs';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
-import { CarritoService } from '../Services/global/carrito.service';
+import { CarritoService } from '../Modules/carrito/carrito.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { LoadingService } from '../Services/loading.service';
 import { CargaPorVozService } from '../Services/carga-por-voz.service';
@@ -24,12 +24,12 @@ import { Item } from '../models/item';
 import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
-import { FormProductoPage } from '../form-producto/form-producto.page';
-import { DetailsCarritoPage } from '../details-carrito/details-carrito.page';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
 import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
 import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
+import { EditProductoPage } from '../edit-producto/edit-producto.page';
+import { CarritoPage } from '../carrito/carrito.page';
 
 @Component({
   selector: 'app-list-productos-servicios',
@@ -272,7 +272,7 @@ export class ListProductosServiciosPage implements OnInit {
   async editarProducto(item){
     
     let modal = await this.modalCtrl.create({
-      component: FormProductoPage,
+      component: EditProductoPage,
       componentProps: {
         item:item
       }
@@ -469,7 +469,7 @@ export class ListProductosServiciosPage implements OnInit {
    this.flagCobrando = true; 
    const modal = await this.modalController.create({
      id:'details-carrito',
-      component: DetailsCarritoPage,
+      component: CarritoPage,
       componentProps:{}      
     });    
 
@@ -570,10 +570,8 @@ export class ListProductosServiciosPage implements OnInit {
       return await modal.present();
     }
     else{
-     // this.router.navigate(['form-producto']);
-
       let modal = await this.modalController.create({
-        component: FormProductoPage
+        component: EditProductoPage
       });  
 
       modal.onDidDismiss().then(response =>{

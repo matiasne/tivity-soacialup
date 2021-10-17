@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { FormReservaPage } from '../form-reserva/form-reserva.page';
+import { EditReservaPage } from '../edit-reserva/edit-reserva.page';
 import { Reserva } from '../models/reserva';
 import { ReservasService } from '../Modules/reservas/reservas.service';
 
@@ -28,7 +28,7 @@ export class DashboardReservasPage implements OnInit {
     res.desde = fechaInicio;
 
    const modal = await this.modalCtrl.create({
-      component: FormReservaPage,
+      component: EditReservaPage,
       componentProps:{
         reserva: res
      },     

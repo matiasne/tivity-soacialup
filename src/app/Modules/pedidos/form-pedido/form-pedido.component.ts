@@ -20,7 +20,7 @@ import { SelectProductPage } from '../../../select-product/select-product.page';
 import { AfipServiceService } from '../../afip/afip-service.service';
 import { CajasService } from '../../cajas/cajas.service';
 import { ComerciosService } from '../../../Modules/comercio/comercios.service';
-import { CarritoService } from '../../../Services/global/carrito.service';
+import { CarritoService } from '../../carrito/carrito.service';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
 import { ImpresoraService } from '../../../Modules/impresion/impresora.service';
 import { ModalNotificacionService } from '../../../Services/modal-notificacion.service';

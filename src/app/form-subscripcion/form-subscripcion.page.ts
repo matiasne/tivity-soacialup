@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { ChatPage } from '../chat/chat.page';
-import { FormClientePage } from '../form-cliente/form-cliente.page';
 import { Comercio } from '../models/comercio';
 import { Descuento } from '../models/descuento';
 import { ItemPedido } from '../models/itemPedido';
@@ -16,6 +15,7 @@ import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { ReservasService } from '../Modules/reservas/reservas.service';
 import { SubscripcionesService } from '../Services/subscripciones.service';
+import { EditClientePage } from '../edit-cliente/edit-cliente.page';
 
 @Component({
   selector: 'app-form-subscripcion',
@@ -157,7 +157,7 @@ export class FormSubscripcionPage implements OnInit {
 
   async abrirNuevoCliente(){
     const modal = await this.modalController.create({
-      component: FormClientePage,     
+      component: EditClientePage,     
       cssClass:'modal-custom-wrapper' 
     });    
     modal.present().then(()=>{

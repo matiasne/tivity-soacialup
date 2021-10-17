@@ -8,7 +8,6 @@ import { CocinasService } from '../Services/cocinas.service';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Pedido } from '../models/pedido';
-import { DetailsPedidoPage } from '../details-pedido/details-pedido.page';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { DetailsComandaPage } from '../details-comanda/details-comanda.page';
 

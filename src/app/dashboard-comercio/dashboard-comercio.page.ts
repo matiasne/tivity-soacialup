@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Comercio } from '../models/comercio';
-import { CarritoService } from '../Services/global/carrito.service';
+import { CarritoService } from '../Modules/carrito/carrito.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
 import { ModalController } from '@ionic/angular';

@@ -67,10 +67,6 @@ const routes: Routes = [
     loadChildren: () => import('./dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
   },
   {
-    path: 'form-producto',
-    loadChildren: () => import('./form-producto/form-producto.module').then( m => m.FormProductoPageModule)
-  },
-  {
     path: 'details-producto',
     loadChildren: () => import('./details-producto/details-producto.module').then( m => m.DetailsProductoPageModule)
   },
@@ -81,11 +77,6 @@ const routes: Routes = [
   {
     path: 'list-productos-servicios',
     loadChildren: () => import('./list-productos-servicios/list-productos-servicios.module').then( m => m.ListProductosServiciosPageModule)
-  },
-  
-  {
-    path: 'details-carrito',
-    loadChildren: () => import('./details-carrito/details-carrito.module').then( m => m.DetailsCarritoPageModule)
   },
   {
     path: 'form-caja',
@@ -188,16 +179,8 @@ const routes: Routes = [
     loadChildren: () => import('./servicio-calendario/servicio-calendario.module').then( m => m.ServicioCalendarioPageModule)
   },
   {
-    path: 'form-reserva',
-    loadChildren: () => import('./form-reserva/form-reserva.module').then( m => m.FormReservaPageModule)
-  },
-  {
     path: 'list-personal',
     loadChildren: () => import('./list-personal/list-personal.module').then( m => m.ListPersonalPageModule)
-  },
-  {
-    path: 'details-caja',
-    loadChildren: () => import('./details-caja/details-caja.module').then( m => m.DetailsCajaPageModule)
   },
   {
     path: 'form-estilo-configuracion',
@@ -234,10 +217,6 @@ const routes: Routes = [
   {
     path: 'form-apertura-caja',
     loadChildren: () => import('./form-apertura-caja/form-apertura-caja.module').then( m => m.FormAperturaCajaPageModule)
-  },
-  {
-    path: 'details-pedido',
-    loadChildren: () => import('./details-pedido/details-pedido.module').then( m => m.DetailsPedidoPageModule)
   },
   {
     path: 'form-impresora-config',
@@ -429,7 +408,8 @@ const routes: Routes = [
   {
     path: 'edit-comercio',
     loadChildren: () => import('./edit-comercio/edit-comercio.module').then( m => m.EditComercioPageModule)
-  },  {
+  },
+  {
     path: 'edit-reserva',
     loadChildren: () => import('./edit-reserva/edit-reserva.module').then( m => m.EditReservaPageModule)
   },
@@ -441,6 +421,16 @@ const routes: Routes = [
     path: 'dashboard-caja',
     loadChildren: () => import('./dashboard-caja/dashboard-caja.module').then( m => m.DashboardCajaPageModule)
   },
+  {
+    path: 'edit-producto',
+    loadChildren: () => import('./edit-producto/edit-producto.module').then( m => m.EditProductoPageModule)
+  },
+  {
+    path: 'carrito',
+    loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
+  },
+
+
 
 
 

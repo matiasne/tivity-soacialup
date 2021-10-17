@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { DetailsPedidoPage } from 'src/app/details-pedido/details-pedido.page';
+import { EditPedidoPage } from 'src/app/edit-pedido/edit-pedido.page';
 import { Pedido } from 'src/app/models/pedido';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
 import { ListPedidosComponent } from 'src/app/Modules/pedidos/list-pedidos/list-pedidos.component';
@@ -51,7 +51,7 @@ export class ListPedidosClientePage implements OnInit {
     pedido.asignarCliente(this.cliente)
 
     const modal = await this.modalController.create({
-      component: DetailsPedidoPage,
+      component: EditPedidoPage,
       componentProps:{
         pedido:pedido
       },

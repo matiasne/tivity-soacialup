@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { DetailsPedidoPage } from 'src/app/details-pedido/details-pedido.page';
+import { EditPedidoPage } from 'src/app/edit-pedido/edit-pedido.page';
 import { Pedido } from 'src/app/models/pedido';
 import { Division } from 'src/app/models/subdivision';
 import { ListPedidosComponent } from 'src/app/Modules/pedidos/list-pedidos/list-pedidos.component';
@@ -39,7 +39,7 @@ export class ListPedidosDivisionPage implements OnInit {
     let pedido = new Pedido();
     pedido.divisionNombre = this.division.nombre
     const modal = await this.modalController.create({
-      component: DetailsPedidoPage,
+      component: EditPedidoPage,
       componentProps:{
         pedido:pedido
       },

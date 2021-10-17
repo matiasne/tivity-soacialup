@@ -10,6 +10,7 @@ import { ListProductosServiciosPage } from './list-productos-servicios.page';
 import { ComponentsModule } from '../Components/components.module';
 import { DirectivesModule } from '../Directives/directives.module';
 import { ItemsModule } from '../Modules/items/items.module';
+import { CarritoModule } from '../Modules/carrito/carrito.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ItemsModule } from '../Modules/items/items.module';
     CommonModule,
     ComponentsModule,
     ItemsModule,
+    CarritoModule,
     DirectivesModule,
     FormsModule,
     IonicModule,

@@ -3,7 +3,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { Subscription } from 'rxjs';
-import { CarritoService } from '../Services/global/carrito.service';
+import { CarritoService } from '../Modules/carrito/carrito.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { CajasService } from '../Modules/cajas/cajas.service';
 import { ActivatedRoute } from '@angular/router';

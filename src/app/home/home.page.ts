@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from '../Services/loading.service';
 import { UsuariosService } from '../Services/usuarios.service';
 import { ToastService } from '../Services/toast.service';
-import { FormComercioPage } from '../form-comercio/form-comercio.page';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
 import { EnumPlanes, User } from '../models/user';
 import { ImpresoraService } from '../Modules/impresion/impresora.service';

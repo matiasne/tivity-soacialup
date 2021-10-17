@@ -7,10 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { EditPedidoPageRoutingModule } from './edit-pedido-routing.module';
 
 import { EditPedidoPage } from './edit-pedido.page';
+import { PedidosModule } from '../Modules/pedidos/pedidos.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    PedidosModule,
     FormsModule,
     IonicModule,
     EditPedidoPageRoutingModule

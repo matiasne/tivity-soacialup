@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { FormReservaPage } from 'src/app/form-reserva/form-reserva.page';
 import { Reserva } from 'src/app/models/reserva';
 import { Division } from 'src/app/models/subdivision';
 import { NavegacionParametrosService } from 'src/app/Services/global/navegacion-parametros.service';
 import { ReservasService } from 'src/app/Modules/reservas/reservas.service';
 import { ListReservasComponent } from 'src/app/Modules/reservas/list-reservas/list-reservas.component';
+import { EditReservaPage } from 'src/app/edit-reserva/edit-reserva.page';
 
 @Component({
   selector: 'app-list-reservas-division',
@@ -57,7 +57,7 @@ export class ListReservasDivisionPage implements OnInit {
     res.divisionNombre = this.division.nombre
     
    const modal = await this.modalController.create({
-      component: FormReservaPage,
+      component: EditReservaPage,
       componentProps:{
         reserva: res
      },     

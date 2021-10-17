@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthenticationService } from '../../Modules/authentication/authentication.service';
+import { AuthenticationService } from '../authentication/authentication.service';
 import { Item } from 'src/app/models/item';
 import { Descuento, EnumTipoDescuento } from 'src/app/models/descuento';
 import { EnumTipoRecargo, Recargo } from 'src/app/models/recargo';
-import { PedidoService } from '../../Modules/pedidos/pedido.service';
+import { PedidoService } from '../pedidos/pedido.service';
 import { Pedido } from 'src/app/models/pedido';
-import { ModalNotificacionService } from '../modal-notificacion.service';
-import { ComentariosService } from '../../Modules/chat/comentarios.service';
+import { ModalNotificacionService } from '../../Services/modal-notificacion.service';
+import { ComentariosService } from '../chat/comentarios.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Comentario } from 'src/app/models/comentario';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';

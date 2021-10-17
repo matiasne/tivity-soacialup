@@ -1,34 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { CarritoService } from '../../Services/global/carrito.service';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastService } from '../../Services/toast.service';
-import { SelectClientePage } from '../../select-cliente/select-cliente.page';
-import { FormClientePage } from '../../form-cliente/form-cliente.page';
-import { Mesa } from '../../models/mesa';
-import { Comercio } from '../../models/comercio';
-import { Pedido } from '../../models/pedido';
-import { AuthenticationService } from '../../Modules/authentication/authentication.service';
-import { EnumTipoDescuento } from '../../models/descuento';
-import { ModalNotificacionService } from '../../Services/modal-notificacion.service';
-import { ModalInputDireccionPage } from '../../modal-input-direccion/modal-input-direccion.page';
-import { Localizacion } from '../../models/localizacion';
-import { ImpresoraService } from '../../Modules/impresion/impresora.service';
-import { SelectDivisionPage } from '../../select-division/select-division.page';
-import { Division, Subdivision } from '../../models/subdivision';
-import { FormCobrarPedidoPage } from '../../form-cobrar-pedido/form-cobrar-pedido.page';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
-
+import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
+import { Pedido } from 'src/app/models/pedido';
+import { Comercio } from 'src/app/models/comercio';
+import { EnumTipoDescuento } from 'src/app/models/descuento';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { ToastService } from 'src/app/Services/toast.service';
+import { ImpresoraService } from '../../impresion/impresora.service';
+import { ModalNotificacionService } from 'src/app/Services/modal-notificacion.service';
+import { CarritoService } from '../carrito.service';
+import { SelectClientePage } from 'src/app/select-cliente/select-cliente.page';
+import { Division } from 'src/app/models/subdivision';
+import { SelectDivisionPage } from 'src/app/select-division/select-division.page';
+import { ModalInputDireccionPage } from 'src/app/modal-input-direccion/modal-input-direccion.page';
+import { Localizacion } from 'src/app/models/localizacion';
+import { FormCobrarPedidoPage } from 'src/app/form-cobrar-pedido/form-cobrar-pedido.page';
 
 @Component({
-  selector: 'app-carrito',
-  templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.scss'],
+  selector: 'app-details-carrito',
+  templateUrl: './details-carrito.component.html',
+  styleUrls: ['./details-carrito.component.scss'],
 })
-export class CarritoComponent implements OnInit {
+export class DetailsCarritoComponent implements OnInit {
 
+  
   public carrito = new Pedido();
   public comercio:Comercio;
   public subsComercio: Subscription;
@@ -175,7 +174,7 @@ export class CarritoComponent implements OnInit {
 
   async abrirNuevoCliente(){
     const modal = await this.modalController.create({
-      component: FormClientePage,
+      component: EditClientePage,
       cssClass:'modal-custom-wrapper',      
     });    
     modal.present().then(()=>{
@@ -278,3 +277,4 @@ export class CarritoComponent implements OnInit {
 
   
 }
+

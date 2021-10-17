@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Descuento, EnumTipoDescuento } from '../models/descuento';
-import { CarritoService } from '../Services/global/carrito.service';
+import { CarritoService } from '../Modules/carrito/carrito.service';
 import { ToastService } from '../Services/toast.service';
 
 @Component({

@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Calendar, CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { ModalController } from '@ionic/angular';
-import { FormReservaPage } from 'src/app/form-reserva/form-reserva.page';
 import { Reserva } from 'src/app/models/reserva';
 import { NavegacionParametrosService } from 'src/app/Services/global/navegacion-parametros.service';
 import { ReservasService } from 'src/app/Modules/reservas/reservas.service';
 import { ToastService } from 'src/app/Services/toast.service';
+import { EditReservaPage } from 'src/app/edit-reserva/edit-reserva.page';
 
 @Component({
   selector: 'app-calendario-reservas',
@@ -193,7 +193,7 @@ export class CalendarioReservasComponent implements OnInit , AfterViewInit {
 
     this.navParametrosService.param = res
     const modal = await this.modalCtrl.create({
-      component: FormReservaPage,  
+      component: EditReservaPage,  
       componentProps:{
         reserva:res
       },
@@ -238,7 +238,7 @@ export class CalendarioReservasComponent implements OnInit , AfterViewInit {
     }
     console.log(res)
     const modal = await this.modalCtrl.create({
-      component: FormReservaPage,
+      component: EditReservaPage,
       componentProps:{
         reserva: res,
      },     

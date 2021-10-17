@@ -11,13 +11,8 @@ import { Opcion } from '../models/opcion';
 import { Subscription } from 'rxjs';
 import { CocinasService } from '../Services/cocinas.service';
 import { GrupoOpcionesService } from '../Services/grupo-opciones.service';
-import { CarritoService } from '../Services/global/carrito.service';
 import { LoadingService } from '../Services/loading.service';
-import { ModalNotificacionService } from '../Services/modal-notificacion.service';
-import { FormProductoPage } from '../form-producto/form-producto.page';
-import { EnumEstadoCobro } from '../models/pedido';
 import { ItemPedido } from '../models/itemPedido';
-import { UsuariosService } from '../Services/usuarios.service';
 
 @Component({
   selector: 'app-add-producto-venta',

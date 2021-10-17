@@ -1,15 +1,7 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController, LoadingController, IonInfiniteScroll } from '@ionic/angular';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ModalController} from '@ionic/angular';
 import { ClientesService } from '../../clientes/clientes.service';
 import { Cliente } from '../../clientes/cliente';
-import { LoadingService } from '../../../Services/loading.service';
-import { FormClientePage } from '../../../form-cliente/form-cliente.page';
-import { CambiarPlanPage } from '../../../cambiar-plan/cambiar-plan.page';
-import { ComerciosService } from '../../../Modules/comercio/comercios.service';
-import { Comercio } from '../../../models/comercio';
-import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
 
 @Component({
   selector: 'app-list-cliente',

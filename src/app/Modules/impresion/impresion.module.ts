@@ -7,6 +7,8 @@ import { DirectivesModule } from 'src/app/Directives/directives.module';
 import { ConfigImpresoraComponent } from './config-impresora/config-impresora.component';
 import { EditImpresoraBluetoothComponent } from './edit-impresora-bluetooth/edit-impresora-bluetooth.component';
 import { SelectImpresoraBluetoothComponent } from './select-impresora-bluetooth/select-impresora-bluetooth.component';
+import { ButtonImpresionComponent } from './button-impresion/button-impresion.component';
+import { ItemBluetoothPrinterComponent } from './item-bluetooth-printer/item-bluetooth-printer.component';
 
 @NgModule({
   
@@ -20,12 +22,16 @@ import { SelectImpresoraBluetoothComponent } from './select-impresora-bluetooth/
   declarations: [
     ConfigImpresoraComponent,
     EditImpresoraBluetoothComponent,
-    SelectImpresoraBluetoothComponent
+    SelectImpresoraBluetoothComponent,
+    ButtonImpresionComponent,
+    ItemBluetoothPrinterComponent,
   ],
   exports:[
     ConfigImpresoraComponent,
     EditImpresoraBluetoothComponent,
-    SelectImpresoraBluetoothComponent
+    SelectImpresoraBluetoothComponent,
+    ButtonImpresionComponent,
+    ItemBluetoothPrinterComponent
   ]
 })
 export class ImpresionModule { }
