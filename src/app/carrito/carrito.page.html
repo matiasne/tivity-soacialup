@@ -6,7 +6,8 @@
 
 <ion-content>
   <app-details-carrito></app-details-carrito>  
-
-  <app-button-impresion [pedido]="carrito" [tipo]="ticket"></app-button-impresion>
-  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <app-button-impresion [pedido]="carrito" [tipo]="ticket"></app-button-impresion>
+  </ion-fab>
+ 
 </ion-content>

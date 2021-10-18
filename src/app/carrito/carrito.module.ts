@@ -15,7 +15,6 @@ import { CarritoModule } from '../Modules/carrito/carrito.module';
   imports: [
     CommonModule,
     FormsModule,
-    PedidosModule,
     ImpresionModule,
     CarritoModule,
     IonicModule,

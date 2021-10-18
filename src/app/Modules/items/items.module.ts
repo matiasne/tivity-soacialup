@@ -7,6 +7,7 @@ import { DirectivesModule } from 'src/app/Directives/directives.module';
 import { CardItemComponent } from './card-item/card-item.component';
 import { FormItemComponent } from './form-item/form-item.component';
 import { ListItemsComponent } from './list-items/list-items.component';
+import { CardItemPedidoComponent } from './card-item-pedido/card-item-pedido.component';
 
 
 
@@ -21,11 +22,13 @@ import { ListItemsComponent } from './list-items/list-items.component';
   ],
   declarations: [
     CardItemComponent,
+    CardItemPedidoComponent,
     FormItemComponent,
     ListItemsComponent
   ],
   exports:[
     CardItemComponent,
+    CardItemPedidoComponent,
     FormItemComponent,
     ListItemsComponent
   ]
