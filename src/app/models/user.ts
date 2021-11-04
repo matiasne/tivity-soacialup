@@ -3,11 +3,7 @@ export enum EnumPlanes {
     free = 1, 
     spark = 2, 
     premium = 3
-}
-
-
-
-  
+}  
 
 export class User{
     public uid="";
@@ -20,9 +16,7 @@ export class User{
     public createdAt="";
     public plan = EnumPlanes.free
 
-    
-
-	constructor(
+    constructor(
 		
 		){
     }

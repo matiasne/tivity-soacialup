@@ -25,11 +25,11 @@ import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
-import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
 import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { EditProductoPage } from '../edit-producto/edit-producto.page';
 import { CarritoPage } from '../carrito/carrito.page';
+import { CobrarPedidoPage } from '../cobrar-pedido/cobrar-pedido.page';
 
 @Component({
   selector: 'app-list-productos-servicios',
@@ -624,7 +624,7 @@ export class ListProductosServiciosPage implements OnInit {
     this.carrito.comanda.numero = await this.comerciosService.obtenerActualizarNumeroPedido()
     const modal = await this.modalController.create({
       id:'form-cobrar',
-      component: FormCobrarPedidoPage,  
+      component: CobrarPedidoPage,  
       componentProps:{pedido:this.carrito,comercio:this.comercio},   
       cssClass:'modal-custom-wrapper' 
     });    

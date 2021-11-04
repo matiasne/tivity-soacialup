@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Egreso Caja</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-egreso-caja
+  [caja]="caja"
+  (guardar)="cerrar()"
+  (cancelar)="cerrar()"
+></app-form-egreso-caja>
+</ion-content>

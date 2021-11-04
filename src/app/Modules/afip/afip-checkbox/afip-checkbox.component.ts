@@ -10,17 +10,24 @@ import { AfipServiceService } from '../afip-service.service';
 })
 export class AfipCheckboxComponent implements OnInit {
 
-  @Input() habilitadoFacturar = false;
+  @Input() habilitadoFacturar = true;
+  @Input() clienteDoc = "";
   public facturar = false;
 
   constructor(
     private loadingService:LoadingService,
     private afipService:AfipServiceService
-  ) { }
+  ) {
+    if(this.clienteDoc == ""){
+      this.habilitadoFacturar = false;
+    }
+   }
 
   ngOnInit() {
     this.facturar = (localStorage.getItem('facturar') === "true")    
     console.log(this.facturar)
+
+    
   }
 
   updateFacturar(event){

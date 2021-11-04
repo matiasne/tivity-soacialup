@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit-cocina</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-cocina
+  [cocina]="cocina"
+  (guardar)="cerrar()"
+  (cancelar)="cerrar()"
+  (eliminar)="cerrar()"
+  ></app-form-cocina>
+</ion-content>

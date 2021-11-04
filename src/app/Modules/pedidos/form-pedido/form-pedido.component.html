@@ -202,10 +202,10 @@
     </ion-item-sliding>
  
     <span *appCheckUsuarioPermisos="{feature:'cobro',permiso:'Editor'}">   
-      <ion-button *ngIf="pedido.statusCobro == cEstado.suspendido" class="button-rounded"  color="primary" (click)="reanudar()">Reanudar</ion-button>
-      <ion-button *ngIf="pedido.statusCobro == cEstado.cobrado" class="button-rounded"  color="danger" (click)="devolverPedido()">Reembolsar</ion-button>
+      <ion-button *ngIf="pedido.statusCobro == cEstado.suspendido" class="button-rounded"  color="primary" (click)="_reanudar()">Reanudar</ion-button>
+      <ion-button *ngIf="pedido.statusCobro == cEstado.cobrado" class="button-rounded"  color="danger" (click)="_devolverPedido()">Reembolsar</ion-button>
       
-      <ion-button *ngIf="!isUpdating" slot="start" class="button-rounded"  color="primary" (click)="guardar()">Guardar</ion-button>
-      <ion-button slot="end" *ngIf="pedido.statusCobro != cEstado.cobrado && pedido.statusCobro == cEstado.pendiente" class="button-rounded"  color="success" (click)="cobrar()">Cobrar: ${{pedido.total}}</ion-button>
+      <ion-button *ngIf="!isUpdating" slot="start" class="button-rounded"  color="primary" (click)="_guardar()">Guardar</ion-button>
+      <ion-button slot="end" *ngIf="pedido.statusCobro != cEstado.cobrado && pedido.statusCobro == cEstado.pendiente" class="button-rounded"  color="success" (click)="_cobrar()">Cobrar: ${{pedido.total}}</ion-button>
     </span> 
     

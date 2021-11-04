@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { EditClientePageRoutingModule } from './edit-cliente-routing.module';
 
 import { EditClientePage } from './edit-cliente.page';
+import { CajasModule } from '../Modules/cajas/cajas.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    CajasModule,
     IonicModule,
     EditClientePageRoutingModule
   ],

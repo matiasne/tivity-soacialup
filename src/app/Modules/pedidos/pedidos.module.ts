@@ -5,12 +5,24 @@ import { ListPedidosComponent } from './list-pedidos/list-pedidos.component';
 import { DirectivesModule } from 'src/app/Directives/directives.module';
 import { ComponentsModule } from 'src/app/Components/components.module';
 import { CardPedidoComponent } from './card-pedido/card-pedido.component';
+import { ItemsModule } from '../items/items.module';
+import { FormCobrarPedidoComponent } from './form-cobrar-pedido/form-cobrar-pedido.component';
+import { FormDevolverPedidoComponent } from './form-devolver-pedido/form-devolver-pedido.component';
+import { AfipModule } from '../afip/afip.module';
+import { FormsModule } from '@angular/forms';
+import { ChatModule } from '../chat/chat.module';
+import { ImpresionModule } from '../impresion/impresion.module';
 
 
 
 @NgModule({
   imports: [
+    AfipModule,
+    ChatModule,
+    ImpresionModule,
+    FormsModule,
     CommonModule,
+    ItemsModule,
     ComponentsModule,
     DirectivesModule
   ],
@@ -18,11 +30,15 @@ import { CardPedidoComponent } from './card-pedido/card-pedido.component';
     CardPedidoComponent,    
     FormPedidoComponent,
     ListPedidosComponent,
+    FormCobrarPedidoComponent,
+    FormDevolverPedidoComponent
   ],
   exports:[
     CardPedidoComponent,    
     FormPedidoComponent,
     ListPedidosComponent,
+    FormCobrarPedidoComponent,
+    FormDevolverPedidoComponent
   ]
 })
 export class PedidosModule { }

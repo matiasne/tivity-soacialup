@@ -7,11 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardCajaPageRoutingModule } from './dashboard-caja-routing.module';
 
 import { DashboardCajaPage } from './dashboard-caja.page';
+import { CajasModule } from '../Modules/cajas/cajas.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    CajasModule,
     IonicModule,
     DashboardCajaPageRoutingModule
   ],

@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Abrir Caja</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-abrir-caja
+    [caja]="caja"
+    (guardar)="cerrar()"
+    (cancelar)="cerrar()"
+  ></app-form-abrir-caja>
+</ion-content>

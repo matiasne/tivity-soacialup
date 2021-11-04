@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ActionSheetController, AlertController, ModalController, NavParams } from '@ionic/angular';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { DetailsImagePage } from 'src/app/details-image/details-image.page';
-import { FormCategoriaPage } from 'src/app/form-categoria/form-categoria.page';
 import { FormStockPage } from 'src/app/form-stock/form-stock.page';
+import { Categoria } from 'src/app/models/categoria';
 import { Comercio } from 'src/app/models/comercio';
 import { Archivo } from 'src/app/models/foto';
 import { Item } from 'src/app/models/item';
@@ -20,6 +20,7 @@ import { ImagesService } from 'src/app/Services/images.service';
 import { ProductosService } from 'src/app/Services/productos.service';
 import { ToastService } from 'src/app/Services/toast.service';
 import { ComerciosService } from '../../comercio/comercios.service';
+import { FormCategoriaComponent } from '../form-categoria/form-categoria.component';
 
 @Component({
   selector: 'app-form-item',
@@ -27,6 +28,11 @@ import { ComerciosService } from '../../comercio/comercios.service';
   styleUrls: ['./form-item.component.scss'],
 })
 export class FormItemComponent implements OnInit {
+
+  @Input() item = new Item()
+  @Output() guardar = new EventEmitter<any>();
+  @Output() cancelar = new EventEmitter<any>();
+  @Output() eliminar = new EventEmitter<any>();
 
   isLoading = false;
   submitted = false;
@@ -50,8 +56,6 @@ export class FormItemComponent implements OnInit {
   
   public updating:boolean = false;
   public titulo = "Nuevo Producto";
-
-  public item:Item; 
   public croppedImageIcono ="";
 
   public imagenesNuevas = []
@@ -67,7 +71,6 @@ export class FormItemComponent implements OnInit {
 
     private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
-    public modalController: ModalController,
     public productosService:ProductosService,
     public categoriaService:CategoriasService,
     private barcodeScanner: BarcodeScanner,
@@ -81,8 +84,9 @@ export class FormItemComponent implements OnInit {
     public fotosService:FotoService,
     public comercioService:ComerciosService,
     public imageService:ImagesService,
-    private modalCtrl:ModalController,
-    private navParams:NavParams
+    private navParams:NavParams,
+    private modalCtrl:ModalController
+   // private modalController:ModalController
 
   ) { 
 
@@ -243,8 +247,11 @@ export class FormItemComponent implements OnInit {
 
 
   async openAddGrupoOpciones(){   
-      const modal = await this.modalController.create({
-        component: SelectGruposOpcionesPage      
+      const modal = await this.modalCtrl.create({
+        component: SelectGruposOpcionesPage,
+        componentProps: {
+          categoria: new Categoria()      
+        }      
       });  
       modal.present().then(()=>{
         
@@ -266,7 +273,7 @@ export class FormItemComponent implements OnInit {
     this.gruposOpciones.splice(index,1);
   }
 
-  async guardar(){
+  async _guardar(){
     
     this.submitted = true;
     
@@ -314,9 +321,18 @@ export class FormItemComponent implements OnInit {
       this.productosService.updateWoocommerceValues(itemGuardar.id,wSyncData);
     }
 
+    if(this.updating){
+      this.productosService.update(itemGuardar).then(data=>{
+
+      })
+    }     
+    else{
+      this.productosService.add(itemGuardar).then(data=>{
+
+      })
+    }
    
-   
-    this.modalCtrl.dismiss(itemGuardar)
+    this.guardar.emit()
     //this.navCtrl.back();
 
   }
@@ -361,11 +377,9 @@ export class FormItemComponent implements OnInit {
   
 
   async openAddCategoria(){
-    const modal = await this.modalController.create({
-      component: FormCategoriaPage,  
-      componentProps: { 
-        comercioId:localStorage.getItem('comercio_seleccionadoId')
-      }
+    let categoria = new Categoria()
+    const modal = await this.modalCtrl.create({
+      component: FormCategoriaComponent
     });   
     return await modal.present();
   }
@@ -373,13 +387,14 @@ export class FormItemComponent implements OnInit {
 
 
  
-  cerrar(){
-   this.modalCtrl.dismiss()
+  _cancelar(){
+   this.cancelar.emit()
   }
 
-  elimiar(){
+  _eliminar(){
     this.presentAlertEliminar();
   }
+
 
   async presentAlertEliminar() {
     const alert = await this.alertController.create({
@@ -397,7 +412,7 @@ export class FormItemComponent implements OnInit {
             this.productosService.delete(this.paramId);
             this.productosService.deleteWoocommerceValues(this.paramId)
             //this.navCtrl.back();
-            this.modalCtrl.dismiss();
+            this.eliminar.emit();
           }
         }
       ]

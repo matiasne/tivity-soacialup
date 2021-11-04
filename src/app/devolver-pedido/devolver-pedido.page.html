@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>cobrar-pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-devolver-pedido 
+  [pedido]="pedido" 
+  (reembolsar)="cerrar()"
+  (cancelar)="cerrar()">
+</app-form-devolver-pedido>
+</ion-content>

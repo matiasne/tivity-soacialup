@@ -3,7 +3,8 @@
     <ion-button fill="clear" (click)="cerrar()" color="primary" slot="end">
       <ion-icon  name="close-outline"></ion-icon>
     </ion-button>   
-    <ion-title  size="small">{{titulo}} <p class="header-subtitulo">{{item.nombre}}</p></ion-title>    
+    <ion-title *ngIf="item" size="small">{{titulo}} <p class="header-subtitulo">{{item.nombre}}</p></ion-title>   
+    <ion-title *ngIf="!item" size="small">{{titulo}} <p class="header-subtitulo">Nuevo Producto</p></ion-title> 
   </ion-toolbar>
 </ion-header>
 

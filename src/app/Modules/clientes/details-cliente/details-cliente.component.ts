@@ -5,7 +5,6 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormComentarioPage } from '../../../form-comentario/form-comentario.page';
-import { FormClienteEstadoPage } from '../../../form-cliente-estado/form-cliente-estado.page';
 import { ClientesEstadosService } from '../../../Services/clientes-estados.service';
 import { BeneficiosService } from '../../../Services/beneficios.service';
 import { SelectBeneficioPage } from '../../../select-beneficio/select-beneficio.page';
@@ -48,13 +47,7 @@ export class DetailsClienteComponent implements OnInit {
   ngOnInit() {}
 
   async openAddEstado(){
-    const modal = await this.modalController.create({
-      component: FormClienteEstadoPage,  
-      componentProps: { 
-        comercioId:localStorage.getItem('comercio_seleccionadoId')
-      }
-    });  
-    return await modal.present();
+   
   }
 
   cambioEstado(){

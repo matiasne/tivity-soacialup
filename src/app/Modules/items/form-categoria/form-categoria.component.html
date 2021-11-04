@@ -1,0 +1,29 @@
+<div class="icono-foto-producto">
+  <app-seleccionar-imagen
+    [aspectRatio] = "1/1"
+    [croppedImage]="categoria.foto"
+    (onSelectValue)=imagenSeleccionadaIcono($event)>
+  </app-seleccionar-imagen>
+</div>
+
+<form [formGroup]="datosForm">
+  <div [ngClass]="{'form-card': true, 'form-card-error': submitted && !datosForm.controls.nombre.valid}">
+    <ion-text color="primary">
+      <h4>Nombre *</h4>        
+    </ion-text>            
+    <ion-item>
+      <ion-input name="nombre" type="text" formControlName="nombre" required></ion-input>
+    </ion-item>
+    <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+        <div *ngIf="f.nombre.errors.required"><h5>Ingresa el nombre de la categoría</h5></div>
+    </div> 
+  </div>
+</form>
+
+<ion-button  *ngIf="updating" class="button-rounded"  color="danger" (click)="_elimiar()">Eliminar Categoría</ion-button>
+
+<ion-toolbar>
+  <ion-button class="button-rounded" slot="end" (click)="_guardar()">Guardar</ion-button>
+  
+  <ion-button class="button-rounded" slot="start"  color="light" (click)="_cancelar()">Cancelar</ion-button>
+</ion-toolbar>

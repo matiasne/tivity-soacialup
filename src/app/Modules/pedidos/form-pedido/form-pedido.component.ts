@@ -1,19 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
-import { ChatPage } from '../../../chat/chat.page';
-import { FormCobrarPedidoPage } from '../../../form-cobrar-pedido/form-cobrar-pedido.page';
-import { FormConfiguracionAfipPage } from '../../../form-configuracion-afip/form-configuracion-afip.page';
-import { FormDevolverPedidoPage } from '../../../form-devolver-pedido/form-devolver-pedido.page';
 import { ModalInputDireccionPage } from '../../../modal-input-direccion/modal-input-direccion.page';
-import { Caja } from '../../../models/caja';
 import { Comercio } from '../../../models/comercio';
 import { Descuento, EnumTipoDescuento } from '../../../models/descuento';
 import { Localizacion } from '../../../models/localizacion';
-import { Mesa } from '../../../models/mesa';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from '../../../models/movimientoCaja';
 import { EnumEstadoCobro, Pedido } from '../../../models/pedido';
 import { EnumEstadoCocina } from 'src/app/models/item';
-import { Item } from '../../../models/item';
 import { Recargo } from '../../../models/recargo';
 import { SelectClientePage } from '../../../select-cliente/select-cliente.page';
 import { SelectProductPage } from '../../../select-product/select-product.page';
@@ -21,17 +14,15 @@ import { AfipServiceService } from '../../afip/afip-service.service';
 import { CajasService } from '../../cajas/cajas.service';
 import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { CarritoService } from '../../carrito/carrito.service';
-import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
-import { ImpresoraService } from '../../../Modules/impresion/impresora.service';
 import { ModalNotificacionService } from '../../../Services/modal-notificacion.service';
 import { PedidoService } from '../pedido.service';
-import { ActivatedRoute } from '@angular/router';
 import { ItemPedido } from '../../../models/itemPedido';
-import { UsuariosService } from '../../../Services/usuarios.service';
 import { SelectDivisionPage } from '../../../select-division/select-division.page';
 import { Division } from '../../../models/subdivision';
 import { Cliente } from '../../../Modules/clientes/cliente';
 import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
+import { CobrarPedidoPage } from 'src/app/cobrar-pedido/cobrar-pedido.page';
+import { DevolverPedidoPage } from 'src/app/devolver-pedido/devolver-pedido.page';
 
 @Component({
   selector: 'app-form-pedido',
@@ -41,6 +32,13 @@ import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
 export class FormPedidoComponent implements OnInit {
 
   @Input() pedido:Pedido;
+
+  @Output() guardar = new EventEmitter<any>();
+  @Output() cobrar = new EventEmitter<any>();
+  @Output() devolverPedido = new EventEmitter<any>();
+  @Output() reanudar = new EventEmitter<any>();
+  @Output() suspender = new EventEmitter<any>();
+  @Output() cancelar = new EventEmitter<any>();
 
   private enumTipoMovimientoCaja = EnumTipoMovimientoCaja
   public comercio:Comercio;
@@ -237,9 +235,9 @@ export class FormPedidoComponent implements OnInit {
 
   
 
-  async devolverPedido(){
+  async _devolverPedido(){
     const modal = await this.modalController.create({
-      component: FormDevolverPedidoPage,  
+      component: DevolverPedidoPage,  
       componentProps:{pedido:this.pedido, comercio:this.comercio},   
       cssClass:'modal-custom-wrapper' 
     });    
@@ -247,14 +245,14 @@ export class FormPedidoComponent implements OnInit {
     modal.onDidDismiss()
     .then((retorno) => {
       if(retorno.data == "cobrado"){
-        this.modalController.dismiss() 
+        this.devolverPedido.emit()
       }
      
     });
     return await modal.present();
   }
   
-  async suspender(){
+  async _suspender(){
     const alert = await this.alertController.create({
       header: 'Está seguro que desea suspender el pedido?',
       message: '',
@@ -270,7 +268,7 @@ export class FormPedidoComponent implements OnInit {
             this.pedido.statusCobro = this.cEstado.suspendido
             this.modalNotificacion.trash("Suspendido","El pedido ahora se encuentra en estado suspendido.")
             this.actualizarPedido()   
-            this.modalController.dismiss()         
+            this.suspender.emit()       
           }
         }
       ]
@@ -279,7 +277,7 @@ export class FormPedidoComponent implements OnInit {
   }
 
 
-  async reanudar(){
+  async _reanudar(){
     const alert = await this.alertController.create({
       header: 'Está seguro que desea reanudar el pedido?',
       message: '',
@@ -296,7 +294,7 @@ export class FormPedidoComponent implements OnInit {
             this.modalNotificacion.success("Reanudado","El pedido ahora se encuentra en estado pendiente.")       
             this.pedido.statusCobro = this.cEstado.pendiente
             this.actualizarPedido()             
-            this.modalController.dismiss()
+            this.reanudar.emit()
           }
         }
       ]
@@ -304,11 +302,11 @@ export class FormPedidoComponent implements OnInit {
     await alert.present();    
   }
 
-  async cobrar(){
+  async _cobrar(){
     
     const modal = await this.modalController.create({
       id:'form-cobrar',
-      component: FormCobrarPedidoPage,  
+      component: CobrarPedidoPage,  
       componentProps:{pedido:this.pedido,comercio:this.comercio},   
       cssClass:'modal-custom-wrapper' 
     });    
@@ -317,7 +315,7 @@ export class FormPedidoComponent implements OnInit {
     .then((retorno) => {
       if(retorno.data == "cobrado"){
        
-        this.modalController.dismiss(null,null,'detail-pedido') 
+        this.cobrar.emit();
        
         
       }
@@ -326,12 +324,16 @@ export class FormPedidoComponent implements OnInit {
     return await modal.present();
   }
 
-  guardar(){
+  _guardar(){
     this.pedido.direccion = JSON.parse(JSON.stringify(this.pedido.direccion));
     this.pedidosService.add(this.pedido).then(data=>{
       console.log("Pedido guardado")
     })
-    this.modalController.dismiss();
+    this.guardar.emit()
+  }
+
+  _cancelar(){
+    this.cancelar.emit()
   }
   
 

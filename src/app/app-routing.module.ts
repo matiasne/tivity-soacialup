@@ -27,10 +27,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-plan/form-plan.module').then( m => m.FormPlanPageModule)
   },
   {
-    path: 'form-categoria',
-    loadChildren: () => import('./form-categoria/form-categoria.module').then( m => m.FormCategoriaPageModule)
-  },
-  {
     path: 'list-subscripciones',
     loadChildren: () => import('./list-subscripciones/list-subscripciones.module').then( m => m.ListSubscripcionesPageModule)
   },
@@ -79,22 +75,6 @@ const routes: Routes = [
     loadChildren: () => import('./list-productos-servicios/list-productos-servicios.module').then( m => m.ListProductosServiciosPageModule)
   },
   {
-    path: 'form-caja',
-    loadChildren: () => import('./form-caja/form-caja.module').then( m => m.FormCajaPageModule)
-  },
-  {
-    path: 'list-cajas',
-    loadChildren: () => import('./list-cajas/list-cajas.module').then( m => m.ListCajasPageModule)
-  },
-  {
-    path: 'form-egreso-caja',
-    loadChildren: () => import('./form-egreso-caja/form-egreso-caja.module').then( m => m.FormEgresoCajaPageModule)
-  },
-  {
-    path: 'form-cierre-caja',
-    loadChildren: () => import('./form-cierre-caja/form-cierre-caja.module').then( m => m.FormCierreCajaPageModule)
-  },
-  {
     path: 'form-horario',
     loadChildren: () => import('./form-horario/form-horario.module').then( m => m.FormHorarioPageModule)
   },
@@ -121,10 +101,6 @@ const routes: Routes = [
   {
     path: 'form-extraccion-cta-corriente',
     loadChildren: () => import('./form-extraccion-cta-corriente/form-extraccion-cta-corriente.module').then( m => m.FormExtraccionCtaCorrientePageModule)
-  },
-  {
-    path: 'form-ingreso-caja',
-    loadChildren: () => import('./form-ingreso-caja/form-ingreso-caja.module').then( m => m.FormIngresoCajaPageModule)
   },
   {
     path: 'form-producto-opcion',
@@ -187,14 +163,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-estilo-configuracion/form-estilo-configuracion.module').then( m => m.FormEstiloConfiguracionPageModule)
   },
   {
-    path: 'form-comentario',
-    loadChildren: () => import('./form-comentario/form-comentario.module').then( m => m.FormComentarioPageModule)
-  },
-  {
-    path: 'form-cliente-estado',
-    loadChildren: () => import('./form-cliente-estado/form-cliente-estado.module').then( m => m.FormClienteEstadoPageModule)
-  },
-  {
     path: 'form-stock',
     loadChildren: () => import('./form-stock/form-stock.module').then( m => m.FormStockPageModule)
   },
@@ -213,10 +181,6 @@ const routes: Routes = [
   {
     path: 'details-cocina',
     loadChildren: () => import('./details-cocina/details-cocina.module').then( m => m.DetailsCocinaPageModule)
-  },
-  {
-    path: 'form-apertura-caja',
-    loadChildren: () => import('./form-apertura-caja/form-apertura-caja.module').then( m => m.FormAperturaCajaPageModule)
   },
   {
     path: 'form-impresora-config',
@@ -302,16 +266,8 @@ const routes: Routes = [
     loadChildren: () => import('./form-configuracion-afip/form-configuracion-afip.module').then( m => m.FormConfiguracionAfipPageModule)
   },
   {
-    path: 'form-cobrar-pedido',
-    loadChildren: () => import('./form-cobrar-pedido/form-cobrar-pedido.module').then( m => m.FormCobrarPedidoPageModule)
-  },
-  {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },
-  {
-    path: 'form-devolver-pedido',
-    loadChildren: () => import('./form-devolver-pedido/form-devolver-pedido.module').then( m => m.FormDevolverPedidoPageModule)
   },
   {
     path: 'form-user',
@@ -429,6 +385,52 @@ const routes: Routes = [
     path: 'carrito',
     loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
   },
+  {
+    path: 'select-caja',
+    loadChildren: () => import('./select-caja/select-caja.module').then( m => m.SelectCajaPageModule)
+  },
+  {
+    path: 'edit-caja',
+    loadChildren: () => import('./edit-caja/edit-caja.module').then( m => m.EditCajaPageModule)
+  },
+  {
+    path: 'edit-caja-apertura',
+    loadChildren: () => import('./edit-caja-apertura/edit-caja-apertura.module').then( m => m.EditCajaAperturaPageModule)
+  },
+  {
+    path: 'edit-caja-cierre',
+    loadChildren: () => import('./edit-caja-cierre/edit-caja-cierre.module').then( m => m.EditCajaCierrePageModule)
+  },
+  {
+    path: 'edit-caja-egreso',
+    loadChildren: () => import('./edit-caja-egreso/edit-caja-egreso.module').then( m => m.EditCajaEgresoPageModule)
+  },
+  {
+    path: 'edit-caja-ingreso',
+    loadChildren: () => import('./edit-caja-ingreso/edit-caja-ingreso.module').then( m => m.EditCajaIngresoPageModule)
+  },
+  {
+    path: 'cobrar-pedido',
+    loadChildren: () => import('./cobrar-pedido/cobrar-pedido.module').then( m => m.CobrarPedidoPageModule)
+  },
+  {
+    path: 'devolver-pedido',
+    loadChildren: () => import('./devolver-pedido/devolver-pedido.module').then( m => m.DevolverPedidoPageModule)
+  },
+  {
+    path: 'edit-item-categoria',
+    loadChildren: () => import('./edit-item-categoria/edit-item-categoria.module').then( m => m.EditItemCategoriaPageModule)
+  },  {
+    path: 'edit-cocina',
+    loadChildren: () => import('./edit-cocina/edit-cocina.module').then( m => m.EditCocinaPageModule)
+  },
+
+
+
+
+
+
+
 
 
 

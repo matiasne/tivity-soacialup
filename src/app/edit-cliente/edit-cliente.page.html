@@ -10,6 +10,8 @@
 <ion-content>        
   <app-form-cliente 
   [cliente]="cliente"
-  (finalizado)="cerrar()"
+  (guardar)="cerrar()"
+  (cancelar)="cerrar()"
+  (eliminar)="cerrar()"
   ></app-form-cliente>  
  </ion-content>

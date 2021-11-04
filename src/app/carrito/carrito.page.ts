@@ -16,10 +16,10 @@ import { Localizacion } from '../models/localizacion';
 import { ImpresoraService } from '../Modules/impresion/impresora.service';
 import { SelectDivisionPage } from '../select-division/select-division.page';
 import { Division, Subdivision } from '../models/subdivision';
-import { FormCobrarPedidoPage } from '../form-cobrar-pedido/form-cobrar-pedido.page';
 import { Cliente } from 'src/app/Modules/clientes/cliente';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
+import { CobrarPedidoPage } from '../cobrar-pedido/cobrar-pedido.page';
 
 
 @Component({
@@ -258,7 +258,7 @@ export class CarritoPage implements OnInit {
     this.carrito.comanda.numero = await this.comerciosService.obtenerActualizarNumeroPedido()
     const modal = await this.modalController.create({
       id:'form-cobrar',
-      component: FormCobrarPedidoPage,  
+      component: CobrarPedidoPage,  
       componentProps:{pedido:this.carrito,comercio:this.comercio},   
       cssClass:'modal-custom-wrapper' 
     });    

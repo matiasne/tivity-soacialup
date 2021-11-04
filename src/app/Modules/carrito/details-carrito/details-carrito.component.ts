@@ -18,7 +18,7 @@ import { Division } from 'src/app/models/subdivision';
 import { SelectDivisionPage } from 'src/app/select-division/select-division.page';
 import { ModalInputDireccionPage } from 'src/app/modal-input-direccion/modal-input-direccion.page';
 import { Localizacion } from 'src/app/models/localizacion';
-import { FormCobrarPedidoPage } from 'src/app/form-cobrar-pedido/form-cobrar-pedido.page';
+import { CobrarPedidoPage } from 'src/app/cobrar-pedido/cobrar-pedido.page';
 
 @Component({
   selector: 'app-details-carrito',
@@ -26,8 +26,7 @@ import { FormCobrarPedidoPage } from 'src/app/form-cobrar-pedido/form-cobrar-ped
   styleUrls: ['./details-carrito.component.scss'],
 })
 export class DetailsCarritoComponent implements OnInit {
-
-  
+    
   public carrito = new Pedido();
   public comercio:Comercio;
   public subsComercio: Subscription;
@@ -257,7 +256,7 @@ export class DetailsCarritoComponent implements OnInit {
     this.carrito.comanda.numero = await this.comerciosService.obtenerActualizarNumeroPedido()
     const modal = await this.modalController.create({
       id:'form-cobrar',
-      component: FormCobrarPedidoPage,  
+      component: CobrarPedidoPage,  
       componentProps:{pedido:this.carrito,comercio:this.comercio},   
       cssClass:'modal-custom-wrapper' 
     });    

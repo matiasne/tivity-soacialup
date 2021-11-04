@@ -1,3 +1,35 @@
-<p>
-  form-egreso-caja works!
-</p>
+<ion-item class="item-card">
+  <ion-label position="floating">Caja</ion-label>
+  <ion-select [(ngModel)]="cajaSeleccionadaIndex" (ionChange)="setearCaja()">
+    <span *ngFor="let caja of cajas;let i=index">
+      <ion-select-option [value]="i">{{caja.nombre}}</ion-select-option>
+    </span>          
+  </ion-select> 
+</ion-item>
+
+
+<div class="form-card">
+  <ion-text color="primary">
+    <p>Total Efectivo {{totalActual | currency}}</p>
+  </ion-text> 
+              
+  <ion-item>
+    <ion-label position="floating">Monto *</ion-label>
+    <ion-input name="monto" type="number" [(ngModel)]="monto" required></ion-input>
+  </ion-item>
+</div>
+          
+<div class="form-card">
+  <ion-text color="primary">
+    <h4>Motivo</h4>    
+  </ion-text> 
+  <ion-item >
+    <ion-textarea [(ngModel)]="motivo" required></ion-textarea>
+  </ion-item>     
+</div>  
+
+<ion-toolbar>
+  <ion-button class="button-rounded" slot="end" (click)="_guardar()">Guardar</ion-button>
+  
+  <ion-button class="button-rounded" slot="start"  color="light" (click)="_cancelar()">Cancelar</ion-button>
+</ion-toolbar>

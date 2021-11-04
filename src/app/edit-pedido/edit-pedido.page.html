@@ -11,7 +11,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">   
-    <app-form-pedido [pedido]="pedido"></app-form-pedido>
+    <app-form-pedido [pedido]="pedido" 
+      (guardar)="cerrar()" 
+      (cobrar)="cerrar()"
+      (devolverPedido)="cerrar()"
+      (reanudar)="cerrar()"
+      (suspender)="cerrar()"
+      (cancelar)="cerrar()"></app-form-pedido>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="pedido.id != ''">
      

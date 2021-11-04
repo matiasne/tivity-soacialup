@@ -14,6 +14,7 @@ import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { Pedido } from '../models/pedido';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { EditPedidoPage } from '../edit-pedido/edit-pedido.page';
+import { EditCajaAperturaPage } from '../edit-caja-apertura/edit-caja-apertura.page';
 
 @Component({
   selector: 'app-dashboard-caja',
@@ -22,171 +23,40 @@ import { EditPedidoPage } from '../edit-pedido/edit-pedido.page';
 })
 export class DashboardCajaPage implements OnInit {
 
-  public enumTipoMovimientoCaja = EnumTipoMovimientoCaja
-  
-  public items:MovimientoCaja[] = [];
   public caja:Caja;
-  
-  public totalGeneral = 0;
 
-  public optionCaja = "";
-
-  public fechaDesde = new Date();
-
-  public comercio:Comercio
-
-  public totales = {
-    efectivo: 0,
-    debito:0,
-    credito:0,
-    ctaCorriente:0,
-    general:0
-  }
   constructor(
-    public cajasService:CajasService,
-    public ventasServices:VentasService,
-    public router:Router,
-    public loadingService:LoadingService,
-    public alertController:AlertController,
-    private movimientosService:MovimientosService,
-    private route:ActivatedRoute,
-    private comercioService:ComerciosService,
-    private pedidosService:PedidoService,
-    public navParametrosService:NavegacionParametrosService,
-    private modalController:ModalController,
-    public changeRef:ChangeDetectorRef,
-  ) { 
-    this.comercio = new Comercio()
+    private navParametrosService:NavegacionParametrosService,
+    private modalController:ModalController
+    ){
     this.caja = new Caja()
-    this.caja.id = this.route.snapshot.params.id;
-    this.fechaDesde.setDate(this.fechaDesde.getDate() - 1);
-
-    this.comercio = this.comercioService.getSelectedCommerceValue()
-    
-    this.movimientosService.setearPath(this.caja.id)
-    this.movimientosService.getMovimientosCaja(this.caja.id,this.fechaDesde).subscribe(data =>{
-    
-      this.items = data;
-      console.log(this.items)     
-    }); 
-    
-
-  }
-
-  ngOnInit() {
-    
-  }
-
-  onChangeAtras(event){
-    this.fechaDesde.setDate(this.fechaDesde.getDate() - Number(event.target.value));
-    this.refrescar()   
-  }
-
-  refrescar(){
-    
-    this.cajasService.get(this.caja.id).subscribe(data=>{
-      this.caja.asignarValores(data);
-      console.log(data)
-      console.log("Cambiando valores de caja!")
-      this.changeRef.detectChanges()   
+    this.navParametrosService.getParam().subscribe(param =>{
+      if(param instanceof Caja){
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
+      this.caja.asignarValores(param)    
+    }
     })
+  }
+
+  ngOnInit(){
     
   }
 
-  ionViewDidEnter(){    
-    
-    this.refrescar();        
-          
-  }
-
-
-  ionViewDidLeave(){
-    
-  }
-  
-  irEgreso(){
-    this.router.navigate(['form-egreso-caja',
-    {
-      cajaId:this.caja.id,
-      totalActual: this.caja.totalEfectivo
-    }
-    ]);
-  }
-
-  irIngreso(){
-    this.router.navigate(['form-ingreso-caja',
-    {
-      cajaId:this.caja.id
-    }
-    ]);
-  }
-
-  irCierre(){
-    this.router.navigate(['form-cierre-caja',
-      {
-        cajaId:this.caja.id,
-      }
-    ]);
-  }
-
-  irApertura(){
-    this.router.navigate(['form-apertura-caja',
-      {
-        cajaId:this.caja.id,
-      }
-    ]);
-  }
-
-  async eliminar(item){
-
-    const alert = await this.alertController.create({
-      header: 'Está seguro que desea eliminar el movimiento?',
-      message: 'Se perderán los registros del mismo',
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: (blah) => {
-            
-          }
-        }, {
-          text: 'Eliminar',
-          handler: () => {  
-
-            
-            this.movimientosService.eliminarMovimientoCaja(this.caja,item);
-            this.refrescar();
-          }
-        }
-      ]
+  async abrirCaja(){
+    const modal = await this.modalController.create({
+      component: EditCajaAperturaPage,
+      componentProps:{
+        caja:this.caja
+      },
+      cssClass:'modal-custom-wrapper',      
     });
-    await alert.present();    
+    
+    modal.present().then(()=>{
+    
+
+    })
   }
 
-  seleccionar(item){
-    if(item.pedidoId){
-      let obs = this.pedidosService.get(item.pedidoId).subscribe(async data=>{
-
-        let editarPedido = new Pedido();
-        editarPedido.asignarValores(data);
-        
-
-        const modal = await this.modalController.create({
-          component: EditPedidoPage,
-          componentProps:{
-            pedido:editarPedido
-          },
-          id:'detail-pedido'      
-        });
-        modal.onDidDismiss()
-        .then((retorno) => {
-          this.refrescar()
-        })
-
-        
-        await modal.present();  
-      })
-    }
-  }
 
 
 }

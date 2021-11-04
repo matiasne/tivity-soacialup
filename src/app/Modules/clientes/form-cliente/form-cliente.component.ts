@@ -21,8 +21,10 @@ import { Cliente } from '../cliente';
 export class FormClienteComponent implements OnInit {
 
   @Input() cliente:Cliente;
-  @Output() finalizado = new EventEmitter<any>();
-  
+  @Output() guardar = new EventEmitter<any>();
+  @Output() cancelar = new EventEmitter<any>();
+  @Output() eliminar = new EventEmitter<any>();
+
   submitted = false;
   
   croppedImagepath = "";
@@ -68,10 +70,10 @@ export class FormClienteComponent implements OnInit {
 
   
 
-  guardar(){
+  _guardar(){
 
     this.submitted = true;
-    this.finalizado.emit()
+    this.guardar.emit()
   
 
     console.log(this.updating)
@@ -86,13 +88,14 @@ export class FormClienteComponent implements OnInit {
     }   
   }
 
-  cancelar(){
-    this.finalizado.emit()
+  _cancelar(){
+    this.cancelar.emit()
   }
 
 
-  elimiar(){
+  _elimiar(){
     this.presentAlertEliminar();
+    this.eliminar.emit() 
   }
 
   async presentAlertEliminar() {

@@ -98,7 +98,7 @@
 
             <span *appCheckUsuarioPermisos="{feature:'cajas',permiso:'Visible'}">
               <span *ngIf="rolActual == 'Administrador' || rolActual=='Cajero'">
-                <ion-item [routerLink]="['/list-cajas']" lines="none" detail="false">
+                <ion-item [routerLink]="['/select-caja']" lines="none" detail="false">
                   <ion-icon slot="start" name="file-tray-full-outline"></ion-icon>
                   <ion-label>Cajas</ion-label> 
                 </ion-item> 

@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit-item-categoria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-categoria [categoria]="categoria"
+  (guardar)="cerrar()"
+  (cancelar)="cerrar()"
+  (eliminar)="cerrar()">
+</app-form-categoria>
+</ion-content>

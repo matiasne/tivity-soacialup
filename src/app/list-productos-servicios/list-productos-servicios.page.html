@@ -130,14 +130,14 @@
   </ion-grid>
     <!--ion-searchbar animated *ngIf="showSearchBar && itemsAllProductos.length > 0" class="FadeOut FadeIn" #ionsearchbar
       placeholder="Buscar por nombre o categoría"
-      animated="true"
+      animated="true" 
       showCancelButton="never" 
       color="light" 
-      autocomplete="on"
-      enterkeyhint="send"
-      inputmode="text"
-      type="text"
-      debounce="50"
+      autocomplete="on" 
+      enterkeyhint="send" 
+      inputmode="text" 
+      type="text" 
+      debounce="50" 
       value="{{palabraFiltro}}"
       (ionChange)="buscar($event)">
     </ion-searchbar-->
@@ -174,20 +174,5 @@
       <ion-spinner *ngIf="flagCobrando"></ion-spinner>
     </ion-button>
   </ion-toolbar> 
-
-  <ion-toolbar *ngIf="devWidth > 720"> 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="9">
-          <ion-button  class="button-rounded"  color="primary" (click)="continuar()">Guardar Pedido</ion-button>
-        </ion-col>
-        <ion-col size="3">
-          <ion-button  class="button-rounded"  color="success" (click)="cobrar()">Cobrar {{getTotal() | currency}}</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>  
-   
-    
-  </ion-toolbar>
 
 </ion-footer>
