@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
 import { CarritoService } from '../Modules/carrito/carrito.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { LoadingService } from '../Services/loading.service';
 import { CargaPorVozService } from '../Services/carga-por-voz.service';
 import { ChangeDetectorRef } from '@angular/core'
 import { ToastService } from '../Services/toast.service';
@@ -18,10 +17,7 @@ import { FormDescuentoPage } from '../form-descuento/form-descuento.page';
 import { FormRecargoPage } from '../form-recargo/form-recargo.page';
 import { ComandaPage } from '../impresiones/comanda/comanda.page';
 import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
-import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
-import { WordpressService } from '../Services/wordpress/wordpress.service';
 import { Item } from '../models/item';
-import { UsuariosService } from '../Services/usuarios.service';
 import { NotifificacionesAppService } from '../Services/notifificaciones-app.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { EscanerCodigoBarraService } from '../Services/escaner-codigo-barra.service';
@@ -30,6 +26,8 @@ import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { EditProductoPage } from '../edit-producto/edit-producto.page';
 import { CarritoPage } from '../carrito/carrito.page';
 import { CobrarPedidoPage } from '../cobrar-pedido/cobrar-pedido.page';
+import { UsuariosService } from '../Modules/authentication/usuarios.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-list-productos-servicios',

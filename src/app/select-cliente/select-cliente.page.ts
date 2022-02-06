@@ -37,7 +37,7 @@ export class SelectClientePage implements OnInit {
     this.modalController.dismiss();
   }
 
-  select(cliente){
+  _select(cliente){
     console.log(cliente)
     this.modalController.dismiss(cliente)
   }
@@ -46,7 +46,7 @@ export class SelectClientePage implements OnInit {
     const modal = await this.modalController.create({
       component: EditClientePage,
       componentProps:{
-        client:cliente
+        cliente:cliente
       }      
     });
     

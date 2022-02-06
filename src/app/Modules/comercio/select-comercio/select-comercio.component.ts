@@ -6,11 +6,11 @@ import { CambiarPlanPage } from 'src/app/cambiar-plan/cambiar-plan.page';
 import { EditComercioPage } from 'src/app/edit-comercio/edit-comercio.page';
 import { EnumPlanes, User } from 'src/app/models/user';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { RolesService } from 'src/app/Services/roles.service';
 import { ToastService } from 'src/app/Services/toast.service';
-import { UsuariosService } from 'src/app/Services/usuarios.service';
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { UsuariosService } from '../../authentication/usuarios.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-select-comercio',

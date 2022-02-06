@@ -7,11 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { EditReservaPageRoutingModule } from './edit-reserva-routing.module';
 
 import { EditReservaPage } from './edit-reserva.page';
+import { ReservasModule } from '../Modules/reservas/reservas.module';
+import { ImpresionModule } from '../Modules/impresion/impresion.module';
+import { ChatModule } from '../Modules/chat/chat.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReservasModule,
+    ImpresionModule,
+    ChatModule,
     IonicModule,
     EditReservaPageRoutingModule
   ],

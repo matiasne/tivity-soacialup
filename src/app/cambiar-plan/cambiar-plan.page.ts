@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { FormCardTokenPage } from '../form-card-token/form-card-token.page';
-import { LoadingService } from '../Services/loading.service';
 import { MercadopagoService } from '../Modules/mercadopago/mercadopago.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-cambiar-plan',

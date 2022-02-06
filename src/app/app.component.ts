@@ -10,7 +10,6 @@ import { NotifificacionesAppService } from './Services/notifificaciones-app.serv
 import { Comercio } from './models/comercio';
 import { ToastService } from './Services/toast.service';
 import { PresenceService } from './Services/presence.service';
-import { UsuariosService } from './Services/usuarios.service';
 import { RolesService } from './Services/roles.service';
 import { BluetoothService } from './Services/bluetooth.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
@@ -23,6 +22,7 @@ import { SelectClientePage } from './select-cliente/select-cliente.page';
 import { Cliente } from './Modules/clientes/cliente';
 import { ImpresoraService } from './Modules/impresion/impresora.service';
 import { ComerciosService } from './Modules/comercio/comercios.service';
+import { UsuariosService } from './Modules/authentication/usuarios.service';
 
 @Component({
   selector: 'app-root',
@@ -131,7 +131,6 @@ export class AppComponent implements OnInit {
     private toastService:ToastService,
     public presenceService:PresenceService,
     private usuariosService:UsuariosService,
-    private usuarioService:UsuariosService,
     private bluetoothService:BluetoothService,
     private rolesService:RolesService,
     private impresoraService:ImpresoraService,
@@ -243,13 +242,13 @@ export class AppComponent implements OnInit {
           });    
 
 
-          this.usuarioService.setForConnectionStatus(uid)
+          this.usuariosService.setForConnectionStatus(uid)
 
-          this.usuarioService.getConnectionStatus().subscribe(data=>{
+          this.usuariosService.getConnectionStatus().subscribe(data=>{
             this.connectionStatus = data
           })
 
-          this.usuarioService.obsUserData().subscribe(data=>{
+          this.usuariosService.obsUserData().subscribe(data=>{
             this.usuario = data
             console.log(this.usuario)
           })

@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
@@ -9,25 +8,16 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firestore';
-import { UsuariosService } from '../../Services/usuarios.service';
-import { LoadingService } from '../../Services/loading.service';
 import { EnumPlanes, User } from '../../models/user';
 import { environment } from 'src/environments/environment';
+import { UsuariosService } from './usuarios.service';
+import { LoadingService } from '../core/services/loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {  
   
-  private httpHeaders = new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
-  private options = {
-    headers: this.httpHeaders
-  };
-
   public userIdSubject = new BehaviorSubject <any>("");
   public userRol = new BehaviorSubject <any>("");
 
@@ -36,7 +26,7 @@ export class AuthenticationService {
 
   constructor(
     public firebaseAuth: AngularFireAuth,
-    private httpClient: HttpClient,
+   
     private platform: Platform,
     public alertController: AlertController,
     public googlePlus:GooglePlus,
@@ -440,29 +430,6 @@ export class AuthenticationService {
     }    
   }
 
-  // Handle API errors
-  handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      //console.error(`Backend returned code ${error.status}, ` +`body was: ${error.error.errors[0]}`);
-
-      console.log(error.error.errors.date_of_birth[0]);
-      //this.presentAlert(error.error.errors.date_of_birth[0]);      
-
-    }
-    // return an observable with a user-facing error message
-    
-    var mensaje = "Ocurrió un error, por favor intente más tarde";
-    if(error.status == 0){
-      mensaje = "Error al conectar con el servidor, por favor verifique su conexión a internet";        
-    }
-
-    return throwError(mensaje);
-  };
 
   async presentAlert(message) {
 

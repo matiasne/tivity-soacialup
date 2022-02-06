@@ -21,8 +21,8 @@ import { SelectDivisionPage } from '../../../select-division/select-division.pag
 import { Division } from '../../../models/subdivision';
 import { Cliente } from '../../../Modules/clientes/cliente';
 import { EditClientePage } from 'src/app/edit-cliente/edit-cliente.page';
-import { CobrarPedidoPage } from 'src/app/cobrar-pedido/cobrar-pedido.page';
 import { DevolverPedidoPage } from 'src/app/devolver-pedido/devolver-pedido.page';
+import { CobrarPedidoPage } from 'src/app/cobrar-pedido/cobrar-pedido.page';
 
 @Component({
   selector: 'app-form-pedido',

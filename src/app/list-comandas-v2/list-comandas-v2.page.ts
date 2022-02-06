@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComentariosService } from '../Modules/chat/comentarios.service';
-import { LoadingService } from '../Services/loading.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
 import { EnumEstadoCocina } from 'src/app/models/item';
 import { CocinasService } from '../Services/cocinas.service';
@@ -9,7 +8,8 @@ import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Pedido } from '../models/pedido';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
-import { DetailsComandaPage } from '../details-comanda/details-comanda.page';
+import { EditComandaPage } from '../edit-comanda/edit-comanda.page';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-list-comandas-v2',
@@ -221,7 +221,7 @@ export class ListComandasV2Page implements OnInit {
    // this.router.navigate(['details-pedido'])
 
     const modal = await this.modalController.create({
-      component: DetailsComandaPage, 
+      component: EditComandaPage, 
       id:'detail-comanda'      
     });
     modal.onDidDismiss()

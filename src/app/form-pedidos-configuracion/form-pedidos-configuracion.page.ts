@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { Comercio } from '../models/comercio';
-import { SelectEmpleadoPage } from '../select-empleado/select-empleado.page';
 import { ModalController, NavController, AlertController } from '@ionic/angular';
 import { FormInvitacionPage } from '../form-invitacion/form-invitacion.page';
 import { RolesService } from '../Services/roles.service';
-import { UsuariosService } from '../Services/usuarios.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Rol } from '../models/rol';
 
 @Component({
   selector: 'app-form-pedidos-configuracion',

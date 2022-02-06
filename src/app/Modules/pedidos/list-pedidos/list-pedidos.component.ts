@@ -9,7 +9,6 @@ import { EnumEstadoCocina } from 'src/app/models/item';
 import { WCOrder } from '../../../models/woocommerce/order';
 import { AuthenticationService } from '../../../Modules/authentication/authentication.service';
 import { NavegacionParametrosService } from '../../../Services/global/navegacion-parametros.service';
-import { LoadingService } from '../../../Services/loading.service';
 import { PedidoService } from '../pedido.service';
 import { PedidosWoocommerceService } from '../../../Services/pedidos-woocommerce.service';
 
@@ -23,6 +22,7 @@ import { ComerciosService } from '../../../Modules/comercio/comercios.service';
 import { Comercio } from '../../../models/comercio';
 import { Rol } from '../../../models/rol';
 import { EditPedidoPage } from 'src/app/edit-pedido/edit-pedido.page';
+import { LoadingService } from '../../core/services/loading.service';
 @Component({
   selector: 'app-list-pedidos',
   templateUrl: './list-pedidos.component.html',

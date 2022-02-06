@@ -7,10 +7,10 @@ import { Comercio } from 'src/app/models/comercio';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from 'src/app/models/movimientoCaja';
 import { Pedido } from 'src/app/models/pedido';
 import { NavegacionParametrosService } from 'src/app/Services/global/navegacion-parametros.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { MovimientosService } from 'src/app/Services/movimientos.service';
 import { VentasService } from 'src/app/Services/ventas.service';
 import { ComerciosService } from '../../comercio/comercios.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { PedidoService } from '../../pedidos/pedido.service';
 import { CajasService } from '../cajas.service';
 

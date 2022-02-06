@@ -9,18 +9,22 @@ import { ItemsModule } from '../items/items.module';
 import { FormCobrarPedidoComponent } from './form-cobrar-pedido/form-cobrar-pedido.component';
 import { FormDevolverPedidoComponent } from './form-devolver-pedido/form-devolver-pedido.component';
 import { AfipModule } from '../afip/afip.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatModule } from '../chat/chat.module';
 import { ImpresionModule } from '../impresion/impresion.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicModule } from '@ionic/angular';
 
 
 
 @NgModule({
   imports: [
+    IonicModule,
+    FormsModule ,
+    ReactiveFormsModule,
     AfipModule,
     ChatModule,
-    ImpresionModule,
-    FormsModule,
+    ImpresionModule,    
     CommonModule,
     ItemsModule,
     ComponentsModule,
@@ -28,7 +32,7 @@ import { ImpresionModule } from '../impresion/impresion.module';
   ],
   declarations: [
     CardPedidoComponent,    
-    FormPedidoComponent,
+    FormPedidoComponent,    
     ListPedidosComponent,
     FormCobrarPedidoComponent,
     FormDevolverPedidoComponent

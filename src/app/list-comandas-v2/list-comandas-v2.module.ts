@@ -8,12 +8,14 @@ import { ListComandasV2PageRoutingModule } from './list-comandas-v2-routing.modu
 
 import { ListComandasV2Page } from './list-comandas-v2.page';
 import { ComponentsModule } from '../Components/components.module';
+import { PedidosModule } from '../Modules/pedidos/pedidos.module';
+import { CocinasModule } from '../Modules/cocinas/cocinas.module';
 
 @NgModule({
   imports: [ 
     CommonModule,
-    ComponentsModule,
-    FormsModule,
+    CocinasModule,
+    PedidosModule,
     IonicModule,
     ListComandasV2PageRoutingModule
   ],

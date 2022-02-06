@@ -63,10 +63,6 @@ const routes: Routes = [
     loadChildren: () => import('./dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
   },
   {
-    path: 'details-producto',
-    loadChildren: () => import('./details-producto/details-producto.module').then( m => m.DetailsProductoPageModule)
-  },
-  {
     path: 'add-producto-venta',
     loadChildren: () => import('./add-producto-venta/add-producto-venta.module').then( m => m.AddProductoVentaPageModule)
   },
@@ -135,10 +131,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-pedidos-configuracion/form-pedidos-configuracion.module').then( m => m.FormPedidosConfiguracionPageModule)
   },
   {
-    path: 'list-categorias',
-    loadChildren: () => import('./list-categorias/list-categorias.module').then( m => m.ListCategoriasPageModule)
-  },
-  {
     path: 'recortar-imagen',
     loadChildren: () => import('./recortar-imagen/recortar-imagen.module').then( m => m.RecortarImagenPageModule)
   },
@@ -175,14 +167,6 @@ const routes: Routes = [
     loadChildren: () => import('./select-cocina/select-cocina.module').then( m => m.SelectCocinaPageModule)
   },
   {
-    path: 'list-cocinas',
-    loadChildren: () => import('./list-cocinas/list-cocinas.module').then( m => m.ListCocinasPageModule)
-  },
-  {
-    path: 'details-cocina',
-    loadChildren: () => import('./details-cocina/details-cocina.module').then( m => m.DetailsCocinaPageModule)
-  },
-  {
     path: 'form-impresora-config',
     loadChildren: () => import('./form-impresora-config/form-impresora-config.module').then( m => m.FormImpresoraConfigPageModule)
   },
@@ -197,10 +181,6 @@ const routes: Routes = [
   {
     path: 'list-comandas-v2',
     loadChildren: () => import('./list-comandas-v2/list-comandas-v2.module').then( m => m.ListComandasV2PageModule)
-  },
-  {
-    path: 'details-comanda',
-    loadChildren: () => import('./details-comanda/details-comanda.module').then( m => m.DetailsComandaPageModule)
   },
   {
     path: 'form-descuento',
@@ -334,10 +314,6 @@ const routes: Routes = [
     loadChildren: () => import('./form-estado-reserva/form-estado-reserva.module').then( m => m.FormEstadoReservaPageModule)
   },
   {
-    path: 'list-estados-reserva',
-    loadChildren: () => import('./list-estados-reserva/list-estados-reserva.module').then( m => m.ListEstadosReservaPageModule)
-  },
-  {
     path: 'form-subdivision',
     loadChildren: () => import('./form-subdivision/form-subdivision.module').then( m => m.FormSubdivisionPageModule)
   },
@@ -420,10 +396,25 @@ const routes: Routes = [
   {
     path: 'edit-item-categoria',
     loadChildren: () => import('./edit-item-categoria/edit-item-categoria.module').then( m => m.EditItemCategoriaPageModule)
-  },  {
+  },
+  {
     path: 'edit-cocina',
     loadChildren: () => import('./edit-cocina/edit-cocina.module').then( m => m.EditCocinaPageModule)
   },
+  {
+    path: 'edit-comanda',
+    loadChildren: () => import('./edit-comanda/edit-comanda.module').then( m => m.EditComandaPageModule)
+  },
+  {
+    path: 'select-categoria',
+    loadChildren: () => import('./select-categoria/select-categoria.module').then( m => m.SelectCategoriaPageModule)
+  },
+  {
+    path: 'select-reserva-estados',
+    loadChildren: () => import('./select-reserva-estados/select-reserva-estados.module').then( m => m.SelectReservaEstadosPageModule)
+  },
+
+
 
 
 

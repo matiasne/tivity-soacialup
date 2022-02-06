@@ -5,7 +5,6 @@ import { ProductosService } from '../Services/productos.service';
 import { Subscription } from 'rxjs';
 import { AddProductoVentaPage } from '../add-producto-venta/add-producto-venta.page';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { LoadingService } from '../Services/loading.service';
 import { CargaPorVozService } from '../Services/carga-por-voz.service';
 import { ChangeDetectorRef } from '@angular/core'
 import { ToastService } from '../Services/toast.service';
@@ -20,6 +19,7 @@ import { Pedido } from '../models/pedido';
 import { ComandaPage } from '../impresiones/comanda/comanda.page';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
 import { WoocommerceService } from '../Services/woocommerce/woocommerce.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-select-product',

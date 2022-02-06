@@ -8,12 +8,12 @@ import { EditClientePageRoutingModule } from './edit-cliente-routing.module';
 
 import { EditClientePage } from './edit-cliente.page';
 import { CajasModule } from '../Modules/cajas/cajas.module';
+import { ClientesModule } from '../Modules/clientes/clientes.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    CajasModule,
+    ClientesModule,
     IonicModule,
     EditClientePageRoutingModule
   ],

@@ -4,16 +4,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { IonicModule } from '@ionic/angular';
-import { CardSubscriptionComponent } from './card-subscription/card-subscription.component';
-import { CardUsuarioComponent } from './card-usuario/card-usuario.component';
-import { CardComandaV2Component } from './card-comanda-v2/card-comanda-v2.component';
+import { CardSubscriptionComponent } from '../Modules/subscripciones/card-subscription/card-subscription.component';
+import { CardUsuarioComponent } from '../Modules/authentication/card-usuario/card-usuario.component';
 import { BtnSeleccionarImagenComponent } from './btn-seleccionar-imagen/btn-seleccionar-imagen.component';
-import { CardPedidoWoocommerceComponent } from './card-pedido-woocommerce/card-pedido-woocommerce.component';
-import { CardProductoWoocommerceComponent } from './card-producto-woocommerce/card-producto-woocommerce.component';
-import { ItemBluetoothDeviceComponent } from './item-bluetooth-device/item-bluetooth-device.component';
+import { CardPedidoWoocommerceComponent } from '../Modules/woocommerce/card-pedido-woocommerce/card-pedido-woocommerce.component';
+import { CardProductoWoocommerceComponent } from '../Modules/woocommerce/card-producto-woocommerce/card-producto-woocommerce.component';
+import { ItemBluetoothDeviceComponent } from '../Modules/impresion/item-bluetooth-device/item-bluetooth-device.component';
 import { ItemBluetoothPrinterComponent } from '../Modules/impresion/item-bluetooth-printer/item-bluetooth-printer.component';
-import { SearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
-import { CardReservaComponent } from './card-reserva/card-reserva.component';
+import { SearchFilterInputComponent } from '../Modules/shared/search-filter-input/search-filter-input.component';
 import { DirectivesModule } from '../Directives/directives.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
@@ -32,29 +30,12 @@ imports: [
   declarations: [
     BtnSeleccionarImagenComponent,
     SeleccionarImagenComponent,
-    CardComandaV2Component,
-    CardUsuarioComponent,
-    CardSubscriptionComponent,
-    CardReservaComponent,
-    CardPedidoWoocommerceComponent,
-    CardProductoWoocommerceComponent,
-    ItemBluetoothDeviceComponent,
-    ItemBluetoothPrinterComponent,
-    SearchFilterInputComponent,
+    
     
   ],
   exports: [
     BtnSeleccionarImagenComponent,
     SeleccionarImagenComponent,
-    CardComandaV2Component,
-    CardUsuarioComponent,
-    CardSubscriptionComponent,
-    CardReservaComponent,
-    CardPedidoWoocommerceComponent,
-    CardProductoWoocommerceComponent, 
-    ItemBluetoothDeviceComponent,
-    ItemBluetoothPrinterComponent,
-    SearchFilterInputComponent,
     
   ]
 })

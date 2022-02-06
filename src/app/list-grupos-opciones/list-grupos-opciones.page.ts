@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FormProductoGrupoOpcionesPage } from '../form-producto-grupo-opciones/form-producto-grupo-opciones.page';
+import { LoadingService } from '../Modules/core/services/loading.service';
 import { GrupoOpcionesService } from '../Services/grupo-opciones.service';
-import { LoadingService } from '../Services/loading.service';
 
 @Component({
   selector: 'app-list-grupos-opciones',

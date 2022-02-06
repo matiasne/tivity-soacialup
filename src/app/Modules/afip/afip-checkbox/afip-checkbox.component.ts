@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Pedido } from 'src/app/models/pedido';
-import { LoadingService } from 'src/app/Services/loading.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { AfipServiceService } from '../afip-service.service';
 
 @Component({

@@ -1,16 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { ModalController, AlertController, Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { RolesService } from '../Services/roles.service';
-import { Subscription } from 'rxjs';
-import { LoadingService } from '../Services/loading.service';
-import { UsuariosService } from '../Services/usuarios.service';
-import { ToastService } from '../Services/toast.service';
-import { CambiarPlanPage } from '../cambiar-plan/cambiar-plan.page';
-import { EnumPlanes, User } from '../models/user';
-import { ImpresoraService } from '../Modules/impresion/impresora.service';
+import { Platform } from '@ionic/angular';
+
 
 
 @Component({

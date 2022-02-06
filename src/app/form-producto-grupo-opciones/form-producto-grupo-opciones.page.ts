@@ -20,10 +20,8 @@ export class FormProductoGrupoOpcionesPage implements OnInit {
   datosForm: FormGroup;
 
   constructor(
-    private route:ActivatedRoute,
     private formBuilder: FormBuilder,
     private alertController:AlertController,
-    private navCtrl:NavController,
     private modalController:ModalController,
     private toastServices:ToastService,
     private modalCtrl:ModalController,

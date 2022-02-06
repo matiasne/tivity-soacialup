@@ -4,7 +4,6 @@ import { SubscripcionesService } from '../../../Services/subscripciones.service'
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { AlertController, ModalController } from '@ionic/angular';
-import { FormComentarioPage } from '../../../form-comentario/form-comentario.page';
 import { ClientesEstadosService } from '../../../Services/clientes-estados.service';
 import { BeneficiosService } from '../../../Services/beneficios.service';
 import { SelectBeneficioPage } from '../../../select-beneficio/select-beneficio.page';
@@ -162,23 +161,4 @@ export class DetailsClienteComponent implements OnInit {
     });
     await alert.present();    
   }
-
- 
-  async agregarComentario(){
-    const modal = await this.modalController.create({
-      component: FormComentarioPage,
-      componentProps:{
-        comentableId:this.cliente.id,
-        comentableTipo:"clientes"
-      }      
-    }); 
-    modal.onDidDismiss()
-    .then((retorno) => {
-      if(retorno.data)
-        this.cliente.asignarValores(retorno.data.item);        
-    });
-    return await modal.present();
-  }
-
-
 }

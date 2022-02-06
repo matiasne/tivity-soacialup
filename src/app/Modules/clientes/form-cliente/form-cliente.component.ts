@@ -1,13 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { ActionSheetController, ModalController,  AlertController, NavParams } from '@ionic/angular';
 import { ClientesService } from '../../clientes/clientes.service';
 import { Router} from '@angular/router';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { Subscription } from 'rxjs';
-import { ToastService } from '../../../Services/toast.service';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { BeneficiosService } from '../../../Services/beneficios.service';
 import { ModalInputDireccionPage } from '../../../modal-input-direccion/modal-input-direccion.page';
 import { Localizacion } from '../../../models/localizacion'
@@ -39,20 +33,14 @@ export class FormClienteComponent implements OnInit {
   
 
   constructor(
-    private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
     private clientesService:ClientesService,
     public router:Router,
     public modalController: ModalController,
-    private authService:AuthenticationService,    
     public alertController: AlertController,
-    private toastServices:ToastService,
     private beneficiosService:BeneficiosService
   ) {
    
-  
-
-    this.cliente = new Cliente()
     
    }
 

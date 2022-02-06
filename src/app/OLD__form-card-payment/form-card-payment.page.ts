@@ -4,7 +4,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { Comercio } from '../models/comercio';
 import { Pedido } from '../models/pedido';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { LoadingService } from '../Services/loading.service';
+import { LoadingService } from '../core/services/loading.service';
 import { MercadopagoService } from '../Modules/mercadopago/mercadopago.service';
 
 declare let Mercadopago: any

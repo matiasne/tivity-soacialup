@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { CambiarPlanPage } from 'src/app/cambiar-plan/cambiar-plan.page';
 import { EditCajaPage } from 'src/app/edit-caja/edit-caja.page';
 import { Comercio } from 'src/app/models/comercio';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { ComerciosService } from '../../comercio/comercios.service';
 import { CajasService } from '../cajas.service';
 
@@ -27,8 +26,6 @@ export class ListCajasComponent implements OnInit, OnDestroy {
   constructor(
     private cajasService:CajasService,
     private modalCtrl:ModalController,
-    private router:Router,
-    private loadingService:LoadingService,
     private comercioService:ComerciosService
   ) { 
     this.comercio = new Comercio()

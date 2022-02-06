@@ -1,19 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CajasService } from '../Modules/cajas/cajas.service';
-import { VentasService } from '../Services/ventas.service';
-import { LoadingService } from '../Services/loading.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Caja } from '../models/caja';
-import { EnumTipoMovimientoCaja, MovimientoCaja } from '../models/movimientoCaja';
-import { MovimientosService } from '../Services/movimientos.service';
-import { Comercio } from '../models/comercio';
-import { PedidoService } from '../Modules/pedidos/pedido.service';
-import { Pedido } from '../models/pedido';
 import { NavegacionParametrosService } from '../Services/global/navegacion-parametros.service';
-import { EditPedidoPage } from '../edit-pedido/edit-pedido.page';
 import { EditCajaAperturaPage } from '../edit-caja-apertura/edit-caja-apertura.page';
 
 @Component({

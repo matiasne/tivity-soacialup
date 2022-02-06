@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit-comanda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-form-comanda
+    [pedido]="pedido" 
+    (guardar)="cerrar()" 
+    (cancelar)="cerrar()"
+    (eliminar)="cerrar()"
+    (demora)="cerrar()"
+  ></app-form-comanda>
+</ion-content>

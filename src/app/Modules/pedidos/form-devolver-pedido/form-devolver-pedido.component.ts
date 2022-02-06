@@ -10,7 +10,6 @@ import { EnumEstadoCocina } from 'src/app/models/item';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from 'src/app/models/movimientoCaja';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
 import { CtaCorrientesService } from 'src/app/Services/cta-corrientes.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { ModalNotificacionService } from 'src/app/Services/modal-notificacion.service';
 import { MovimientosService } from 'src/app/Services/movimientos.service';
 import { ProductosService } from 'src/app/Services/productos.service';
@@ -19,6 +18,7 @@ import { AfipServiceService } from '../../afip/afip-service.service';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { CajasService } from '../../cajas/cajas.service';
 import { ComerciosService } from '../../comercio/comercios.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { PedidoService } from '../pedido.service';
 
 @Component({

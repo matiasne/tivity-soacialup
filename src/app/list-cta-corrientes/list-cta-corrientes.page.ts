@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CtaCorrientesService } from '../Services/cta-corrientes.service';
-import { Comercio } from '../models/comercio';
 import { Router } from '@angular/router';
 import { CtaCorriente } from '../models/ctacorriente';
-import { AuthenticationService } from '../Modules/authentication/authentication.service';
-import { LoadingService } from '../Services/loading.service';
 import { ClientesService } from '../Modules/clientes/clientes.service';
 
 @Component({
@@ -23,8 +20,6 @@ export class ListCtaCorrientesPage implements OnInit {
     private ctasCorreintesService:CtaCorrientesService,
     private clientesServices:ClientesService,
     private router:Router,
-    private authenticationService:AuthenticationService,
-    private loadingService:LoadingService
   ) {
 
    

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Comercio } from '../models/comercio';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { LoadingService } from '../Services/loading.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 declare var MercadoPago: any
 
@@ -45,10 +45,7 @@ export class FormCardTokenPage implements OnInit {
   public mp:any
 
   constructor(
-    private modalCtrl:ModalController,
     private comerciosService:ComerciosService,
-    private loadingService:LoadingService,
-    private navParams:NavParams,
     public changeRef:ChangeDetectorRef,
   ) { 
 

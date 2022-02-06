@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormCardTokenPage } from 'src/app/form-card-token/form-card-token.page';
@@ -9,7 +10,6 @@ import { EnumEstadoCocina } from 'src/app/models/item';
 import { EnumTipoMovimientoCaja } from 'src/app/models/movimientoCaja';
 import { EnumEstadoCobro, Pedido } from 'src/app/models/pedido';
 import { CtaCorrientesService } from 'src/app/Services/cta-corrientes.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { ModalNotificacionService } from 'src/app/Services/modal-notificacion.service';
 import { MovimientosService } from 'src/app/Services/movimientos.service';
 import { ProductosService } from 'src/app/Services/productos.service';
@@ -19,6 +19,7 @@ import { AfipServiceService } from '../../afip/afip-service.service';
 import { CajasService } from '../../cajas/cajas.service';
 import { CarritoService } from '../../carrito/carrito.service';
 import { ComerciosService } from '../../comercio/comercios.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { ImpresoraService } from '../../impresion/impresora.service';
 import { MercadopagoService } from '../../mercadopago/mercadopago.service';
 import { PedidoService } from '../pedido.service';
@@ -40,12 +41,14 @@ export class FormCobrarPedidoComponent implements OnInit {
   @Input() pedido:Pedido;
   @Output() cobrar = new EventEmitter<any>();
   @Output() cancelar = new EventEmitter<any>();
+
+  datosForm: FormGroup;
   
   public comercio:Comercio
   public cajas = []
   public cajaSeleccionadaIndex=0;
   public cajaSeleccionada:Caja;
-  public metodoPagoSeleccionado =[];
+  public metodoPagoSeleccionado:any = [];
 
   public pagoTotal = 0;
   public vuelto = 0;
@@ -63,10 +66,10 @@ export class FormCobrarPedidoComponent implements OnInit {
   public total = 0;
 
   constructor(
+    private formBuilder: FormBuilder,
     public comerciosService:ComerciosService,
     public cajasService:CajasService,
     private toastServices:ToastService,
-    private router:Router,
     private modalController:ModalController,
     private movimientosService:MovimientosService,
     private pedidosService:PedidoService,
@@ -80,6 +83,11 @@ export class FormCobrarPedidoComponent implements OnInit {
     private alertController:AlertController,
     private mercadoPagoService:MercadopagoService
   ) { 
+
+    this.datosForm = this.formBuilder.group({
+      cajaSeleccionadaIndex:[''],
+      metodoPagoSeleccionado:['']
+    });
 
   }
 
@@ -107,7 +115,6 @@ export class FormCobrarPedidoComponent implements OnInit {
     });
 
     if(this.pedido.clienteId != ""){
-
       this.ctasCorrientesService.getByCliente(this.pedido.clienteId).subscribe(snapshot =>{
         snapshot.forEach(snap =>{
           let cta:any = snap.payload.doc.data();
@@ -117,16 +124,17 @@ export class FormCobrarPedidoComponent implements OnInit {
         })
       })
     }
+   
   }
 
   
 
 
   setMontos(){
-
+    console.log(this.cajas[this.cajaSeleccionadaIndex])
     this.pedido.montoPagoEfectivo = 0;
     this.pedido.montoPagoDebito = 0;
-    this.pedido.montoPagoCredito = 0;
+    this.pedido.montoPagoCredito = 0; 
     this.pedido.montoPagoCtaCorriente = 0;
     this.pedido.montoPagoMercadoPago = 0;
 
@@ -288,12 +296,9 @@ async alertRechazado(){
             if(metodo === "mercadopago"){
               monto = this.pedido.montoPagoMercadoPago;
             }
-            if(metodo != "ctaCorriente"){
-
-              
+            if(metodo != "ctaCorriente"){              
               this.movimientosService.agregarMovimientoCaja(this.cajaSeleccionada.id,this.pedido.clienteId,this.enumTipoMovimientoCaja.pago,"",metodo, monto,
               "Venta de productos")
-
             }
             
               
@@ -357,7 +362,7 @@ async alertRechazado(){
         
       this.modalNotificacion.success("Cobrado","El pedido ha sido cobrado.")
      
-     this.cobrar.emit();
+      this.cobrar.emit();
       //this.modalController.dismiss("cobrado",'','form-cobrar')   
       
     }catch(err){
@@ -379,6 +384,8 @@ async alertRechazado(){
   }
 
   setearCaja(){
+
+    console.log(this.cajas[this.cajaSeleccionadaIndex])
     
     localStorage.setItem('cajaSeleccionadaIndex',this.cajaSeleccionadaIndex.toString());
 

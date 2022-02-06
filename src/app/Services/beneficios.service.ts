@@ -8,7 +8,6 @@ import { Cliente } from '../Modules/clientes/cliente';
 import { BaseService } from './base.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
 import { PedidoService } from '../Modules/pedidos/pedido.service';
-import { UsuariosService } from './usuarios.service';
 
 @Injectable({
   providedIn: 'root'

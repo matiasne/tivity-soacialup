@@ -5,13 +5,12 @@ import { ActionSheetController, AlertController, ModalController, NavParams } fr
 import { ModalInputDireccionPage } from 'src/app/modal-input-direccion/modal-input-direccion.page';
 import { Comercio } from 'src/app/models/comercio';
 import { Localizacion } from 'src/app/models/localizacion';
-import { CajasService } from 'src/app/Modules/cajas/cajas.service';
 import { ComerciosService } from 'src/app/Modules/comercio/comercios.service';
 import { FotoService } from 'src/app/Services/fotos.service';
 import { ImagesService } from 'src/app/Services/images.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { RolesService } from 'src/app/Services/roles.service';
 import { ToastService } from 'src/app/Services/toast.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-form-comercio',

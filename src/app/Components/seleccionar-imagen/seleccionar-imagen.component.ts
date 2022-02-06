@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { Platform, ActionSheetController, ModalController } from '@ionic/angular';
 import { ImagesService } from 'src/app/Services/images.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { Crop } from '@ionic-native/crop/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { RecortarImagenPage } from 'src/app/recortar-imagen/recortar-imagen.page';
+import { LoadingService } from 'src/app/Modules/core/services/loading.service';
 
 
 @Component({

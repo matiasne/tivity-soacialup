@@ -2,15 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Comercio } from '../models/comercio';
-import { CategoriasService } from '../Services/categorias.service';
 import { ComerciosService } from '../Modules/comercio/comercios.service';
-import { LoadingService } from '../Services/loading.service';
-import { ProductosService } from '../Services/productos.service';
 import { ToastService } from '../Services/toast.service';
-import { CategoriesService } from '../Services/woocommerce/categories.service';
-import { WebhooksService } from '../Services/woocommerce/webhooks.service';
 import { WoocommerceService } from '../Services/woocommerce/woocommerce.service';
 import { WordpressService } from '../Services/wordpress/wordpress.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-form-woocommerce-configuracion',
@@ -49,13 +45,10 @@ export class FormWoocommerceConfiguracionPage implements OnInit {
   constructor(
     private comerciosService:ComerciosService,
     private navCtrl:NavController,
-    private productosServices:ProductosService,
     private woocommerceService:WoocommerceService,
     private wordpressService:WordpressService,
     private alertController:AlertController,
     private loadingService:LoadingService,
-    private categoriasService:CategoriasService,
-    private webhooksService:WebhooksService,
     private toastService:ToastService
   ) { 
     this.comercio = new Comercio()

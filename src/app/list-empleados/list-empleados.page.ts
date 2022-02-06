@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../Services/roles.service';
-import { UsuariosService } from '../Services/usuarios.service';
 import { Subscription } from 'rxjs';
 import { ModalController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormInvitacionPage } from '../form-invitacion/form-invitacion.page';
 import { User } from 'firebase';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
+import { UsuariosService } from '../Modules/authentication/usuarios.service';
 
 @Component({
   selector: 'app-list-empleados',

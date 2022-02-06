@@ -57,12 +57,8 @@ export class FormCocinaComponent implements OnInit {
       nombre: ['', Validators.required],
     });
 
-    if(this.navParams.get('cocina')){
-      this.cocina = new Cocina();
-      console.log(this.navParams.get('cocina'));
-
-      this.cocina.asignarValores(this.navParams.get('cocina'));
-      
+    
+    if(this.cocina.id != ""){
       this.updating = true;
       this.titulo = "Editar Cocina";
       this.datosForm = this.formBuilder.group({

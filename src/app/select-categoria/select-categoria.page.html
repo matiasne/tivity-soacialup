@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>select-categoria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <app-list-categorias
+    (seleccionar)="select($event)"
+    (editar)="edit($event)">
+  </app-list-categorias>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openAddCategoria()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

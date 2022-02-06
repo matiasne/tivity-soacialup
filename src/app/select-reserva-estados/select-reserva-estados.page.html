@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estados</ion-title>
+    <ion-button fill="clear" (click)="cerrar()" color="primary" slot="end">
+      <ion-icon  name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button class="button-rounded" color="light" (click)="crearEstado()">Nuevo Estado</ion-button>
+
+  <app-list-estados-reserva
+    (seleccionar)="_select($event)"
+  ></app-list-estados-reserva>
+
+</ion-content>

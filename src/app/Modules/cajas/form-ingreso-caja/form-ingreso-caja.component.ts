@@ -7,11 +7,11 @@ import { Comercio } from 'src/app/models/comercio';
 import { EnumTipoMovimientoCaja, MovimientoCaja } from 'src/app/models/movimientoCaja';
 import { SelectClientePage } from 'src/app/select-cliente/select-cliente.page';
 import { CtaCorrientesService } from 'src/app/Services/cta-corrientes.service';
-import { LoadingService } from 'src/app/Services/loading.service';
 import { MovimientosService } from 'src/app/Services/movimientos.service';
 import { ToastService } from 'src/app/Services/toast.service';
 import { Cliente } from '../../clientes/cliente';
 import { ComerciosService } from '../../comercio/comercios.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { CajasService } from '../cajas.service';
 
 @Component({

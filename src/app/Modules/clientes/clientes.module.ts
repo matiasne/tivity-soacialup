@@ -13,7 +13,6 @@ import { FormClienteComponent } from './form-cliente/form-cliente.component';
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule,
     FormsModule,
     IonicModule,
     DirectivesModule

@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../Modules/authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
-import { LoadingService } from '../Services/loading.service';
 import { MovimientoCtaCorriente } from '../models/movimientoCtaCorriente';
 import { MovimientosService } from '../Services/movimientos.service';
-import { UsuariosService } from '../Services/usuarios.service';
 import { ClientesService } from '../Modules/clientes/clientes.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
+import { UsuariosService } from '../Modules/authentication/usuarios.service';
 
 @Component({
   selector: 'app-details-cta-corriente',

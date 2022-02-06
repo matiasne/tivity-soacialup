@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
-import { LoadingService } from './loading.service';
+import { LoadingService } from '../Modules/core/services/loading.service';
 import { ToastService } from './toast.service';
 
 @Injectable({

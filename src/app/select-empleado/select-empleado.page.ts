@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../Services/roles.service';
-import { UsuariosService } from '../Services/usuarios.service';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { UsuariosService } from '../Modules/authentication/usuarios.service';
 
 @Component({
   selector: 'app-select-empleado',

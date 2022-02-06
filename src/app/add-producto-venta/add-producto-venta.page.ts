@@ -11,8 +11,8 @@ import { Opcion } from '../models/opcion';
 import { Subscription } from 'rxjs';
 import { CocinasService } from '../Services/cocinas.service';
 import { GrupoOpcionesService } from '../Services/grupo-opciones.service';
-import { LoadingService } from '../Services/loading.service';
 import { ItemPedido } from '../models/itemPedido';
+import { LoadingService } from '../Modules/core/services/loading.service';
 
 @Component({
   selector: 'app-add-producto-venta',
